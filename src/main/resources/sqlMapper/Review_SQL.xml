@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+
+	<!-- 관리자 리뷰관리  START-->
+
+	<!-- 관리자 리뷰 리스트 -->
+	<select id="reviewList" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT A.GOODS_NUMBER, A.REVIEW_NUMBER, A.MEMBER_NUMBER, A.REVIEW_CONTENT, A.REVIEW_IMAGE,
+		A.REVIEW_TITLE,A.REVIEW_SCORE, A.REVIEW_REGDATE, C.GOODS_NAME, D.MEMBER_ID
+		FROM REVIEW A, GOODS C, MEMBER D 
+		WHERE A.GOODS_NUMBER=C.GOODS_NUMBER AND A.MEMBER_NUMBER=D.MEMBER_NUMBER
+		ORDER BY REVIEW_NUMBER DESC
+		
+	]]>
+	</select>
+
+	<!-- 관리자 리뷰 삭제 -->
+	<delete id="reviewDelete" parameterType="hashmap">
+		<![CDATA[
+			DELETE REVIEW
+			WHERE
+				REVIEW_NUMBER = #{REVIEW_NUMBER}
+		]]>
+	</delete>
+
+	<!-- 관리자 리뷰 검색(회원 ID) -->
+	<select id="searchReviewList0" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT A.GOODS_NUMBER, A.REVIEW_NUMBER, A.MEMBER_NUMBER, A.REVIEW_CONTENT, A.REVIEW_IMAGE,
+		A.REVIEW_TITLE,A.REVIEW_SCORE, A.REVIEW_REGDATE, C.GOODS_NAME, D.MEMBER_ID
+		FROM REVIEW A, GOODS C, MEMBER D 
+		WHERE A.GOODS_NUMBER=C.GOODS_NUMBER AND A.MEMBER_NUMBER=D.MEMBER_NUMBER
+   		AND D.MEMBER_ID LIKE '%'||#{isSearch}||'%'
+		ORDER BY REVIEW_NUMBER DESC	
+	]]>
+	</select>
+
+	<!-- 관리자 리뷰 검색(상품 이름) -->
+	<select id="searchReviewList1" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT A.GOODS_NUMBER, A.REVIEW_NUMBER, A.MEMBER_NUMBER, A.REVIEW_CONTENT, A.REVIEW_IMAGE,
+		A.REVIEW_TITLE,A.REVIEW_SCORE, A.REVIEW_REGDATE, C.GOODS_NAME, D.MEMBER_ID
+		FROM REVIEW A, GOODS C, MEMBER D 
+		WHERE A.GOODS_NUMBER=C.GOODS_NUMBER AND A.MEMBER_NUMBER=D.MEMBER_NUMBER
+    	AND C.GOODS_NAME LIKE '%'||#{isSearch}||'%'
+		ORDER BY REVIEW_NUMBER DESC	
+	]]>
+	</select>
+
+	<!-- 관리자 리뷰 검색(상품 번호) -->
+	<select id="searchReviewList2" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT A.GOODS_NUMBER, A.REVIEW_NUMBER, A.MEMBER_NUMBER, A.REVIEW_CONTENT, A.REVIEW_IMAGE,
+		A.REVIEW_TITLE,A.REVIEW_SCORE, A.REVIEW_REGDATE, C.GOODS_NAME, D.MEMBER_ID
+		FROM REVIEW A, GOODS C, MEMBER D 
+		WHERE A.GOODS_NUMBER=C.GOODS_NUMBER AND A.MEMBER_NUMBER=D.MEMBER_NUMBER
+		AND C.GOODS_NUMBER LIKE '%'||#{isSearch}||'%'
+		ORDER BY REVIEW_NUMBER DESC		
+	]]>
+	</select>
+	<!-- 관리자 리뷰관리 END -->
+	
+	
+	
+	<!-- 리뷰 등록 -->
+	<insert id="insertReview" parameterType="hashMap">
+		<selectKey keyProperty="REVIEW_NUMBER" resultType="string"
+			order="BEFORE">
+			SELECT REVIEW_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO REVIEW (
+			GOODS_NUMBER, 
+			REVIEW_NUMBER, 
+			MEMBER_NUMBER,
+			REVIEW_CONTENT, 
+			REVIEW_REGDATE, 
+			REVIEW_SCORE, 
+			REVIEW_TITLE
+			)
+			
+			VALUES (
+			#{GOODS_NUMBER, jdbcType=INTEGER}, 
+			#{REVIEW_NUMBER}, 
+			#{MEMBER_NUMBER},
+			#{REVIEW_CONTENT}, 
+			SYSDATE, 
+			#{REVIEW_SCORE}, 
+			#{REVIEW_TITLE})
+		]]>
+	</insert>
+	
+	<!-- 리뷰 적립금 -->
+	<insert id="reviewPoint" parameterType="hashMap" >
+	<![CDATA[
+		INSERT INTO POINT 
+		(
+			MEMBER_NUMBER, 
+			POINT_CONTENT, 
+			POINT_POINT, 
+			POINT_DATE, 
+			POINT_NUMBER
+		)
+		VALUES 
+		( 
+			#{MEMBER_NUMBER}, 
+			'리뷰 적립금', 
+			100, 
+			SYSDATE, 
+			POINT_NUMBER_SEQ.NEXTVAL
+		)		
+	]]>
+	</insert>
+	
+	<!-- 리뷰 첨부파일 -->
+	<update id="insertReviewImage" parameterType="hashmap">
+		<![CDATA[
+			UPDATE REVIEW SET REVIEW_IMAGE=#{REVIEW_IMAGE} WHERE REVIEW_NUMBER=#{REVIEW_NUMBER}
+		]]>
+	</update>
+	
+	<!-- 리뷰 평점 -->
+	<select id="selectGoodsEvgScore" parameterType="hashmap"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT AVG(REVIEW_SCORE)*10 FROM REVIEW WHERE GOODS_NUMBER=#{GOODS_NUMBER}
+		]]>
+	</select>
+	
+	<!-- 상품에 대한 리뷰 -->
+	<select id="selectGoodsReview" parameterType="hashmap"
+		resultType="hashmap">
+		<![CDATA[
+			SELECT D.MEMBER_NAME,A.REVIEW_TITLE, A.REVIEW_CONTENT, A.REVIEW_SCORE, A.REVIEW_IMAGE, 
+			A.REVIEW_REGDATE FROM REVIEW A, MEMBER D WHERE GOODS_NUMBER=#{GOODS_NUMBER} AND
+      		D.MEMBER_NUMBER=A.MEMBER_NUMBER
+			ORDER BY REVIEW_NUMBER DESC
+		]]>
+	</select>
+
+</mapper>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

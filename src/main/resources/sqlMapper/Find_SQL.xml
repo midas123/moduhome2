@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="find">
+
+	<select id="findID" parameterType="hashmap" resultType="string">
+		<![CDATA[
+			select MEMBER_ID 
+			from member 
+			where MEMBER_NAME=#{MEMBER_NAME} and MEMBER_EMAIL=#{MEMBER_EMAIL}
+		]]>
+	</select>
+	
+	<select id="findPW" parameterType="hashmap" resultType="string">
+		<![CDATA[
+			select MEMBER_PASSWORD
+			from member 
+			where MEMBER_ID=#{MEMBER_ID} and MEMBER_NAME=#{MEMBER_NAME} and MEMBER_EMAIL=#{MEMBER_EMAIL}
+		]]>
+	</select>
+	
+	<update id="changePw" parameterType="hashmap">
+		update member set member_password =#{MEMBER_PASSWORD_CHANGE} where member_id=#{MEMBER_ID_FIND}
+	</update>
+
+</mapper>

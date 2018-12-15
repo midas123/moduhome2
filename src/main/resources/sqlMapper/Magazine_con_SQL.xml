@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="magazine_con">
+
+	<!-- 매거진 내용 리스트 -->
+	<select id="MGCONTENTLIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				MG_NUMBER, 
+				MG_IMAGE, 
+				MG_IMAGE_NUMBER, 
+				MG_IMAGE_CONTENT
+			FROM MAGAZINE_IMAGE
+			ORDER BY MG_IMAGE_NUMBER ASC
+		]]>
+	</select>
+	
+
+	<!-- 매거진 내용 등록 -->
+	<insert id="MGCONTENTINSERT" parameterType="hashmap">
+		<selectKey keyProperty="MG_IMAGE_NUMBER" resultType="string"
+			order="BEFORE">
+			SELECT MG_IMAGE_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO MAGAZINE_IMAGE 
+			(
+				MG_NUMBER, 
+				MG_IMAGE_NUMBER, 
+				MG_IMAGE,
+				MG_IMAGE_CONTENT 
+			)
+			VALUES 
+			(
+				#{MG_NUMBER, jdbcType=INTEGER}, 
+				#{MG_IMAGE_NUMBER, jdbcType=INTEGER}, 
+				#{MG_IMAGE, jdbcType=VARCHAR},
+				#{MG_IMAGE_CONTENT, jdbcType=VARCHAR}
+			)
+		]]>
+	</insert>
+</mapper>
+	
+	

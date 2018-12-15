@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goods">
+
+
+
+<!-- [판매 인기순] 스토어 메인 -->
+<select id="bestSellAll" resultType="hashMap">
+<![CDATA[
+SELECT sum(b.goods_amount) as amount, sum(b.goods_sellcount) as sellcount, a.* FROM
+(select * FROM goods WHERE goods_onoff =0 ) a 
+inner join goods_kind b on a.goods_number = b.goods_number 
+group by a.goods_number, a.goods_name, a.goods_price,a.goods_DISPRICE, a.goods_thumbnail,
+a.goods_date,a.goods_category1,a.goods_category2,a.goods_saledate,
+a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by sellcount desc, a.goods_number desc
+]]>
+</select>
+
+<!-- [최신순] 스토어 메인 -->
+<select id="newItemAll" resultType="hashMap" >
+<![CDATA[
+SELECT sum(b.goods_amount) as amount, a.* 
+from(select * from goods where goods_onoff ='0' ) 
+a inner join goods_kind b on a.goods_number = b.goods_number 
+group by a.goods_number, a.goods_name, a.goods_price,a.goods_DISPRICE,a.goods_thumbnail,a.goods_date,a.goods_category1,
+a.goods_category2,a.goods_saledate,a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by A.goods_number desc
+]]>
+</select>
+
+<!-- 카테고리 정렬 -->
+<select id="goodsCategory" resultType="hashMap" parameterType="hashMap">
+<choose>
+<!-- 최신순 -->
+<when test="sort == 1">
+<![CDATA[
+SELECT sum(b.goods_amount) as amount, a.* 
+from(select * from goods where  
+]]>
+	<if test="CATEGORY != null">
+	 <![CDATA[
+	goods_CATEGORY1= #{CATEGORY} and
+	]]>
+	</if>
+	<if test="SUBCATEGORY != null">
+            <![CDATA[
+              goods_CATEGORY2=#{SUBCATEGORY} and
+            ]]>
+    </if>
+<![CDATA[
+goods_onoff ='0' ) 
+a inner join goods_kind b on a.goods_number = b.goods_number 
+group by a.goods_number, a.goods_name, a.goods_price,a.goods_DISPRICE,
+a.goods_thumbnail,a.goods_date,a.goods_category1,a.goods_category2,
+a.goods_saledate,a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by A.goods_number desc
+]]>
+</when>
+<!-- 판매 인기순 -->
+<when test="sort == 2">
+<![CDATA[
+SELECT sum(b.goods_amount) as amount, sum(b.goods_sellcount) as sellcount, a.* FROM
+(select * FROM goods where  
+]]>
+	<if test="CATEGORY != null">
+	 <![CDATA[
+	goods_CATEGORY1= #{CATEGORY} and
+	]]>
+	</if>
+	<if test="SUBCATEGORY != null">
+            <![CDATA[
+               goods_CATEGORY2=#{SUBCATEGORY} and
+            ]]>
+    </if>
+<![CDATA[
+goods_onoff ='0' ) a 
+inner join goods_kind b on a.goods_number = b.goods_number 
+group by a.goods_number, a.goods_name, a.goods_price,a.goods_DISPRICE, a.goods_thumbnail,
+a.goods_date,a.goods_category1,a.goods_category2,a.goods_saledate,
+a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by sellcount desc, a.goods_number desc
+]]>
+</when>
+
+<!-- 낮은 가격순 -->
+<when test="sort == 3">
+<![CDATA[
+SELECT sum(b.goods_amount) as amount, a.* 
+from(select * from goods where 
+]]>
+	<if test="CATEGORY != null">
+	 <![CDATA[
+	goods_CATEGORY1= #{CATEGORY} and
+	]]>
+	</if>
+	<if test="SUBCATEGORY != null">
+            <![CDATA[
+               goods_CATEGORY2=#{SUBCATEGORY} and
+            ]]>
+    </if>
+<![CDATA[
+goods_onoff ='0' ) 
+a inner join goods_kind b on a.goods_number = b.goods_number 
+group by a.goods_number, a.goods_name, a.goods_price,a.goods_DISPRICE,
+a.goods_thumbnail,a.goods_date,a.goods_category1,a.goods_category2,a.goods_saledate,
+a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by A.goods_DISPRICE ASC
+]]>
+</when>
+
+<!-- 높은 가격순 -->
+<when test="sort == 4">
+<![CDATA[
+SELECT sum(b.goods_amount) as amount, a.* 
+FROM(select * from goods where  
+]]>
+	<if test="CATEGORY != null">
+	 <![CDATA[
+	goods_CATEGORY1= #{CATEGORY} and
+	]]>
+	</if>
+
+
+	<if test="SUBCATEGORY != null">
+            <![CDATA[
+               goods_CATEGORY2=#{SUBCATEGORY} and
+            ]]>
+    </if>
+<![CDATA[
+goods_onoff ='0' ) 
+a inner join goods_kind b on a.goods_number = b.goods_number 
+group by a.goods_number, a.goods_name, a.goods_price,a.goods_DISPRICE,a.goods_thumbnail,
+a.goods_date,a.goods_category1,a.goods_category2,a.goods_saledate,a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by A.goods_DISPRICE DESC
+]]>
+
+</when>
+
+<!-- 후기 많은 순 -->
+<when test="sort == 5">
+<![CDATA[
+SELECT SUM(B.GOODS_AMOUNT) AS AMOUNT, SUM(C.REVIEW_CONTENT) AS REVIEWCOUNT, A.*
+FROM(SELECT * FROM GOODS WHERE  
+]]>
+	<if test="CATEGORY != null">
+	 <![CDATA[
+	goods_CATEGORY1= #{CATEGORY} and
+	]]>
+	</if>
+	<if test="SUBCATEGORY != null">
+            <![CDATA[
+               goods_CATEGORY2=#{SUBCATEGORY} and
+            ]]>
+    </if>
+<![CDATA[
+GOODS_ONOFF = '0') A, GOODS_KIND B , REVIEW C WHERE A.GOODS_NUMBER = B.GOODS_NUMBER AND A.GOODS_NUMBER = C.GOODS_NUMBER
+GROUP BY a.goods_number, a.goods_name, a.goods_price, a.goods_DISPRICE,a.goods_thumbnail,
+a.goods_date,a.goods_category1,a.goods_category2,a.goods_saledate,a.goods_onoff,a.goods_count,a.goods_relevant,a.goods_brname
+order by REVIEWCOUNT DESC
+]]>
+</when>
+</choose>
+</select>
+
+<!-- 코디 상품 호출(썸네일, 넘버) -->
+	<select id="selectRelatedGoods" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT GOODS_THUMBNAIL, GOODS_NUMBER, GOODS_NAME, GOODS_DISPRICE, GOODS_PRICE
+        	 FROM GOODS 
+         	WHERE GOODS_NUMBER = #{GOODS_NUMBER} 
+         	AND GOODS_ONOFF = 0
+		]]>
+	</select>
+
+
+<!-- 상품 정보 가져오기 -->
+<select id="selectOneGood" resultType="hashMap" parameterType="hashMap">
+<![CDATA[
+		SELECT A.*, D.* FROM GOODS A, GOODS_KIND D 
+		WHERE A.GOODS_NUMBER=D.GOODS_NUMBER AND A.GOODS_NUMBER=#{GOODS_NUMBER}
+		ORDER BY D.GOODS_OPTION1 ASC
+	]]>
+</select>
+
+<!-- 상품 이미지 가져오기 -->
+<select id="selectImage" resultType="hashMap" parameterType="hashMap">
+	<![CDATA[
+		SELECT * FROM GOODS_IMAGE
+		WHERE GOODS_NUMBER=#{GOODS_NUMBER} ORDER BY GOODS_IMAGE_NUMBER ASC
+	]]>
+</select>
+
+
+<!-- 상품 구매 여부 확인 -->
+<select id="checkBuy" resultType="java.lang.Integer" parameterType="hashMap">
+<![CDATA[
+		SELECT GOODS_NUMBER FROM ORDERLIST WHERE MEMBER_NUMBER = #{MEMBER_NUMBER} AND 
+		GOODS_NUMBER = #{GOODS_NUMBER} group by GOODS_NUMBER
+	]]>
+</select>
+
+<!-- 상품 상세보기 조회수 증가 -->
+<update id="goodsCountUp" parameterType="hashMap">
+	<![CDATA[
+		UPDATE GOODS 
+		SET GOODS_COUNT = GOODS_COUNT + 1 
+		WHERE GOODS_NUMBER = #{GOODS_NUMBER}
+	]]>
+</update>
+	
+<!-- 검색 상품 리스트 (상품명, 브랜드명, 카테고리2)-->
+<select id="goodsSearchList" parameterType="hashMap" resultType="hashMap">
+	<![CDATA[
+			select sum(a.goods_amount) as amount,
+		a.goods_number, a.goods_name, a.goods_price,a.goods_disprice,
+		a.goods_thumbnail,a.goods_date,a.goods_category1,
+		a.goods_category2,a.goods_saledate,a.goods_onoff,a.goods_count, a.goods_brname 
+		from (select * from goods natural join goods_kind) A where goods_onoff ='0' 
+		and ( GOODS_NAME like '%'||#{isSearch}||'%' or GOODS_CATEGORY2 like '%'||#{isSearch}||'%' or GOODS_BRNAME like '%'||#{isSearch}||'%' ) 
+		group by a.goods_number, a.goods_name, a.goods_price,a.goods_disprice,a.goods_thumbnail,a.goods_date,a.goods_category1,a.goods_category2,a.goods_saledate,a.goods_onoff,a.goods_count,a.goods_brname
+		order by GOODS_NUMBER DESC
+		
+	]]>
+</select>
+
+
+
+<!-- 상품 주문 -->
+
+<!-- 주문자 정보 가져오기 -->
+<select id="orderMember" parameterType="hashMap" resultType="hashMap">
+<![CDATA[
+	SELECT M.MEMBER_NUMBER,M.MEMBER_ID,M.MEMBER_NAME,M.MEMBER_PHONE,M.MEMBER_EMAIL,M.MEMBER_ZIPCODE,M.MEMBER_ADDRESS1,M.MEMBER_ADDRESS2,SUM(P.POINT_POINT) MEMBER_POINT FROM MEMBER M, POINT P WHERE M.MEMBER_NUMBER = P.MEMBER_NUMBER AND M.MEMBER_NUMBER = ${MEMBER_NUMBER} GROUP BY 
+	M.MEMBER_NUMBER, M.MEMBER_ID, M.MEMBER_NAME, M.MEMBER_PHONE, M.MEMBER_EMAIL, M.MEMBER_ZIPCODE, M.MEMBER_ADDRESS1, M.MEMBER_ADDRESS2
+	]]>
+</select>
+
+<!-- 상품 정보 가져오기 -->
+<select id="orderGoods" parameterType="hashMap" resultType="hashMap">
+<![CDATA[
+select G.GOODS_NUMBER,
+       G.GOODS_NAME,
+       G.GOODS_PRICE,
+       G.GOODS_DISPRICE,
+       G.GOODS_THUMBNAIL,
+       G.GOODS_SALEDATE,
+       K.GOODS_AMOUNT,
+       K.GOODS_OPTION1,
+       K.GOODS_OPTION2,
+       K.GOODS_KIND_NUMBER,
+       G.GOODS_PRICE * ${EA} TOTALPRICE,
+       G.GOODS_DISPRICE * ${EA} TOTALDISPRICE
+       FROM GOODS G, GOODS_KIND K
+       WHERE G.GOODS_NUMBER = K.GOODS_NUMBER
+       AND G.GOODS_NUMBER = ${GOODS_NUMBER}
+       AND K.GOODS_KIND_NUMBER = ${GOODS_KIND_NUMBER}
+]]>
+</select>
+
+<!-- 배송내역 저장 -->
+<insert id="createDeliveryList" parameterType="hashMap">
+<![CDATA[
+	INSERT INTO DELIVERY 
+	(ORDER_CODE,
+	MEMBER_NUMBER,
+	BUYER_ZIPCODE,
+	BUYER_ADDRESS1,
+	BUYER_ADDRESS2,
+	BUYER_NAME,
+	RECEIVER_NAME,
+	BUYER_NUMBER,
+	BUYER_EMAIL,
+	RECEIVER_ZIPCODE,
+	RECEIVER_ADDRESS1,
+	RECEIVER_ADDRESS2,
+	RECEIVER_NUMBER,
+	DELIVERY_MESSAGE,
+	TOTALPRICE) VALUES 
+	('${ORDER_CODE}',
+	'${MEMBER_NUMBER}',
+	'${BUYER_ZIPCODE}',
+	'${BUYER_ADDRESS1}',
+	'${BUYER_ADDRESS2}',
+	'${BUYER_NAME}',
+	'${RECEIVER_NAME}',
+	'${BUYER_NUMBER}',
+	'${BUYER_EMAIL}',
+	'${RECEIVER_ZIPCODE}',
+	'${RECEIVER_ADDRESS1}',
+	'${RECEIVER_ADDRESS2}',
+	'${RECEIVER_NUMBER}',
+	'${DELIVERY_MESSAGE}',
+	'${TOTALPRICE}')
+]]>  
+</insert>
+
+<!-- 주문내역 저장 -->
+<insert id="createOrderList" parameterType="hashMap">
+<![CDATA[
+	INSERT INTO ORDERLIST (
+	ORDER_NUMBER,
+	MEMBER_NUMBER,
+	GOODS_NUMBER,
+	ORDER_CODE,
+	ORDER_AMOUNT,
+	ORDER_DATE,
+	ORDER_DELIVERY_STATE,
+	ORDER_TOTAL_PRICE,
+	ORDER_PAY_STATE,
+	GOODS_KIND_NUMBER,
+	ORDER_STATE
+	) VALUES (
+	ORDER_NUMBER_SEQ.NEXTVAL,
+	'${MEMBER_NUMBER}',
+	'${GOODS_NUMBER}',
+	'${ORDER_CODE}',
+	'${ORDER_AMOUNT}',
+	TO_DATE('${ORDER_DATE}','YY/MM/dd'),
+	'결제대기',
+	'${ORDER_TOTAL_PRICE}',
+	'결제대기',
+	'${GOODS_KIND_NUMBER}',
+	'주문진행중'
+	)
+]]>
+
+</insert>
+
+
+<!-- 상품 수량 수정(빼기) -->
+<update id="goodsCountDown" parameterType="java.lang.Integer">
+	<![CDATA[
+       	UPDATE GOODS_KIND 
+       	SET GOODS_AMOUNT = GOODS_AMOUNT - #{ORDER_AMOUNT}, 
+       		GOODS_SELLCOUNT = GOODS_SELLCOUNT + #{ORDER_AMOUNT}
+        	WHERE GOODS_KIND_NUMBER = #{GOODS_KIND_NUMBER}
+     	]]>
+</update>
+
+<!-- 포인트 적립 & 차감 -->
+<insert id="insertPoint" parameterType="java.lang.Integer">
+	<![CDATA[
+			INSERT INTO POINT (
+				MEMBER_NUMBER,
+				POINT_CONTENT,
+				POINT_POINT,
+				POINT_DATE,
+				POINT_NUMBER,
+	  			ORDER_CODE)
+			VALUES (
+				#{MEMBER_NUMBER},
+				#{POINT_CONTENT},
+				#{POINT_POINT},
+				SYSDATE,
+				POINT_NUMBER_SEQ.NEXTVAL,
+				#{ORDER_CODE})
+	]]>
+</insert>
+
+	<!-- 리뷰 꺼내오기 -->
+	<select id="selectReview" parameterType="hashMap" resultType="hashMap">
+		<![CDATA[
+			SELECT D.MEMBER_NUMBER, A.REVIEW_NUMBER, D.MEMBER_NAME,A.REVIEW_TITLE, A.REVIEW_CONTENT, A.REVIEW_SCORE * 20 AS REVIEW_SCORE, A.REVIEW_IMAGE, 
+			A.REVIEW_REGDATE FROM REVIEW A, MEMBER D 
+			WHERE GOODS_NUMBER = ${GOODS_NUMBER} 
+			AND D.MEMBER_NUMBER = A.MEMBER_NUMBER
+			ORDER BY REVIEW_NUMBER DESC
+		]]>
+	</select>
+	
+	<!-- Q&A 꺼내오기 -->
+	<select id="selectQNA" parameterType="hashMap" resultType="hashMap">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT * FROM QNA NATURAL JOIN MEMBER) A 
+			WHERE GOODS_NUMBER = #{GOODS_NUMBER} 
+			ORDER BY QNA_NUMBER DESC
+		]]>
+	</select>	
+	
+<select id="selectOrderList" parameterType="String" resultType="hashmap">
+		<![CDATA[
+		select A.ORDER_TOTAL_PRICE, A.ORDER_NUMBER, A.ORDER_AMOUNT, A.GOODS_NUMBER, C.GOODS_NAME, A.ORDER_DATE, A.ORDER_STATE, A.ORDER_CODE, A.ORDER_DELIVERY_STATE, A.ORDER_PAY_STATE, C.GOODS_THUMBNAIL 
+		from orderlist A, GOODS C WHERE 
+   		MEMBER_NUMBER = #{MEMBER_NUMBER} AND NOT A.ORDER_STATE IN ('반품신청', '반품완료', '교환신청', '교환완료') AND A.GOODS_NUMBER = C.GOODS_NUMBER 
+    	GROUP BY A.ORDER_TOTAL_PRICE, A.ORDER_AMOUNT, A.ORDER_NUMBER, C.GOODS_THUMBNAIL , A.GOODS_NUMBER, C.GOODS_NAME, A.ORDER_DATE, A.ORDER_STATE, A.ORDER_CODE, A.ORDER_DELIVERY_STATE, A.ORDER_PAY_STATE ORDER BY A.ORDER_DATE DESC
+		]]>
+</select>
+
+<update id="nocancelOrder" parameterType="hashmap">
+		<![CDATA[
+		UPDATE ORDERLIST SET ORDER_STATE = '주문취소' ,ORDER_PAY_STATE = '결제취소', ORDER_DELIVERY_STATE = '배송취소' WHERE ORDER_CODE = #{ORDER_CODE}
+		]]>
+</update>
+		
+		
+<update id="noConfirmOrder" parameterType="hashmap">
+		<![CDATA[
+		UPDATE ORDERLIST SET ORDER_STATE = '구매확정' WHERE ORDER_CODE = #{ORDER_CODE}
+		]]>
+</update>
+
+<update id="ModiOrder" parameterType="hashMap">
+	<![CDATA[
+		UPDATE ORDERLIST 
+		SET ORDER_STATE =  #{ORDER_STATE},
+		ORDER_DELIVERY_STATE = #{ORDER_STATE}
+		WHERE ORDER_NUMBER = #{ORDER_NUMBER}
+	]]>
+</update>
+
+</mapper>

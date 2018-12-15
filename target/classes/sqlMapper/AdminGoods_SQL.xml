@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminGoods">
+
+	<!-- 관리자페이지 상품리스트 -->
+	<select id="selectAdminGoodsList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME, A.GOODS_SALEDATE,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL, A.GOODS_COUNT,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 전체 상품 수 -->
+	<select id="countAdminGoods" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(GOODS_NUMBER) FROM GOODS
+		]]>
+	</select>
+
+	<!-- 상품 수정 폼으로 이동 -->
+	<select id="selectOneGoods" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_NAME,A.GOODS_PRICE,A.GOODS_DISPRICE,
+			A.GOODS_THUMBNAIL,A.GOODS_DATE,A.GOODS_CATEGORY1,A.GOODS_CATEGORY2,
+			A.GOODS_SALEDATE,A.GOODS_ONOFF, D.GOODS_AMOUNT,D.GOODS_OPTION1,D.GOODS_OPTION2,A.GOODS_RELEVANT,
+			D.GOODS_KIND_NUMBER, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE A.GOODS_NUMBER=D.GOODS_NUMBER AND A.GOODS_NUMBER=#{GOODS_NUMBER}
+		]]>
+	</select>
+
+	<!-- 상품 이미지 정보 -->
+	<select id="selectOneGoodsImage" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT IMAGE FROM GOODS_IMAGE
+			WHERE GOODS_NUMBER=#{GOODS_NUMBER}
+			ORDER BY GOODS_IMAGE_NUMBER ASC
+		]]>
+	</select>
+
+	<!-- 상품 등록 -->
+	<insert id="insertAdminGoods" parameterType="hashmap" useGeneratedKeys="true" keyProperty="GOODS_NUMBER">
+		<selectKey keyProperty="GOODS_NUMBER" resultType="integer" order="BEFORE">
+			SELECT GOODS_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO GOODS ( 
+			GOODS_NUMBER, GOODS_BRNAME, GOODS_NAME, GOODS_PRICE, GOODS_DISPRICE,
+			GOODS_SALEDATE, GOODS_DATE, GOODS_CATEGORY1, GOODS_CATEGORY2 
+			 ) VALUES ( 
+			#{GOODS_NUMBER}, #{GOODS_BRNAME}, #{GOODS_NAME}, #{GOODS_PRICE}, #{GOODS_DISPRICE},
+			#{GOODS_SALEDATE},sysdate, #{GOODS_CATEGORY1}, #{GOODS_CATEGORY2} )
+		]]>
+	</insert>
+
+	<!-- 상품 세분화 등록 -->
+	<insert id="insertAdminGoodsKinds" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO GOODS_KIND (
+			GOODS_NUMBER, GOODS_AMOUNT, GOODS_OPTION1, GOODS_OPTION2,GOODS_KIND_NUMBER
+			) VALUES ( #{GOODS_NUMBER}, #{GOODS_AMOUNT},
+			#{GOODS_OPTION1}, #{GOODS_OPTION2}, GOODS_KIND_NUMBER_SEQ.NEXTVAL )
+			
+		]]>
+	</insert>
+
+	<!-- 상품 이미지 등록 -->
+	<insert id="insertAdminGoodsImage" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO GOODS_IMAGE (
+			GOODS_NUMBER, GOODS_IMAGE_NUMBER, IMAGE
+			) VALUES (
+			#{GOODS_NUMBER}, GOODS_IMAGE_NUMBER_SEQ.NEXTVAL, #{IMAGE} )
+		]]>
+	</insert>
+
+	<!-- 상품 썸네일 이미지 등록 -->
+	<update id="insertGoodsThumbnail" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GOODS SET GOODS_THUMBNAIL= #{GOODS_THUMBNAIL} WHERE GOODS_NUMBER=#{GOODS_NUMBER}
+		]]>
+	</update>
+
+	<!-- 상품 수정 -->
+	<update id="modifyGoods" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GOODS SET GOODS_NAME=#{GOODS_NAME}, GOODS_PRICE=#{GOODS_PRICE},
+			GOODS_DISPRICE=#{GOODS_DISPRICE}, GOODS_CATEGORY1=#{GOODS_CATEGORY1},
+			GOODS_CATEGORY2=#{GOODS_CATEGORY2},GOODS_SALEDATE=#{GOODS_SALEDATE},
+			GOODS_ONOFF=#{GOODS_ONOFF}, GOODS_RELEVANT=#{GOODS_RELEVANT},
+			GOODS_BRNAME=#{GOODS_BRNAME}
+			WHERE GOODS_NUMBER=#{GOODS_NUMBER}
+		]]>
+	</update>
+
+	<!-- 상품 종류 수정 -->
+	<update id="modifyGoodsKinds" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GOODS_KIND SET GOODS_OPTION1=#{MD_GOODS_OPTION1}, GOODS_OPTION2=#{MD_GOODS_OPTION2},
+			GOODS_AMOUNT=GOODS_AMOUNT+#{addAmount} WHERE GOODS_KIND_NUMBER=#{GOODS_KIND_NUMBER}
+		]]>
+	</update>
+
+	<!-- 상품 이미지 수정 -->
+	<update id="modifyGoodsImage" parameterType="hashmap">
+		<![CDATA[
+			UPDATE IMAGE SET IMAGE=#{IMAGE} WHERE IMAGE=#{ORIGINAL_IMAGE}
+		]]>
+	</update>
+
+	<!-- 주문 취소시 상품 수량 복구 -->
+	<update id="addAmount" parameterType="hashmap">
+		<![CDATA[
+			UPDATE GOODS_KIND SET GOODS_AMOUNT=GOODS_AMOUNT+#{ORDER_AMOUNT},GOODS_SELLCOUNT=GOODS_SELLCOUNT-#{ORDER_AMOUNT}
+			WHERE GOODS_KIND_NUMBER=#{GOODS_KIND_NUMBER}
+		]]>
+	</update>
+
+	<!-- 상품 종류 삭제 -->
+	<delete id="deleteGoodsKinds" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM GOODS_KIND WHERE GOODS_KIND_NUMBER=#{GOODS_KIND_NUMBER}
+		]]>
+	</delete>
+
+	<!-- 상품 이미지 삭제 -->
+	<delete id="deleteGoodsImage" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM GOODS_IMAGE WHERE IMAGE=#{IMAGE}
+		]]>
+	</delete>
+
+	<!-- 상품 삭제 -->
+	<delete id="deleteAdminGoods" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM GOODS WHERE GOODS_NUMBER=#{GOODS_NUMBER}
+		]]>
+	</delete>
+
+	<!-- 상품 검색(상품 이름) -->
+	<select id="adminGoodsSearch0" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE
+			A.GOODS_NUMBER IN (SELECT GOODS_NUMBER FROM GOODS WHERE GOODS_NAME LIKE '%'||#{isSearch}||'%')
+			AND A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_NUMBER DESC		
+		]]>
+	</select>
+
+	<!-- 상품 검색(상품 번호) -->
+	<select id="adminGoodsSearch1" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE
+			A.GOODS_NUMBER IN (SELECT GOODS_NUMBER FROM GOODS WHERE GOODS_NUMBER LIKE '%'||#{isSearch}||'%')
+			AND A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 상품 검색(카테고리) -->
+	<select id="adminGoodsSearch2" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE
+			A.GOODS_NUMBER IN (SELECT GOODS_NUMBER FROM GOODS WHERE GOODS_CATEGORY1=#{isSearch})
+			AND A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 상품 검색(판매 활성화 OR 비활성화 구분) -->
+	<select id="adminGoodsSearch3" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE
+			A.GOODS_NUMBER IN (SELECT GOODS_NUMBER FROM GOODS WHERE GOODS_ONOFF=#{isSearch})
+			AND A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 상품 검색(재고0 품절상태) -->
+	<select id="adminGoodsSearch4" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE
+			A.GOODS_NUMBER =D.GOODS_NUMBER
+			AND D.GOODS_AMOUNT=0
+			ORDER BY GOODS_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 상품 검색(판매량 많은 순) -->
+	<select id="adminGoodsSearch5" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2,A.GOODS_COUNT, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D
+			WHERE A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_SELLCOUNT DESC
+			]]>
+	</select>
+
+	<!-- 상품 검색(조회수 많은 순) -->
+	<select id="adminGoodsSearch6" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2,A.GOODS_COUNT, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D
+			WHERE A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_COUNT DESC
+			]]>
+	</select>
+	
+	<!-- 상품 검색(상품 브랜드명) -->
+	<select id="adminGoodsSearch7" parameterType="String" resultType="hashmap">
+		<![CDATA[
+			SELECT A.GOODS_NUMBER, A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_NAME,
+			A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_DATE, D.GOODS_SELLCOUNT, A.GOODS_THUMBNAIL,
+			D.GOODS_AMOUNT, D.GOODS_OPTION1, D.GOODS_OPTION2, A.GOODS_BRNAME
+      		FROM GOODS A, GOODS_KIND D 
+			WHERE
+			A.GOODS_NUMBER IN (SELECT GOODS_NUMBER FROM GOODS WHERE GOODS_BRNAME LIKE '%'||#{isSearch}||'%')
+			AND A.GOODS_NUMBER=D.GOODS_NUMBER
+			ORDER BY GOODS_NUMBER DESC		
+		]]>
+	</select>
+</mapper>

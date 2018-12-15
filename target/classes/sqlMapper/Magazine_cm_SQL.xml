@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="magazine_cm">
+
+	<!-- 매거진 댓글 삭제 -->
+	<delete id="MGCOMMENTDELETE" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM MAGAZINE_COMMENT
+			WHERE MG_CM_NUMBER = #{MG_CM_NUMBER, jdbcType=INTEGER}
+		]]>
+	</delete>
+	
+	<!-- 매거진 댓글 리스트 -->
+	<select id="MGCOMMENTLIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				MG_NUMBER, 
+				MG_CM_NUMBER, 
+				MEMBER_NUMBER,
+				MG_CM_CONTENT, 
+				MG_CM_REGDATE 
+			FROM MAGAZINE_COMMENT
+			ORDER BY MG_CM_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 매거진 댓글 등록 -->
+	<insert id="MGCOMMENTINSERT" parameterType="hashmap">
+		<selectKey keyProperty="MG_CM_NUMBER" resultType="string"
+			order="BEFORE">
+			SELECT MG_CM_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO MAGAZINE_COMMENT 
+			(
+				MG_NUMBER, 
+				MG_CM_NUMBER, 
+				MEMBER_NUMBER,
+				MG_CM_CONTENT, 
+				MG_CM_REGDATE 
+			)
+			VALUES 
+			(
+				#{MG_NUMBER, jdbcType=INTEGER}, 
+				#{MG_CM_NUMBER, jdbcType=INTEGER}, 
+				#{MEMBER_NUMBER, jdbcType=INTEGER},
+				#{MG_CM_CONTENT, jdbcType=VARCHAR}, 
+				SYSDATE 
+			)
+		]]>
+	</insert>
+</mapper>
+	
+	

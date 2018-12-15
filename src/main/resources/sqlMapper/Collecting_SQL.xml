@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="collecting">
+
+<!-- 	<resultMap type="collectionModel" id="collectionModelRes">
+		<result property="collection_seq" column="collection_seq" />				
+		<result property="id" column="id" />
+		<result property="subject" column="subject" />
+		<result property="contents" column="contents" />
+		<result property="imgname" column="imgname" />
+		<result property="regdate" column="regdate" />
+		<result property="deldate" column="deldate" />
+	</resultMap> -->
+	
+	<resultMap type="collectingModel" id="collectingModelRes">
+		<result property="collecting_seq" column="collecting_seq" />				
+		<result property="mg_number" column="mg_number" />
+		<result property="member_number" column="member_number" />
+		<result property="collecting_date" column="collecting_date" />
+	</resultMap>
+	
+<!-- 	<resultMap type="collectionListModel" id="collectionListModelRes">
+		<result property="collection_seq" column="collection_seq" />				
+		<result property="id" column="id" />
+		<result property="subject" column="subject" />
+		<result property="contents" column="contents" />
+		<result property="imgname" column="imgname" />
+		<result property="regdate" column="regdate" />
+		<result property="deldate" column="deldate" />
+		<result property="A_no" column="A_no" />				
+		<result property="nickname" column="nickname" />
+		<result property="prof_img" column="prof_img" />
+		<result property="article_seq1" column="article_seq1" />
+		<result property="realname1" column="realname1" />
+		<result property="article_seq2" column="article_seq2" />
+		<result property="realname2" column="realname2" />
+		<result property="article_seq3" column="article_seq3" />
+		<result property="realname3" column="realname3" />
+		<result property="article_seq4" column="article_seq4" />
+		<result property="realname4" column="realname4" />
+		<result property="style_quan" column="style_quan" />
+		<result property="like_quan" column="like_quan" />
+	</resultMap>
+	
+	<resultMap type="collectionMemberModel" id="collectionMemberModelRes">
+		<result property="collection_seq" column="collection_seq" />				
+		<result property="id" column="id" />
+		<result property="subject" column="subject" />
+		<result property="contents" column="contents" />
+		<result property="imgname" column="imgname" />
+		<result property="regdate" column="regdate" />
+		<result property="deldate" column="deldate" />
+		<result property="password" column="password" />				
+		<result property="confirmPassword" column="confirmPassword" />
+		<result property="nickname" column="nickname" />
+		<result property="email" column="email" />
+		<result property="sex" column="sex" />
+		<result property="birthday1" column="birthday1" />
+		<result property="birthday2" column="birthday2" />
+		<result property="birthday3" column="birthday3" />
+		<result property="birthday" column="birthday" />
+		<result property="intro" column="intro" />
+		<result property="prof_img" column="prof_img" />
+		<result property="mem_index" column="mem_index" />
+		<result property="mem_regdate" column="mem_regdate" />
+		<result property="mem_deldate" column="mem_deldate" />
+	</resultMap>
+	 -->
+
+<!-- 	<insert id="collectionReg" parameterType="collectionModel">
+		INSERT INTO collection
+		(collection_seq, id, subject, contents, imgname, regdate )
+		VALUES
+		(collection_seq.nextval, #{id}, #{subject}, #{contents}, #{imgname}, sysdate )
+	</insert> -->
+	
+ 	<select id="collectingExist" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*)
+		from collecting
+		where MG_NUMBER = #{MG_NUMBER} and MEMBER_NUMBER = #{MEMBER_NUMBER}
+	</select> 
+	
+	<select id="collectingExist2" parameterType="java.util.Map" resultType="collectingModel">
+		select *
+		from collecting
+		where MG_NUMBER = #{MG_NUMBER} and MEMBER_NUMBER = #{MEMBER_NUMBER}
+	</select>	
+		
+<!-- 보관하기의 보관글 존재 유무를 판별하는 쿼리문 원본저장
+	<select id="collectingExist" parameterType="java.util.Map" resultMap="CollectingModelRes">
+		select *
+		from collecting
+		where MEMBER_NUMBER = #{MEMBER_NUMBER}
+		and MG_NUMBER = #{MG_NUMBER}
+	</select>	
+-->
+	
+	<!-- collecting테이블에 보관에 대한 값을 넣는 쿼리문 -->
+	<insert id="collectingReg" parameterType="java.util.Map">
+		INSERT INTO collecting
+		(collecting_seq, MG_NUMBER, MEMBER_NUMBER, COLLECTING_DATE )
+		VALUES
+		(collecting_seq.nextval, #{MG_NUMBER}, #{MEMBER_NUMBER}, sysdate )
+	</insert>
+	
+	<!-- 매거진의 보관수를 꺼내는 쿼리문 -->
+	<select id="collectingQuan" parameterType="java.util.Map" resultType="java.lang.String">
+		select count(*)
+		from collecting
+		where MG_NUMBER = #{MG_NUMBER}
+	</select>
+	
+	<!-- 보관한 매거진 삭제하기 -->
+	<delete id="collectingDel" parameterType="java.util.Map">
+		delete from collecting
+		where MG_NUMBER = #{MG_NUMBER} and MEMBER_NUMBER = #{MEMBER_NUMBER}
+	</delete>
+
+	
+<!-- 	
+	<select id="collectionFindNewCol" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT *
+		FROM (select *
+			 from collection
+			 where id = #{id}
+			 order by regdate desc
+			)
+		WHERE rownum = '1'
+	</select>
+	
+	<select id="collectingViewData" parameterType="java.lang.String" resultMap="collectionMemberModelRes">
+		select *
+		from member, collection
+		where member.id = collection.id
+		and member.id = #{mem_id}
+		order by collection.regdate desc
+	</select>
+	
+	<select id="styleCollectionQuan" parameterType="java.util.Map" resultType="java.lang.String">
+		select count(*)
+		from collecting
+		where article_seq = #{article_seq}
+	</select>
+	
+	<select id="collectionStyleQuan" parameterType="java.util.Map" resultType="java.lang.String">
+		select count(*)
+		from collecting
+		where collection_seq = #{collection_seq}
+	</select>
+	
+
+
+	<select id="selectCollectionQuan" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*)
+		from collection
+		where deldate is null
+		and id = #{id}
+	</select>
+
+	<select id="collectionView" parameterType="java.lang.String" resultMap="collectionModelRes">
+		SELECT *
+		FROM collection
+		WHERE collection_seq = #{collection_seq}
+	</select>
+	
+	<select id="collectionFindImgname" parameterType="java.lang.Integer" resultType="java.lang.String">
+		SELECT imgname
+		FROM collection
+		WHERE collection_seq = #{collection_seq}
+	</select>
+	
+	<select id="myActivityCollectionList" parameterType="java.util.Map" resultMap="collectionListModelRes">
+		<![CDATA[
+		select collection_seq, id, subject, contents, imgname, regdate, deldate, r
+		from (select collection_seq, id, subject, contents, imgname, regdate, deldate, rownum r
+				from(select collection_seq, id, subject, contents, imgname, regdate, deldate, rownum r
+					from collection where deldate is null and id = #{id} order by regdate desc)
+				order by regdate desc)
+		where r > #{A_no_Start}
+		and r <= #{A_no_End}
+		]]>
+	</select>	
+	
+	<select id="searchCollectionParentList" parameterType="java.util.Map" resultMap="collectionListModelRes">
+		<![CDATA[
+		select collection_seq, id, subject, contents, imgname, regdate, deldate, r
+		from (select collection_seq, id, subject, contents, imgname, regdate, deldate, rownum r
+				from(select collection_seq, id, subject, contents, imgname, regdate, deldate, rownum r
+					from collection where deldate is null and subject like #{keyword} or deldate is null and contents like #{keyword} order by regdate desc)
+				order by regdate desc)
+		where r > #{no_start}
+		and r <= #{no_end}
+		]]>
+	</select>	
+	
+	<select id="myPageLikeColList" parameterType="java.util.Map" resultMap="collectionListModelRes">
+		<![CDATA[
+		select collection_seq, id, subject, contents, imgname, regdate, deldate, r
+		from (select collection_seq, id, subject, contents, imgname, regdate, deldate, rownum r
+				from(select collection_seq, collection.id, subject, contents, imgname, regdate, deldate, rownum r
+					from collection, likes where collection_seq = like_contnum and deldate is null and like_index_no = '2' and likes.id = #{id} order by regdate desc)
+				order by regdate desc)
+		where r > #{A_no_Start}
+		and r <= #{A_no_End}
+		]]>
+	</select>	
+	
+	<select id="collec_findArticle" parameterType="java.util.Map" resultType="java.lang.Integer">
+		<![CDATA[
+		select article_seq
+		from (select collection_seq, article_seq, regdate, rownum r
+				from(select collection_seq, article_seq, regdate, rownum r
+					from collecting where collection_seq = #{collection_seq} order by regdate desc)
+				order by regdate desc)
+		where r = #{rownum}
+		]]>
+	</select>	
+	
+	<update id="collectionMod" parameterType="collectionModel">
+        update
+        	collection
+        set
+            subject = #{subject},
+            contents = #{contents},
+            imgname = #{imgname}
+        where
+            collection_seq = #{collection_seq}
+	</update>
+	
+	<update id="collectionDel" parameterType="java.lang.String">
+        update
+        	collection
+        set
+            deldate = sysdate
+        where
+            collection_seq = #{collection_seq}
+	</update>
+	
+	
+	<delete id="disCollecting" parameterType="java.util.Map">
+		delete from
+			collecting
+		where
+			article_seq = #{article_seq}
+		and
+			collection_seq = #{collection_seq}
+	</delete>
+
+ --></mapper>

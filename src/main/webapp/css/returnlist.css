@@ -1,0 +1,132 @@
+@CHARSET "UTF-8";
+
+
+.tit-join h3{
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	font-size: 15px;
+	margin-bottom: 10px;
+	padding-bottom: 3px;
+	display: inline-block; 
+	border-bottom: 4px solid #3a4452; !important
+	
+}
+.person-tb {
+	font-size: 12px;
+	color: #777;
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: keep-all;
+}
+
+.pl-6{
+	
+	padding-left: 12px;
+}
+.subject
+{text-align: center !important;}
+td, th {
+	text-align: center;
+	margin-left: 5px;
+	border-bottom: 1px solid #dcdcdc;
+    border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+	margin-top: 5px;
+	margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: table-cell;
+    vertical-align: inherit;
+}
+.center_text{
+	text-align: center ; !important;
+	border-right: 0px solid #dcdcdc;!important;
+}
+.caption{
+	border-left: 0px solid #dcdcdc;!important;
+}
+.info-imgg{
+	max-width: auto;
+	height: 65px;
+}
+.info-imgg{
+	border-right: 0px solid #dcdcdc;!important;
+}
+.info-caption .name {
+    color: #959595;
+}
+.info-caption{
+	border-left: 0px solid #dcdcdc;!important;
+}
+.situation1
+{font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;}
+/*  페이징 */
+.cs-pagination {
+    margin: 7px 0px 22px;
+}
+.inline {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    text-align: center;
+}
+.inline>li {
+    display: inline-block;
+    vertical-align: top;
+}
+li {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.cs-pagination li {
+    margin: 0px 3.5px;
+    width: 22px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 12px;
+    color: #757575;
+    font-weight: 600;
+    cursor: pointer;
+}
+.cs-pagination li.current {
+    background: #acacac;
+    color: #fff;
+}
+.cs-pagination li.current1 {
+    background: #ffffff;
+    color: #acacac;
+}
+.oto_aaa{
+	display: block;
+    width: 50.98px;
+    height: 30px;
+       font-family: inherit;!important;
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+
+.oto_aaaa{
+	display: block;
+    width: 60px;
+    height: 35px;
+    line-height: 33px;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}

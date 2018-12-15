@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+
+
+.tit-join h3{
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	font-size: 15px;
+	margin-bottom: 10px;
+	padding-bottom: 3px;
+	display: inline-block; 
+	border-bottom: 4px solid #3a4452; !important
+	
+}
+
+
+.center_text{
+	text-align: center ; !important
+}
+
+/*  페이징 */
+
+.oto_bb{
+	display:inline-block;
+    width: 50.98px;
+    height: 30px;
+   /*  line-height: 29px; */
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+.btn-close{
+	display:inline-block;
+    width: 50.98px;
+    height: 30px;
+   /*  line-height: 29px; */
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #808080;
+    border: 1px solid #808080;
+}
+.oto_aaaa{
+	display: block;
+    width: 140px;
+    height: 35px;
+    line-height: 29px;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #2D2D2D;
+    border: 1px solid #2D2D2D;
+}
+.modal .modal-content .modal-head {
+	position: relative;
+	background-color: #2D2D2D; !important;
+	border-radius: 5px 5px 0 0;
+	padding: 2px 15px 0 15px
+}

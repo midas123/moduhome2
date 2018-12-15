@@ -1,0 +1,137 @@
+/* /* 
+@media (min-width: 1440px) {
+	.bgimg {width:215px !important;}
+	#start-rankCatalog-wrapper .catalog-item .thumbnail>a, .start-recommend .catalog-item .thumbnail>a {border:0;}
+	#start-rankCatalog-wrapper .catalog-item .thumbnail, .start-recommend .catalog-item .thumbnail {width:217px !important; border:1px solid #ccc;}
+}
+
+.red {color:red}
+.btn-more-tb {padding-top:3px;padding-bottom:3px}
+
+
+#optionbox li{padding:0 18px 0 0;margin:0;position:relative;text-align:right;}
+#optionbox li b{display:inline-block;font-weight:bold;position:absolute;top:9px;left:18px;}
+#optionbox li a{cursor:pointer;}
+#optionbox li .price {width:120px; text-align:right; display:inline-block; font:bold 8pt tahoma; color:#333333;padding:10px 15px;}
+#optionbox li .input_ea{height:23px;}
+#optionbox li .ea{position:relative;top:2px;display:inline-block;height:20px;width:15px;}
+#optionbox li .ea a{height:9px;display:inline-block;}
+#optionbox li .ea a img{vertical-align:top;}
+#optionbox li .ea .btn-ea-up{position:absolute;top:0;left:0;}
+#optionbox li .ea .btn-ea-dn{position:absolute;bottom:0;left:0;}
+#totprice {font:bold 16px tahoma; color:#2eb1d3; text-align:right; display:none;}
+
+.popup-layer {position:absolute; top:-999px; left:0; z-index:99900; border:1px solid #333; box-shadow: 1px 5px 10px #666; background: #fff; cursor:pointer; display:none;}
+.popup-layer .pl-bottom {background:#333; color:#fff; padding:3px 8px; text-align:right;}
+.popup-layer p {margin:-2px;}
+
+.section-coupon {background:#fff;}
+.section-coupon li {padding:0 !important; background:#fff;}
+.page-navigator a {cursor:pointer;}
+
+.login-visitor .member .button{height:30px;}
+.login-visitor .non-member .button{margin-top:38px;height:30px;}
+
+.login-visitor .rank_info .lv_wrap li {
+    text-align: left;
+    float: left;
+    width: 90px;
+    margin: 0 0 0 3px;
+}
+
+.login-visitor .rank_info .tit{font-size:16px;text-align:left;padding:20px 0;color:#252525;}
+.login-visitor .rank_info .tit2{font-size:14px;text-align:left;padding:0 0 0 16px;color:#252525;}
+.login-visitor .rank_info .desc{font-size:12px;text-align:left;padding:10px 0 0 16px;color:#808080;}
+.login-visitor .rank_info .lv_wrap{overflow:hidden;}
+.login-visitor .rank_info .lv_wrap li{text-align:left;float:left;width:14%; min-height:140px; margin:0 0 0 3px; border:0px solid #000;}
+.login-visitor .rank_info .lv_wrap li .lv{padding:2px 0 0 0;text-align:center;color:#252525;background:#ccc;}
+.login-visitor .rank_info .lv_wrap li .txt{padding:10px 0 0 0;}
+.login-visitor .rank_info .lv_wrap li .txt span{font-weight:bold;}
+
+
+.register-verify .verify {background:#fff;}
+.product-view-information .action .row {margin:0;}
+.step-panels .arrow {display:none;}
+@media (min-width:1024px) {
+	.step-panels {position:relative;}
+	.step-panels .arrow {display:block;position:absolute;top:20px;}
+	.step-panels .arrow1 {left:448px;}
+	.step-panels .arrow2 {left:679px;}
+}
+@media (min-width:1440px) {
+	.step-panels .arrow1 {left:561px;}
+	.step-panels .arrow2 {left:848px;}
+}
+.account-qna-list .contents {min-height:0;}
+.account-individual-list .contents {min-height:0;}
+.product-view-qna-list .contents {min-height:0;}
+.product-view-reviews-list .contents {min-height:0;}
+.account-review .contents {min-height:0;}
+
+.coupon-list .select .icon-radio{behavior:url(../../../backgroundsize.min.htc);}
+.event-view .caption-group > .caption-item.share {padding:25px 10px 10px 10px;}
+@media (min-width: 768px){
+.event-view .caption-group > .caption-item.share {
+  padding:25px 15px 15px 15px;
+}
+}
+@media (min-width:1440px){
+.event-view .caption-group > .caption-item.share a.button{
+  top:15px;
+}
+}
+
+.start-rankCatalog .section-body .catalog .caption .brand {
+  display: block;
+}
+@media (min-width: 1024px){
+.account-review .review-list .table th.info-caption {width:350px;}
+.account-review .review-list .table th.subject {width:350px;}
+.account-review .review-list .table td.subject p{width:250px;}
+.account-review .review-list .table td.info-caption .brand, .account-review .review-list .table td.info-caption .name {width:320px;}
+}
+@media (min-width: 1440px){
+.account-review .review-list .table th.info-caption {width:350px;}
+.account-review .review-list .table th.subject {width:350px;}
+.account-review .review-list .table td.subject p{width:250px;}
+.account-review .review-list .table td.info-caption .brand, .account-review .review-list .table td.info-caption .name {width:350px;}
+}
+.account-list-page-navigator .page-navigator-horizon .page-number{width:100%;}
+.account-list-page-navigator .page-navigator-horizon .page-number a{float:none;display:inline-block;}
+@media (min-width:475px){
+.account-list-page-navigator .page-navigator-horizon .page-number a{width:90px;}
+}
+
+.hand {cursor:pointer;}
+
+
+** owl-nav CSS **
+.owl-theme .owl-controls {margin:0;}
+.owl-theme .owl-controls .owl-nav [class*=owl-] {
+	margin:0; padding:0; line-height:25px; 
+	position:absolute; top:50%; margin-top:-25px;
+	background:rgba(255,255,255,0.7); color:rgba(0,0,0,0.7); 
+	font-size:50px; width:50px; height:50px;
+	border-radius:100%;
+}
+.owl-theme .owl-controls .owl-nav [class*=owl-]:hover {background:rgba(255,255,255,0.7); color:#000;}
+.owl-carousel .owl-controls .owl-nav .owl-prev {left:30px;}
+.owl-carousel .owl-controls .owl-nav .owl-prev i {margin-left:-5px;}
+.owl-carousel .owl-controls .owl-nav .owl-next {right:30px;}
+.owl-carousel .owl-controls .owl-nav .owl-next i {margin-right:-5px;}
+.owl-dots {position:absolute; bottom:0; left:0; right:0;}
+
+@media (max-width:1440px) {
+	.owl-theme .owl-controls .owl-nav [class*=owl-] {font-size:28px; width:30px; height:30px; line-height:28px; background:rgba(255,255,255,0.3)}
+	.owl-carousel .owl-controls .owl-nav .owl-prev {left:10px;}
+	.owl-carousel .owl-controls .owl-nav .owl-prev i {margin-left:-3px;}
+	.owl-carousel .owl-controls .owl-nav .owl-next {right:10px;}
+	.owl-carousel .owl-controls .owl-nav .owl-next i {margin-right:-3px;}
+}
+@media (max-width:600px){
+	.owl-theme .owl-dots .owl-dot span {width:8px; height:8px; margin:5px 3px;}
+}
+
+
+
+.modal-lookbook .col-xs-12{padding:0;} */ */

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snsboard_cm">
+
+	<!-- 스토리 댓글 리스트 -->	
+	<select id="SNSCOMMENTLIST" parameterType="hashmap" resultType="hashmap">
+			<!-- SELECT 
+				SNS_NUMBER, 
+				SNS_CM_NUMBER, 
+				MEMBER_NUMBER,
+				SNS_CM_CONTENT, 
+				SNS_CM_REGDATE 
+			FROM SNS_COMMENT
+			ORDER BY SNS_CM_NUMBER DESC -->
+		<![CDATA[
+		  select a.*,b.member_id,b.stored_file_name
+          from sns_comment a inner join member b on a.MEMBER_NUMBER = b.MEMBER_NUMBER
+          ORDER BY a.SNS_CM_REGDATE DESC
+		]]>
+	</select>
+     
+    <!-- 하나의 스토리 댓글 가져오기 -->
+    	<select id="SNSCOMMENTLISTONE" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		  select a.*,b.member_id,b.stored_file_name
+          from sns_comment a inner join member b on a.MEMBER_NUMBER = b.MEMBER_NUMBER
+          where a.MEMBER_NUMBER=#{MEMBER_NUMBER} and a.SNS_NUMBER=#{SNS_NUMBER} and a.sns_cm_content=#{SNS_CM_CONTENT}
+          ORDER BY a.SNS_CM_REGDATE DESC
+		]]>
+	</select>
+	
+	
+	
+	<!-- 스토리 댓글 등록 -->
+	<insert id="SNSCOMMENTINSERT" parameterType="hashmap">
+		<selectKey keyProperty="SNS_CM_NUMBER" resultType="string"
+			order="BEFORE">
+			SELECT SNS_CM_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO SNS_COMMENT 
+			(
+				SNS_NUMBER, 
+				SNS_CM_NUMBER, 
+				MEMBER_NUMBER,
+				SNS_CM_CONTENT, 
+				SNS_CM_REGDATE 
+			)
+			VALUES 
+			(
+				#{SNS_NUMBER, jdbcType=INTEGER}, 
+				#{SNS_CM_NUMBER, jdbcType=INTEGER}, 
+				#{MEMBER_NUMBER, jdbcType=INTEGER},
+				#{SNS_CM_CONTENT, jdbcType=VARCHAR}, 
+				SYSDATE 
+			)
+		]]>
+	</insert>
+	
+	<!-- 댓글삭제하기 -->
+      <delete id="SNSCOMMENTDELETE" parameterType="hashmap" >
+		<![CDATA[
+		  DELETE 
+		  FROM SNS_COMMENT
+		  WHERE SNS_CM_NUMBER = #{SNS_CM_NUMBER}
+		]]>
+	</delete>
+	
+
+</mapper>
+	
+	

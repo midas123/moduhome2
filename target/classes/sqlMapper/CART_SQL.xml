@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cart">
+
+
+<!-- 장바구니 품목 중복체크 -->
+<select id="confirmCart" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+	SELECT * FROM CART 
+	WHERE GOODS_KIND_NUMBER=#{GOODS_KIND_NUMBER} AND 
+	MEMBER_NUMBER=#{MEMBER_NUMBER}
+]]>
+</select>
+
+<!-- 장바구니 저장 -->
+<insert id="insertCart" useGeneratedKeys="true" keyProperty="CART_NUMBER">
+<selectKey keyProperty="CART_NUMBER" resultType="java.lang.Integer" order="BEFORE">
+		SELECT CART_NUMBER_SEQ.NEXTVAL FROM DUAL
+</selectKey>
+<![CDATA[
+		
+		INSERT INTO CART ( 
+		CART_NUMBER, MEMBER_NUMBER, GOODS_NUMBER, CART_REG_DATE,
+		CART_AMOUNT, GOODS_KIND_NUMBER
+		) VALUES ( 
+		#{CART_NUMBER}, #{MEMBER_NUMBER}, #{GOODS_NUMBER}, SYSDATE,
+		#{CART_AMOUNT}, #{GOODS_KIND_NUMBER} )
+
+]]>
+</insert>
+
+<!-- 장바구니 리스트 -->
+<select id="selectMyCart" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+			
+		SELECT DISTINCT A.GOODS_NUMBER, A.CART_NUMBER, A.MEMBER_NUMBER,
+		A.CART_REG_DATE, A.CART_AMOUNT, A.GOODS_KIND_NUMBER, E.GOODS_AMOUNT,
+		E.GOODS_OPTION1, E.GOODS_OPTION2, E.GOODS_KIND_NUMBER,
+		D.GOODS_NAME, D.GOODS_PRICE, D.GOODS_DISPRICE, D.GOODS_SALEDATE,
+		D.GOODS_THUMBNAIL,D.GOODS_CATEGORY1, D.GOODS_CATEGORY2
+		FROM CART A, GOODS D, GOODS_KIND E WHERE A.MEMBER_NUMBER=${MEMBER_NUMBER}
+		AND A.CART_REG_DATE>SYSDATE-3
+        		AND A.GOODS_KIND_NUMBER=E.GOODS_KIND_NUMBER
+		AND A.GOODS_NUMBER=D.GOODS_NUMBER AND D.GOODS_ONOFF=0
+		ORDER BY A.CART_REG_DATE DESC, A.GOODS_NUMBER ASC
+
+]]>
+</select>
+
+<!-- 장바구니 리스트(비회원/세션)-->
+<select id="sessionCartList" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+	
+		SELECT A.GOODS_NAME, A.GOODS_PRICE, A.GOODS_DISPRICE, A.GOODS_THUMBNAIL,
+		A.GOODS_CATEGORY1, A.GOODS_CATEGORY2, A.GOODS_SALEDATE, A.GOODS_NUMBER,
+		C.GOODS_AMOUNT, C.GOODS_OPTION1, C.GOODS_OPTION2, C.GOODS_KIND_NUMBER
+		FROM GOODS A, GOODS_KIND C
+		WHERE A.GOODS_NUMBER= #{GOODS_NUMBER} 
+		AND C.GOODS_KIND_NUMBER=#{GOODS_KIND_NUMBER}
+		AND A.GOODS_ONOFF=0
+
+]]>
+</select>
+
+<!-- 장바구니 수량변경 -->
+<update id="updateCarts" parameterType="hashmap">
+<![CDATA[
+UPDATE CART SET CART_AMOUNT=CART_AMOUNT + #{CART_AMOUNT}, 
+CART_REG_DATE=SYSDATE
+WHERE CART_NUMBER=#{CART_NUMBER}
+]]>
+</update>
+
+<!-- 장바구니 3일 자동삭제 -->
+<delete id="deleteCarts" parameterType="hashmap">
+<![CDATA[
+
+		DELETE FROM CART WHERE CART_REG_DATE<SYSDATE-3 
+		AND MEMBER_NUMBER= #{MEMBER_NUMBER}
+]]>
+</delete>
+
+<!-- 장바구니 삭제 -->
+<delete id="deleteMyCart" parameterType="hashmap">
+<![CDATA[
+		DELETE FROM CART WHERE MEMBER_NUMBER=#{MEMBER_NUMBER} 
+		AND GOODS_KIND_NUMBER = #{GOODS_KIND_NUMBER}
+]]>
+</delete>
+
+<!-- 장바구니 구매하기 -->
+<select id="buyInCart" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+			SELECT DISTINCT A.GOODS_NUMBER, A.CART_NUMBER, A.MEMBER_NUMBER,
+			A.CART_REG_DATE, A.CART_AMOUNT, A.GOODS_KIND_NUMBER, E.GOODS_AMOUNT,
+			E.GOODS_OPTION1, E.GOODS_OPTION2, E.GOODS_KIND_NUMBER,
+			D.GOODS_NAME, D.GOODS_PRICE, D.GOODS_DISPRICE, D.GOODS_SALEDATE,
+			D.GOODS_THUMBNAIL,D.GOODS_CATEGORY1, D.GOODS_CATEGORY2
+			FROM CART A, GOODS D, GOODS_KIND E WHERE A.MEMBER_NUMBER=${MEMBER_NUMBER}
+		    AND A.CART_REG_DATE>SYSDATE-3
+        	AND A.GOODS_KIND_NUMBER=E.GOODS_KIND_NUMBER
+        	AND A.GOODS_KIND_NUMBER=${GOODS_KIND_NUMBER}
+			AND A.GOODS_NUMBER=D.GOODS_NUMBER AND D.GOODS_ONOFF=0
+			ORDER BY A.CART_REG_DATE DESC, A.GOODS_NUMBER ASC
+]]>
+</select>
+</mapper>

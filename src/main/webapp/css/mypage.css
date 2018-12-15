@@ -1,0 +1,116 @@
+@CHARSET "UTF-8";
+
+ .info .order {
+    zoom: 1;
+    overflow: hidden;
+	display: inline-block;
+    width: 33%;
+}
+ .info .order {
+        font-family: "crn-rg", "NanumBarunGothic", Dotum, sans-serif;
+    min-height: 117px;
+    padding: 10px 0 0 20px;
+    border: 3px solid #ededed;
+}
+dl {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+ .info {
+     zoom: 1; 
+    overflow: hidden;
+    line-height: 1.5;
+    border: 0px;
+}
+dt {
+    display: block;
+}
+ .info .order .tot {
+    margin-bottom: 10px;
+    color: #b70606;
+    font-weight: bold;
+}
+ .info .order dt {
+    width: 45%;
+    clear: both;
+}
+ .info .order dt, info .order dd {
+    float: left;
+    margin-bottom: 2px;
+}
+ .info .order dd {
+    width: 50%;
+    text-align: right;
+}
+.info .order dt {
+    width: 45%;
+    clear: both;
+}
+.info .order dt, .info .order dd {
+    float: left;
+    margin-bottom: 2px;
+}
+.sss{color: #787878;}
+
+ .info .order1 {
+    zoom: 1;
+    overflow: hidden;
+	display: inline-block;
+    width: 34%;
+}
+ .info .order1 {
+    
+    min-height: 117px;
+    padding: 10px 0 0 0px;
+    border: 3px solid #ededed;
+}
+dl {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+ .info {
+     zoom: 1; 
+    overflow: hidden;
+    line-height: 1.5;
+    border: 0px;
+}
+dt {
+    display: block;
+}
+ .info .order1 .tot {
+    margin-bottom: 10px;
+    color: #b70606;
+    font-weight: bold;
+}
+ .info .order1 dt {
+    width: 45%;
+    clear: both;
+}
+ .info .order1 dt, info .order1 dd {
+    float: left;
+    margin-bottom: 2px;
+}
+ .info .order1 dd {
+    width: 50%;
+    text-align: right;
+}
+.info .order dt {
+    width: 45%;
+    clear: both;
+}
+.info .order1 dt, .info .order1 dd {
+    float: left;
+    margin-bottom: 2px;
+}
+.level {
+    color: #0178d3;
+    font-weight: bold;
+}
+.level{ font-size: 15px;
+        font-family: "crn-rg", "NanumBarunGothic", Dotum, sans-serif;}

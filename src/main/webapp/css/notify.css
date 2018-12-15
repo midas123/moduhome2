@@ -1,0 +1,173 @@
+@CHARSET "UTF-8";
+
+
+.tit-join h3{
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	font-size: 15px;
+	margin-bottom: 10px;
+	padding-bottom: 3px;
+	display: inline-block; 
+	border-bottom: 4px solid #3a4452; !important
+	
+}
+.person-tb {
+	font-size: 12px;
+	color: #777;
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: keep-all;
+}
+
+.pl-6{
+	
+	padding-left: 12px;
+}
+.subject
+{text-align: center !important;}
+td, th {
+	text-align: center;
+	margin-left: 5px;
+	border-bottom: 1px solid #dcdcdc;
+    border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
+	margin-top: 5px;
+	margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: table-cell;
+    vertical-align: inherit;
+}
+.center_text{
+	text-align: center ; !important;
+	border-right: 0px solid #dcdcdc;!important;
+}
+.caption{
+	border-left: 0px solid #dcdcdc;!important;
+}
+.info-imgg{
+	max-width: auto;
+	height: 65px;
+}
+.info-imgg{
+	border-right: 0px solid #dcdcdc;!important;
+}
+.info-caption .name {
+    color: #959595;
+}
+.info-caption{
+	border-left: 0px solid #dcdcdc;!important;
+}
+.situation1
+{font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;}
+/*  페이징 */
+.cs-pagination {
+    margin: 7px 0px 22px;
+}
+.inline {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    text-align: center;
+}
+.inline>li {
+    display: inline-block;
+    vertical-align: top;
+}
+li {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.inline>a {
+    display: inline-block;
+    vertical-align: top;
+}
+a {
+    list-style: none;
+}
+a {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.cs-pagination a {
+    margin: 0px 3.5px;
+    width: 22px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 12px;
+    color: #757575;
+    font-weight: 600;
+    cursor: pointer;
+}
+.cs-pagination a.current {
+    background: #acacac;
+    color: #fff;
+}
+.cs-pagination a.current1 {
+    background: #ffffff;
+    color: #acacac;
+}
+.oto_aaa{
+	display:inline-block;
+    width: 50.98px;
+    height: 22px;
+   /*  line-height: 29px; */
+    margin: 0 auto;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+
+.oto_aaaa{
+	display: block;
+    width: 140px;
+    height: 33px;
+    line-height: 35px;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+
+ 
+div#select_box {
+	display:inline-block;
+    position: relative;
+    width: 46px;
+    height: 22px;
+    background: url(select_arrow.png) 44px center no-repeat; /* 화살표 이미지 */
+    border: 1px solid #2D2D2D;
+}
+div#select_box label {
+    position: absolute;
+    font-size: 14px;
+    color: #2D2D2D;
+    top: 2px;
+    left: 8px;
+    letter-spacing: 1px;
+}
+div#select_box select#searchNum {
+    width: 100%;
+    height: 22px;
+    min-height: 22px;
+    line-height: 22px;
+    opacity: 0;
+    filter: alpha(opacity=0); /* IE 8 */
+}
+
+.aaaaa{
+	background: #c0c0c0; 	!important;
+}

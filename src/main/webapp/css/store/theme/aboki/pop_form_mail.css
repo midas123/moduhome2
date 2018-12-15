@@ -1,0 +1,29 @@
+/* BASIC css start */
+#emailManage .tit-pop { padding: 15px 5px; background-color: #ededed; }
+#emailManage .table-d2-view { margin-top: 0; }
+#emailManage .btn-foot { margin-top: 30px; text-align: center; }
+#emailManage textarea { width: 98%; }
+#emailManage input { width: 98%; }
+#emailManage .cont { margin:20px 0;  padding:0 5px; }
+#emailManage .cont .c-hd { height:20px; line-height:22px; letter-spacing: -1px; }
+#emailManage .cont .c-hd h3 { margin:0; padding:0; color: #000; font-size: 12px; font-weight: bold; background:none; }
+#emailManage .cont .sect { font-size:12px; }
+#emailManage .cont .sect .edit { height: 135px; margin-bottom:10px; }
+#emailManage .cont .sect .edit textarea { width: 99%; height: 135px; border: 1px solid #b3b3b3; font-size:12px; text-align:left; }
+#emailManage .cont .sect .edit-label { height:20px; line-height:20px; margin:0 0 20px 0; }
+#emailManage .cont .sect .edit-label input { width:3%; }
+#emailManage .cont .menu { zoom: 1; margin:10px 0 0 0; padding:0; }
+#emailManage .cont .menu:after { display: block; content: ""; clear: both; }
+#emailManage .cont .menu li { float: left; position: relative; width: 100px; height: 35px; margin:0 -1px 0 0; padding:0; border: 1px solid #b3b3b3; border-bottom: 0; text-align: center; font-size: 12px; background-color: #f6f9fa; letter-spacing: -1px; list-style:none; }
+#emailManage .cont .menu li a { display: inline-block; width: 100px; height: 27px; padding-top: 5px; color: #808080; }
+#emailManage .cont .menu li.now { height: 40px; margin-top: -5px; border: 1px solid #b3b3b3; border-bottom: 0; }
+#emailManage .cont .menu li.now a { padding-top: 8px; color: #333; font-weight: bold; }
+
+#emailManage .tbl { width:100%; padding:0; margin:0 0 10px 0; border-spacing:0; border-collapse:collapse; border-top: 1px solid #dadada; border-left: 1px solid #dadada; }
+#emailManage .tbl caption { display:none; }
+#emailManage .tbl th { line-height:32px; color: #3b3b3b; font-size:12px; font-weight:bold; background: #f0f0f0; text-align:center; }
+#emailManage .tbl th,
+#emailManage .tbl td { height:32px; padding:0; margin:0; border-right: 1px solid #dadada; border-bottom: 1px solid #dadada; letter-spacing:-1px; }
+#emailManage .tbl td .txt-l { padding:5px 3px; margin:0; text-align:left; }
+/* BASIC css end */
+

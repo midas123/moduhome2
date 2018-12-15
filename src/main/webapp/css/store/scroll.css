@@ -1,0 +1,7 @@
+/* BASIC css start */
+#layerTodayView { width: 84px; background: url(/images/d3/modern_simple/quick_today_mdl.gif) repeat-y 0 0; }
+#layerTodayView .list { width: 66px; padding-top: 5px; margin-left: auto; margin-right: auto; min-height: 128px; _height: 128px; }
+#layerTodayView .list li { padding-bottom: 5px; text-align: center; }
+#layerTodayView .list img { width: 60px; height: 60px; }
+/* BASIC css end */
+

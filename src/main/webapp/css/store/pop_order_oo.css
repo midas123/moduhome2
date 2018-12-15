@@ -1,0 +1,60 @@
+/* BASIC css start */
+#orderSt {
+    padding-top: 50px;
+    padding-right: 12%;
+    padding-bottom: 150px;
+    padding-left: 12%;
+}
+#orderSt .tit-pop { padding-bottom: 3px; border-bottom: 1px solid #d0d0d0; }
+#orderSt .tit-pop .dsc { display: inline-block; padding-top: 10px; margin-left: 30px; color: #9a9a9a; letter-spacing: -1px; }
+#orderSt .tit-pop .dsc em { color: #ff5d00; }
+#orderSt .txt-date { margin-top: 10px; padding: 7px 35px; border: 5px solid #ededed; background: url(/images/neo_1/common/bull_h10_arow_red.gif) no-repeat 15px 8px; }
+#orderSt .txt-date strong { font-weight: bold; color: #0178d3; }
+#orderSt .tab { zoom: 1; overflow: hidden; margin-top: 10px; border-bottom: 1px solid #cdcdcd; }
+#orderSt .tab li,
+#orderSt .tab li a { float: left; width: auto; }
+#orderSt .tab li { margin-right: 5px; }
+#orderSt .table-order { border: 1px solid #cdcdcd; }
+#orderSt .table-order th,
+#orderSt .table-order td { padding: 8px 0; }
+#orderSt .table-order th { font-weight: bold; color: #4b4b4b; background-color: #ededed; }
+#orderSt .btn-foot { zoom: 1; overflow: hidden; margin-top: 10px; font-size: 0; line-height: 0;}
+#orderSt .btn-foot .btn-l { float: left; width: auto; }
+#orderSt .btn-foot .btn-l a { margin-right: 5px; }
+#orderSt .btn-foot .btn-r { float: right; width: auto; }
+/* 주문상세 내역 */
+#tabDetail .msg { margin-top: 5px; }
+#tabDetail .total { margin-top: 10px; text-align: right; }
+#tabDetail .table-info { margin-top: 5px; }
+#tabDetail .table-info th, 
+#tabDetail .table-info td { padding: 6px 0; border: 1px solid #cdcdcd; }
+#tabDetail .table-info th { color: #333; background-color: #ededed; }
+#tabDetail .table-info th { color: #333; background-color: #ededed; }
+/* 평점 후기 등록 */
+#tabRatingReview .table-order .tb-rating { padding: 0 20px; }
+#tabRatingReview .table-order .tb-rating table { border-top: 1px dotted #ccc; }
+#tabRatingReview .table-order .tb-rating th,
+#tabRatingReview .table-order .tb-rating td { padding: 3px 0; }
+#tabRatingReview .table-order .tb-rating th {  font-weight: normal; background-color: #fff; }
+/* 상품 후기 등록 */
+#tabPrdReview .table-order .tb-review { padding: 0 20px; }
+#tabPrdReview .table-order .tb-review th,
+#tabPrdReview .table-order .tb-review td { padding: 2px 0; }
+#tabPrdReview .table-order .tb-review th {  font-weight: normal; background-color: #fff; }
+#tabPrdReview .table-order .tb-review .btn-reg { text-align: center; font-size: 0; line-height: 0; }
+#tabPrdReview .table-order .tb-review .btn-reg a { margin-left: 10px; }
+/* 주문자정보, 배송지정보, 주문상품정보, 결제정보, 쿠폰사용/할인내역 */
+#orderInfo h2 { margin-top: 20px; font-size: 12px; font-weight: bold; color: #3D77BD; letter-spacing: -1px; }
+#orderInfo .table-w { margin-top: 10px; }
+#orderInfo .table-w th,
+#orderInfo .table-w td { padding: 5px 0; border: 1px solid #CDCDCD; }
+#orderInfo .table-w th,
+#orderInfo .table-prdinfo tfoot td { background-color: #EDEDED; }
+#orderInfo .table-w tfoot th,
+#orderInfo .table-w tfoot td { font-weight: bold; }
+#orderInfo .table-w .tb-price { color: #FF5D00; }
+#orderInfo .table-prdinfo .tb-center { padding: 0; }
+/* etc */
+#pop_order_btn_group { margin: 10px 20px; }
+/* BASIC css end */
+

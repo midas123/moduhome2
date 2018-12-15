@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="like">
+         
+         <!--  좋아요 등록 -->
+         <insert id="likeReg" parameterType="hashmap">
+         <![CDATA[
+          INSERT INTO likes
+          (LIKE_SEQ, MEMBER_NUMBER , SNS_NUMBER)
+          VALUES
+          (LIKE_SEQ.nextval, #{MEMBER_NUMBER}, #{SNS_NUMBER})
+         ]]>
+         </insert>
+       
+      <!--  좋아요 취소 -->
+      <delete id="likeDel" parameterType="hashmap">
+       <![CDATA[
+		delete from
+			likes
+		where
+			MEMBER_NUMBER = #{MEMBER_NUMBER}
+		and
+			SNS_NUMBER = #{SNS_NUMBER}
+	    ]]>
+	   </delete>
+	 
+        <!-- 게시물의 좋아요수 출력 -->
+        <select id="snsLikeCount" parameterType="hashmap" resultType="java.lang.String">
+		<![CDATA[
+		select count(*)
+		from likes
+		where sns_number = #{article_seq}
+		]]>
+	</select>
+	
+	<select id="SNSLikeExist" parameterType="hashmap" resultType="java.lang.String">
+		<![CDATA[
+		select count(*)
+		from likes
+		where sns_number = #{SNS_NUMBER}
+		and member_number = #{MEMBER_NUMBER}
+	  ]]>
+	</select>
+	
+	
+	
+        
+</mapper>

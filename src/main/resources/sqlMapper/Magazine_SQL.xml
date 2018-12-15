@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="magazine">
+
+	<!-- 매거진 상세보기 -->
+<!-- 	<select id="MGDETAIL2" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				MG_NUMBER,
+				MEMBER_NUMBER,
+				MG_TITLE_IMAGE
+			FROM
+				MAGAZINEBOARD
+			WHERE
+				MG_NUMBER = #{MG_NUMBER, jdbcType=INTEGER}		
+		]]>
+	</select> -->
+	
+			<!-- 매거진 수정폼 -->
+	<update id="MGMODIFYFORM" parameterType="hashmap">
+		<![CDATA[
+			UPDATE MAGAZINEBOARD 
+			SET
+				MG_TITLE_IMAGE = 0
+			WHERE
+				MG_NUMBER = #{MG_NUMBER, jdbcType=INTEGER}	
+		]]>
+	</update>
+	 
+		<!-- 매거진 수정 -->
+	<update id="MGMODIFY" parameterType="hashmap">
+		<![CDATA[
+			UPDATE MAGAZINEBOARD 
+			SET
+				MG_TITLE = #{MG_TITLE, jdbcType=VARCHAR},
+			    MG_CONTENT = #{MG_CONTENT, jdbcType=VARCHAR}, 
+			    MG_TITLE_IMAGE = #{MG_TITLE_IMAGE, jdbcType=VARCHAR},
+			    MG_HASHTAG = #{MG_HASHTAG, jdbcType=VARCHAR},
+			    MG_TYPE = #{MG_TYPE, jdbcType=VARCHAR},
+			    MG_STYLE =  #{MG_STYLE, jdbcType=VARCHAR},
+			    MG_SPACE = #{MG_SPACE, jdbcType=VARCHAR},
+			    MG_AVERAGE =  #{MG_AVERAGE, jdbcType=VARCHAR}
+			    
+			WHERE
+				MG_NUMBER = #{MG_NUMBER, jdbcType=INTEGER}	
+		]]>
+	</update>
+
+
+	<!-- 매거진 타이틀 삭제 -->
+	<delete id="MGDELETE" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM MAGAZINEBOARD 
+			WHERE MG_NUMBER = #{MG_NUMBER, jdbcType=INTEGER}
+		]]>
+	</delete>
+	
+	<!-- 사진 게시판 -->
+	<select id="GLLIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+			MG_NUMBER, 
+			MG_TITLE_IMAGE 
+			FROM MAGAZINEBOARD 
+			ORDER BY 
+			MG_NUMBER DESC
+			
+		]]>
+	</select>
+
+	<!-- 최근 매거진 추출 -->
+	<select id="MGNEW" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+		SELECT MG_NUMBER
+    	FROM MAGAZINEBOARD
+    	WHERE MG_NUMBER = (SELECT MAX(MG_NUMBER)AS MG_NUMBER FROM MAGAZINEBOARD)
+		]]>
+	</select>
+
+
+	<!-- 매거진 타이틀 등록 -->
+	<insert id="MGTITLEINSERT" parameterType="hashmap" useGeneratedKeys="true" keyProperty="SNS_NUMBER">
+		<selectKey keyProperty="MG_NUMBER" resultType="string" order="BEFORE">
+			SELECT MG_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO MAGAZINEBOARD
+			(
+				MG_NUMBER,
+				MG_TITLE,
+			    MG_CONTENT, 
+			    MEMBER_NUMBER,
+			    MG_TITLE_IMAGE,
+			    MG_HASHTAG,
+			    MG_TYPE,
+			    MG_STYLE,
+			    MG_SPACE,
+			    MG_AVERAGE,
+			    MG_REGDATE 
+			)
+			VALUES
+			(
+				#{MG_NUMBER, jdbcType=INTEGER}, 
+				#{MG_TITLE, jdbcType=VARCHAR}, 
+			    #{MG_CONTENT, jdbcType=VARCHAR}, 
+			    #{MEMBER_NUMBER, jdbcType=INTEGER}, 
+			    #{MG_TITLE_IMAGE, jdbcType=VARCHAR},
+			    #{MG_HASHTAG, jdbcType=VARCHAR},
+			    #{MG_TYPE, jdbcType=VARCHAR},
+			    #{MG_STYLE, jdbcType=VARCHAR},
+			    #{MG_SPACE, jdbcType=VARCHAR},
+			    #{MG_AVERAGE, jdbcType=VARCHAR},
+			    SYSDATE
+			)
+		]]>
+	</insert>
+
+ <!-- 매거진 메인이미지 등록 -->
+   <update id="MGMAINIMAGE" parameterType="hashmap">
+      <![CDATA[
+         UPDATE MAGAZINEBOARD SET 
+         MG_TITLE_IMAGE= #{MG_TITLE_IMAGE, jdbcType=VARCHAR} 
+         WHERE MG_NUMBER= #{MG_NUMBER, jdbcType=INTEGER}
+      ]]>
+   </update>
+
+	<!-- ADMIN 매거진 리스트 -->
+	 <select id="ADMINMGLIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    MG_NUMBER,
+			    MG_TITLE,
+			    MG_TITLE_IMAGE,
+			    MEMBER_NUMBER,
+			    MG_CONTENT,
+			    MG_HASHTAG,
+			    MG_TYPE,
+			    MG_STYLE,
+			    MG_SPACE,
+			    MG_AVERAGE,
+			    MG_REGDATE
+			FROM MAGAZINEBOARD
+			ORDER BY MG_NUMBER DESC
+		]]>
+	</select>
+	
+	<select id="MGLIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+ 				MG_NUMBER,
+			    MG_TITLE,
+			    MG_TITLE_IMAGE,
+			    MEMBER_NUMBER,
+			    MG_CONTENT,
+			    MG_HASHTAG,
+			    MG_TYPE,
+			    MG_STYLE,
+			    MG_SPACE,
+			    MG_AVERAGE,
+			    MG_REGDATE
+			FROM (SELECT * FROM MAGAZINEBOARD WHERE MG_NUMBER <= 
+					(SELECT MAX(MG_NUMBER)AS MG_NUMBER FROM MAGAZINEBOARD)  
+					ORDER BY MG_NUMBER DESC) WHERE rownum<=6
+			
+		]]>
+	</select>
+
+	
+	  	<!-- 관리자 매거진 검색(제목) -->
+	<select id="searchMgList0" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT A.MG_NUMBER, A.MG_TITLE, A.MG_TITLE_IMAGE, A.MEMBER_NUMBER, A.MG_CONTENT,
+		A.MG_HASHTAG, A.MG_TYPE, A.MG_STYLE, A.MG_SPACE, A.MG_AVERAGE, A.MG_REGDATE
+		FROM MAGAZINEBOARD A
+		WHERE A.MG_TITLE LIKE '%'||#{isSearch}||'%'
+		ORDER BY A.MG_NUMBER DESC	
+	]]>
+	</select>
+
+	<!-- 관리자 매거진 검색(내용) -->
+	<select id="searchMgList1" parameterType="hashmap" resultType="hashmap">
+	<![CDATA[
+		SELECT A.MG_NUMBER, A.MG_TITLE, A.MG_TITLE_IMAGE, A.MEMBER_NUMBER, A.MG_CONTENT,
+		A.MG_HASHTAG, A.MG_TYPE, A.MG_STYLE, A.MG_SPACE, A.MG_AVERAGE, A.MG_REGDATE
+		FROM MAGAZINEBOARD A
+		WHERE A.MG_CONTENT LIKE '%'||#{isSearch}||'%'
+		ORDER BY A.MG_NUMBER DESC	
+	]]>
+	</select>
+	
+	<!-- 매거진 상세보기 -->
+	<select id="MGDETAIL" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				MG_NUMBER,
+				MEMBER_NUMBER,
+				MG_TITLE_IMAGE,
+				MG_TITLE,
+				MG_CONTENT,
+				MG_HITCOUNT,
+				MG_REGDATE,
+				MG_COLLECTING,
+				MG_HASHTAG
+			FROM
+				MAGAZINEBOARD
+			WHERE
+				MG_NUMBER = #{MG_NUMBER, jdbcType=INTEGER}		
+		]]>
+	</select>
+	
+	<!-- 매거진 조회수 -->
+	<update id="UPDATEHITCNT" parameterType="hashmap">
+		<![CDATA[
+			UPDATE MAGAZINEBOARD 
+			SET
+				MG_HITCOUNT = NVL(MG_HITCOUNT, 0) + 1
+			WHERE
+				MG_NUMBER = #{MG_NUMBER, jdbcType=INTEGER}	
+		]]>
+	</update>
+	
+	<!-- 내가 보관한 매거진 -->
+	<select id="MGMYCOLLECTLIST" parameterType="int" resultType="hashmap">
+		<![CDATA[
+			select 	m.MG_NUMBER,
+				    m.MG_TITLE,
+				    m.MG_TITLE_IMAGE,
+				    m.MEMBER_NUMBER,
+				    m.MG_REGDATE
+			from MAGAZINEBOARD m, COLLECTING c 
+			where m.MG_NUMBER = c.MG_NUMBER and c.MEMBER_NUMBER = #{MEMBER_NUMBER}
+		
+		]]>
+	</select>
+	
+	<select id="MGMORELIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    MG_NUMBER,
+			    MG_TITLE,
+			    MG_TITLE_IMAGE,
+			    MEMBER_NUMBER,
+			    MG_CONTENT,
+			    MG_HASHTAG,
+			    MG_TYPE,
+			    MG_STYLE,
+			    MG_SPACE,
+			    MG_AVERAGE,
+			    MG_REGDATE
+			FROM (SELECT * FROM MAGAZINEBOARD WHERE MG_NUMBER < #{MG_NUMBER, jdbcType=INTEGER}
+			 ORDER BY MG_NUMBER DESC) WHERE rownum<=6
+			
+		]]>
+	</select>
+  
+
+</mapper>

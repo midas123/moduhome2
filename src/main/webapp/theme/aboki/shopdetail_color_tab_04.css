@@ -1,0 +1,58 @@
+.shopdetail_color_tab {
+	width: 80%; /* 한줄 갯수 크기에 따라 조정 */
+	overflow: hidden;
+	font-family: 'Nanum Gothic', Dotum, 돋움, Gulim, 굴림, Verdana, Arial, Trebuchet MS;
+	margin: 100px auto;
+}
+.shopdetail_color_tab h1 {
+	text-align: center;
+	line-height: 40px;
+	font-size: 15px;
+	color: #fff;
+	background-color: #252525;
+	padding: 0;
+	margin: 0;
+	margin: 1px;
+}
+.shopdetail_color_tab img {
+	vertical-align: bottom;
+}
+.shopdetail_color_tab li {
+	float: left;
+	width: 25%; /* 한줄 갯수에 따라 퍼센트 조정 */
+}
+.shopdetail_color_tab li a {
+	margin: 1px;
+	display: block;
+	position: relative;
+}
+.shopdetail_color_tab li a:hover {
+	opacity:0.9;
+	filter:alpha(opacity=90);
+}
+.shopdetail_color_tab li a span {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: #444;
+	display: block;
+	width: 100%;
+	color: #fff;
+	text-align: center;
+	line-height: 20px;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+}
+.shopdetail_color_tab li img {
+	width: 100%;
+}
+@media screen and (max-width:550px) {
+	.shopdetail_color_tab li a span {
+		font-size: 7px;
+	}
+}
+@media screen and (min-width:550px) {
+	.shopdetail_color_tab li a span {
+		font-size: 11px;
+	}	
+}

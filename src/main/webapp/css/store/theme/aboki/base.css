@@ -1,0 +1,46 @@
+.shopdetail_color_info, .shopdetail_color_detail {
+	width: 100%;
+	overflow: hidden;
+	font-family: 'Nanum Gothic', Dotum, 돋움, Gulim, 굴림, Verdana, Arial, Trebuchet MS;
+	font-size: 11px;
+	margin: 50px 0;
+	text-align: center;
+}
+.shopdetail_color_info li, .shopdetail_color_detail li {
+	float: left;
+	margin: 50px 0;				
+}
+.shopdetail_color_info li img, .shopdetail_color_detail li img {
+	width: 100%;
+}
+.shopdetail_color_info li span, .shopdetail_color_detail li span {
+	display: block;
+}
+.shopdetail_color_info li span em, .shopdetail_color_detail li span em {
+	font-style: normal;
+	font-weight: bold;
+	display: block;
+}
+.shopdetail_color_detail {
+	margin-top: 100px;
+}
+.shopdetail_color_detail h1 {
+	margin: 50px 0;
+}
+.shopdetail_color_detail h1 p {
+	margin: 0;
+	padding: 0;
+}
+.shopdetail_color_detail h1 p.title {
+	font-size: 25px;
+	line-height: 40px;
+}
+.shopdetail_color_detail h1 p.title_sub {
+	font-weight: bold;
+}
+.shopdetail_color_detail h1 p.title_sub, .shopdetail_color_detail h1 p.title_sub_sub {
+	font-size: 12px;
+}
+.shopdetail_color_detail h1 p.title_sub_sub {
+	font-weight: normal;
+}

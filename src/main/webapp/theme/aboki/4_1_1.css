@@ -1,0 +1,39 @@
+.shopdetail_color_info ul.acc li {
+	width: 25%;
+}
+.shopdetail_color_detail li {
+	width: 50%; 
+}
+.shopdetail_color_detail ul.acc li {
+	width: 100%; 
+}
+.shopdetail_color_detail ul.acc li img {
+	width: 60%; 
+}
+.shopdetail_color_detail li.acc {
+	width: 100%; 
+}
+.shopdetail_color_detail li.acc img {
+	width: 60%; 
+}
+
+/*깔다를경우(2)*/
+.shopdetail_color_info ul.acc_02 li {
+	width: 50%;
+}
+
+/*깔다를경우(3)*/
+.shopdetail_color_info ul.acc_03 li {
+	width: 33.3333%;
+}
+
+@media screen and (max-width:550px) {
+	.shopdetail_color_info li span {
+		font-size: 0.68em;
+	}
+}
+@media screen and (min-width:550px) {
+	.shopdetail_color_info li span {
+		font-size: 1em;
+	}	
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="alarm">
+
+	<resultMap type="alarmModel" id="alarmModelRes">
+		<result property="alarm_seq" column="alarm_seq" />				
+		<result property="alarm_index_no" column="alarm_index_no" />
+		<result property="alarm_contnum" column="alarm_contnum" />
+		<result property="alarm_id" column="alarm_id" />
+		<result property="alarm_reg_id" column="alarm_reg_id" />
+		<result property="alarm_regdate" column="alarm_regdate" />
+		<result property="alarm_readdate" column="alarm_readdate" />
+	</resultMap>
+	
+	<select id="alarmCheck" parameterType="java.util.Map" resultMap="alarmModelRes">
+		select *
+		from alarm
+		where alarm_index_no = #{alarm_index_no}
+		and alarm_contnum = #{alarm_contnum}
+		and alarm_id = #{alarm_id}
+		and alarm_reg_id = (select member_id from member where member_number = #{alarm_reg_id})
+		and alarm_readdate is null
+	</select>
+	
+	<select id="alarmLoad" parameterType="java.lang.String" resultMap="alarmModelRes">
+		select *
+		from alarm
+		where alarm_id = #{id}
+		and alarm_readdate is null
+		order by alarm_regdate desc
+	</select>
+	
+	<select id="selectAlarmOne" parameterType="java.lang.String" resultMap="alarmModelRes">
+		select *
+		from alarm
+		where alarm_seq = #{alarm_seq}
+	</select>
+	
+	<insert id="regAlarm" parameterType="hashMap">
+		INSERT INTO alarm
+		(alarm_seq, alarm_index_no, alarm_contnum, alarm_id, alarm_reg_id, alarm_regdate)
+		VALUES
+		(alarm_seq.nextval, #{alarm_index_no}, #{alarm_contnum}, #{alarm_id} , (select member_id from member where member_number = #{alarm_reg_id}), SYSDATE)
+	</insert>
+	
+	<update id="readAlarm" parameterType="java.lang.String">
+        update
+        	alarm
+        set
+            alarm_readdate = sysdate
+        where
+            alarm_seq = #{alarm_seq}
+	</update>
+	
+	
+	<select id="selectRegIdNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select MEMBER_NUMBER
+		from MEMBER
+		where MEMBER_ID = #{MEMBER_ID}
+	</select>
+	
+	
+</mapper>

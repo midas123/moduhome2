@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="police">
+
+   <!-- 신고 등록 -->
+         <insert id="policeReg" parameterType="hashmap">
+         <![CDATA[
+          INSERT INTO police
+          (MEMBER_NUMBER ,POLICE_SEQ, POLICE_CONTENT,POLICE_REGDATE,SNS_NUMBER,POLICE_HIDE)
+          VALUES
+          (#{MEMBER_NUMBER},POLICE_SEQ.nextval,#{POLICE_CONTENT},sysdate, #{SNS_NUMBER},0)
+         ]]>
+         </insert>
+         
+       <!-- 신고리스트 출력 -->
+       
+       <select id="policeList" resultType="hashmap">
+       <![CDATA[
+          SELECT *
+          FROM POLICE
+          ORDER BY POLICE_REGDATE DESC
+       ]]>
+       </select>
+       
+       <delete id="policeDelete" parameterType="java.lang.String">
+       <![CDATA[
+          DELETE 
+          FROM POLICE
+          WHERE POLICE_SEQ = #{POLICE_SEQ}
+       ]]>
+       </delete>
+       
+       <!-- sns_number값들 가져오기 -->
+       <select id="selectSNSnum" parameterType="java.lang.String" resultType="java.lang.String">
+       <![CDATA[
+          SELECT SNS_NUMBER
+          FROM POLICE
+          WHERE POLICE_SEQ = #{POLICE_SEQ}
+       ]]>
+       </select>
+       
+       <!-- police_hide 숨기기추가 -->
+       <update id="updateHide" parameterType="java.lang.String">
+       <![CDATA[
+          UPDATE POLICE
+          SET POLICE_HIDE = '1'
+          WHERE SNS_NUMBER = #{SNS_NUM}
+        ]]>
+        </update>
+        
+       <!--  police_hide 숨기기취소 -->
+       <update id="updateHideCancle" parameterType="java.lang.String">
+       <![CDATA[
+          UPDATE POLICE
+          SET POLICE_HIDE = '0'
+          WHERE SNS_NUMBER = #{SNS_NUM}
+        ]]>
+        </update>
+</mapper>

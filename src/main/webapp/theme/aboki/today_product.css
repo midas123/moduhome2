@@ -1,0 +1,14 @@
+/* BASIC css start */
+
+#myTodayView .page-body { padding: 25px 20px 0px; }
+
+#myTodayView .table-d2-list { margin-top: 25px; }
+
+#myTodayView .table-d2-list table td input { width: 25px; text-align: right; }
+
+#myTodayView .btn-del { margin-top: 20px; }
+
+/* BASIC css end */
+
+
+

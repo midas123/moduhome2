@@ -1,0 +1,1016 @@
+@CHARSET "UTF-8";
+
+
+.tit-join h3{
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	font-size: 15px;
+	margin-bottom: 10px;
+	padding-bottom: 3px;
+	display: inline-block; 
+	border-bottom: 4px solid #3a4452; !important
+	
+}
+.person-tb {
+	font-size: 12px;
+	color: #777;
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    -webkit-border-horizontal-spacing: 0px;
+    -webkit-border-vertical-spacing: 0px;
+    table-layout: fixed;
+    word-wrap: break-word;
+    word-break: keep-all;
+}
+
+.pl-6{
+	
+	padding-left: 12px;
+}
+.subject
+{text-align: center !important;}
+td, th {
+	text-align: center; !important;
+	margin-left: 5px; !important;
+	border-bottom: 1px solid #dcdcdc;!important;
+    border-left: 1px solid #dcdcdc; !important;
+    border-right: 1px solid #dcdcdc; !important;
+	margin-top: 5px;!important;
+	margin-bottom: 5px; !important;
+    padding-top: 5px; !important;
+    padding-bottom: 5px; !important;
+    display: table-cell; !important;
+    vertical-align: inherit; !important;
+}
+.center_text{
+	text-align: center ; !important;
+	border-right: 0px solid #dcdcdc; !important;
+}
+.caption{
+	border-left: 0px solid #dcdcdc; !important;
+}
+.info-imgg{
+	max-width: auto;
+	height: 65px;
+}
+.info-imgg{
+	border-right: 0px solid #dcdcdc; !important;
+}
+.info-caption .name {
+    color: #959595;
+}
+.info-caption{
+	border-left: 0px solid #dcdcdc;!important;
+}
+.situation1
+{font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;}
+/*  페이징 */
+.cs-pagination {
+    margin: 7px 0px 22px;
+}
+.inline {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    text-align: center;
+}
+.inline>li {
+    display: inline-block;
+    vertical-align: top;
+}
+li {
+    list-style: none;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.cs-pagination li {
+    margin: 0px 3.5px;
+    width: 22px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 12px;
+    color: #757575;
+    font-weight: 600;
+    cursor: pointer;
+}
+.cs-pagination li.current {
+    background: #acacac;
+    color: #fff;
+}
+.cs-pagination li.current1 {
+    background: #ffffff;
+    color: #acacac;
+}
+.oto_aaa{
+	display: block;
+    width: 50.98px;
+    height: 30px;
+   /*  line-height: 29px; */
+    margin: 0 auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+
+.oto_aaaa{
+	display: block;
+    width: 75px;
+    height: 35px;
+    line-height: 33px;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+.oto_aaaaa{
+	display: block;
+    width: 75px;
+    height: 35px;
+    line-height: 33px;
+    margin: 0 auto;
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+ 	background-color: #434343;
+    border: 1px solid #434343;
+}
+.account-order-view .box-shadow {
+   padding-bottom: 5px
+}
+
+.account-order-view .order-benefit .section-body {
+   padding-bottom: 20px
+}
+
+.account-order-view .sum-calculator .calculator .discount,
+   .account-order-view .sum-calculator .calculator .total {
+   border-left: none
+}
+
+.account-order-view .order-list .table td.discount-coupon,
+   .account-order-view .order-list .table td.discount-member,
+   .account-order-view .order-list .table td.delivery, .account-order-view .order-list .table td.situation
+   {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   width: 10%
+}
+
+.account-order-view .order-list .table td.price {
+   width: 10%
+}
+
+.account-order-view .order-list .table td.price span {
+   text-decoration: line-through;
+   color: #636363
+}
+
+.account-order-view .order-list .table td.price strong {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   display: block
+}
+
+.account-order-view .order-list .table td.delivery-info {
+   width: 10%
+}
+
+.account-order-view .order-list .table td.delivery-info>span {
+   display: block;
+   margin-bottom: 5px
+}
+
+.account-order-view .order-list .table td.action {
+   width: 90px
+}
+
+.account-order-view .order-list .table td.action span {
+   cursor: pointer
+}
+
+@media ( min-width : 1024px) {
+   .account-order-view {
+      margin-bottom: 40px
+   }
+   .account-order-view .box-shadow {
+      padding-bottom: 10px
+   }
+   .account-order-view .sum-calculator .calculator .discount,
+      .account-order-view .sum-calculator .calculator .total {
+      border-left: 1px solid #c8c8c8
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-order-view .sum-calculator .calculator>div {
+      border-bottom: 1px solid #c8c8c8
+   }
+}
+
+.account-privacy .withdraw {
+   text-decoration: underline
+}
+
+.account-privacy .input-horizontal>ul>li.phone .input-box {
+   margin-bottom: 0
+}
+
+.account-individual-list .table {
+   max-width: inherit;
+   background: #fff;
+   margin-bottom: 0
+}
+
+.account-individual-list .table tr.detail td {
+   text-align: left
+}
+
+.account-individual-list .table th, .account-individual-list .table td {
+   font-size: 12px;
+   text-align: center;
+   vertical-align: middle
+}
+
+.account-individual-list .table th.info-caption,
+   .account-individual-list .table th.subject, .account-individual-list .table td.info-caption,
+   .account-individual-list .table td.subject {
+   text-align: left
+}
+
+.account-individual-list .table th {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   color: #2D2D2D;   /* 고치다  */
+   white-space: nowrap;
+   border-top: 1px solid #c8c8c8 !important;
+   border-bottom: 1px solid #c8c8c8;
+   background: #c0c0c0;    /* 고치다  */ 
+   padding-top: 12px;
+   padding-bottom: 10px
+}
+
+.account-individual-list .table th.info-img {
+   text-align: left
+}
+
+.account-individual-list .table td {
+   border-bottom: 1px solid #c8c8c8;
+   padding: 15px 8px 13px;
+   white-space: nowrap
+}
+
+.account-individual-list .table td.info-img {
+   padding-left: 0
+}
+
+.account-individual-list .table td.info-caption .brand,
+   .account-individual-list .table td.info-caption .name {
+   width: 200px
+}
+
+@media ( min-width : 1024px) {
+   .account-individual-list .table td.info-caption .brand,
+      .account-individual-list .table td.info-caption .name {
+      width: 280px
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-individual-list .table td.info-caption .brand,
+      .account-individual-list .table td.info-caption .name {
+      width: 510px
+   }
+}
+
+.account-individual-list .table td.info-caption .brand {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.account-individual-list .table td.info-caption .name {
+   color: #959595
+}
+
+.account-individual-list .table td.info-caption .option {
+   margin: 5px 0
+}
+
+.account-individual-list .table td.info-caption .option:before,
+   .account-individual-list .table td.info-caption .option:after {
+   content: " ";
+   display: table
+}
+
+.account-individual-list .table td.info-caption .option:after {
+   clear: both
+}
+
+@media ( min-width : 768px) {
+   .account-individual-list .table td.info-caption .option {
+      margin-top: 10px
+   }
+}
+
+.account-individual-list .table td.info-caption .option .button {
+   float: left
+}
+
+.account-individual-list .table td.subject {
+   width: 200px
+}
+
+.account-individual-list .table td.subject p {
+   width: 200px;
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+@media ( min-width : 1024px) {
+   .account-individual-list .table td.subject {
+      width: 365px
+   }
+   .account-individual-list .table td.subject p {
+      width: 365px
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-individual-list .table td.subject {
+      width: 465px
+   }
+   .account-individual-list .table td.subject p {
+      width: 465px
+   }
+}
+
+.account-individual-list .table td.coupon .button {
+   background: #ffc000;
+   color: #fff;
+   border-color: #ffc000
+}
+
+.account-individual-list .table td.sale .point {
+   color: #f5685d
+}
+
+.account-individual-list .table th {
+   min-height: 41px
+}
+
+.account-individual-list .table td.situation {
+   color: #636363
+}
+
+.account-individual-list .table .brief.answer-yes .situation {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   color: #242424
+}
+
+.account-individual-list .table .brief.end .situation {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   color: #636363
+}
+
+.account-individual-list .table .detail .answer .alert {
+   margin-top: 8px
+}
+
+.account-individual-list .page-navigator-horizon {
+   border: none
+}
+
+.account-individual-list .page-navigator-horizon .page-number {
+   border: none
+}
+
+.account-qna-list .table {
+   max-width: inherit;
+   background: #fff;
+   margin-bottom: 0
+}
+
+.account-qna-list .table tr.detail td {
+   text-align: left
+}
+
+.account-qna-list .table th, .account-qna-list .table td {
+   font-size: 12px;
+   text-align: center;
+   vertical-align: middle
+}
+
+.account-qna-list .table th.info-caption, .account-qna-list .table th.subject,
+   .account-qna-list .table td.info-caption, .account-qna-list .table td.subject
+   {
+   text-align: left
+}
+
+.account-qna-list .table th {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   color: #2D2D2D;   /* 고치다  */
+   white-space: nowrap;
+   border-top: 1px solid #c8c8c8 !important;
+   border-bottom: 1px solid #c8c8c8;
+   background: #c0c0c0;    /* 고치다  */ 
+   padding-top: 12px;
+   padding-bottom: 10px
+}
+
+.account-qna-list .table th.info-img {
+   text-align: left
+}
+
+.account-qna-list .table td {
+   border-bottom: 1px solid #c8c8c8;
+   padding: 8px;
+   white-space: nowrap
+}
+
+.account-qna-list .table td.info-img {
+   padding-left: 0
+}
+
+.account-qna-list .table td.info-caption .brand, .account-qna-list .table td.info-caption .name
+   {
+   width: 200px
+}
+
+@media ( min-width : 1024px) {
+   .account-qna-list .table td.info-caption .brand, .account-qna-list .table td.info-caption .name
+      {
+      width: 280px
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-qna-list .table td.info-caption .brand, .account-qna-list .table td.info-caption .name
+      {
+      width: 510px
+   }
+}
+
+.account-qna-list .table td.info-caption .brand {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.account-qna-list .table td.info-caption .name {
+   color: #959595
+}
+
+.account-qna-list .table td.info-caption .option {
+   margin: 5px 0
+}
+
+.account-qna-list .table td.info-caption .option:before,
+   .account-qna-list .table td.info-caption .option:after {
+   content: " ";
+   display: table
+}
+
+.account-qna-list .table td.info-caption .option:after {
+   clear: both
+}
+
+@media ( min-width : 768px) {
+   .account-qna-list .table td.info-caption .option {
+      margin-top: 10px
+   }
+}
+
+.account-qna-list .table td.info-caption .option .button {
+   float: left
+}
+
+.account-qna-list .table td.subject {
+   width: 200px
+}
+
+.account-qna-list .table td.subject p {
+   width: 200px;
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+@media ( min-width : 1024px) {
+   .account-qna-list .table td.subject {
+      width: 365px
+   }
+   .account-qna-list .table td.subject p {
+      width: 365px
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-qna-list .table td.subject {
+      width: 465px
+   }
+   .account-qna-list .table td.subject p {
+      width: 465px
+   }
+}
+
+.account-qna-list .table td.coupon .button {
+   background: #ffc000;
+   color: #fff;
+   border-color: #ffc000
+}
+
+.account-qna-list .table td.sale .point {
+   color: #f5685d
+}
+
+.account-qna-list .table th {
+   min-height: 41px
+}
+
+.account-qna-list .table td.info-img img {
+   display: block;
+   width: 45px
+}
+
+.account-qna-list .table td.info-caption .name, .account-qna-list .table td.info-caption .brand
+   {
+   width: auto
+}
+
+.account-qna-list .table td.situation {
+   color: #636363
+}
+
+.account-qna-list .table .detail .answer .alert {
+   margin-top: 10px
+}
+
+.account-qna-list .table .detail .answer .alert p>span {
+   font-family: "crn-rg", "NanumBarunGothic", Dotum, sans-serif;
+   color: #242424;
+   text-decoration: underline;
+   padding: 0 4px
+}
+
+.account-qna-list .table .brief.answer-yes .situation {
+   color: #242424;
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.account-qna-list .table .brief.end .situation {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   color: #636363
+}
+
+.account-qna-list .page-navigator-horizon {
+   border: none
+}
+
+.account-qna-list .page-navigator-horizon .page-number {
+   border: none
+}
+
+.account-review .order-list .table td.info-img {
+   width: 90px
+}
+
+.account-review .order-list .table td.info-img img {
+   width: 100%
+}
+
+.account-review .order-list .table td.review {
+   width: 8%
+}
+
+.account-review .order-list .table td.deadline {
+   width: 8%
+}
+
+.account-review .order-list .table td.deadline em strong {
+   display: block;
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.account-review .review-list .table {
+   max-width: inherit;
+   background: #fff;
+   margin-bottom: 0
+}
+
+.account-review .review-list .table tr.detail td {
+   text-align: left
+}
+
+.account-review .review-list .table th, .account-review .review-list .table td
+   {
+   font-size: 12px;
+   text-align: center;
+   vertical-align: middle
+}
+
+.account-review .review-list .table th.info-caption, .account-review .review-list .table th.subject,
+   .account-review .review-list .table td.info-caption, .account-review .review-list .table td.subject
+   {
+   text-align: left
+}
+
+.account-review .review-list .table th {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+   color: #2D2D2D;   /* 고치다  */
+   white-space: nowrap;
+   border-top: 1px solid #c8c8c8 !important;
+   border-bottom: 1px solid #c8c8c8;
+   background: #c0c0c0;    /* 고치다  */ 
+   padding-top: 12px;
+   padding-bottom: 10px
+}
+
+.account-review .review-list .table th.info-img {
+   text-align: left
+}
+
+.account-review .review-list .table td {
+   border-bottom: 1px solid #c8c8c8;
+   padding: 8px;
+   white-space: nowrap
+}
+
+.account-review .review-list .table td.info-img {
+   padding-left: 0
+}
+
+.account-review .review-list .table td.info-caption .brand,
+   .account-review .review-list .table td.info-caption .name {
+   width: 200px
+}
+
+@media ( min-width : 1024px) {
+   .account-review .review-list .table td.info-caption .brand,
+      .account-review .review-list .table td.info-caption .name {
+      width: 280px
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-review .review-list .table td.info-caption .brand,
+      .account-review .review-list .table td.info-caption .name {
+      width: 510px
+   }
+}
+
+.account-review .review-list .table td.info-caption .brand {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.account-review .review-list .table td.info-caption .name {
+   color: #959595
+}
+
+.account-review .review-list .table td.info-caption .option {
+   margin: 5px 0
+}
+
+.account-review .review-list .table td.info-caption .option:before,
+   .account-review .review-list .table td.info-caption .option:after {
+   content: " ";
+   display: table
+}
+
+.account-review .review-list .table td.info-caption .option:after {
+   clear: both
+}
+
+@media ( min-width : 768px) {
+   .account-review .review-list .table td.info-caption .option {
+      margin-top: 10px
+   }
+}
+
+.account-review .review-list .table td.info-caption .option .button {
+   float: left
+}
+
+.account-review .review-list .table td.subject {
+   width: 200px
+}
+
+.account-review .review-list .table td.subject p {
+   width: 200px;
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+@media ( min-width : 1024px) {
+   .account-review .review-list .table td.subject {
+      width: 365px
+   }
+   .account-review .review-list .table td.subject p {
+      width: 365px
+   }
+}
+
+@media ( min-width : 1440px) {
+   .account-review .review-list .table td.subject {
+      width: 465px
+   }
+   .account-review .review-list .table td.subject p {
+      width: 465px
+   }
+}
+
+.account-review .review-list .table td.coupon .button {
+   background: #ffc000;
+   color: #fff;
+   border-color: #ffc000
+}
+
+.account-review .review-list .table td.sale .point {
+   color: #f5685d
+}
+
+.account-review .review-list .table tr.detail td {
+   padding: 15px
+}
+
+.account-review .review-list .table tr th {
+   min-height: 41px
+}
+
+.account-review .review-list .table tr td.info-img {
+   width: 90px
+}
+
+.account-review .review-list .table tr td.info-img img {
+   width: 100%
+}
+
+.account-review .review-list .table tr td.info-caption {
+   width: 200px
+}
+
+.account-review .review-list .table tr td.grade {
+   width: 84px
+}
+
+.account-review .review-list .table tr td.grade .ratio {
+   position: relative;
+   width: 90px;
+   height: 18px;
+   float: left;
+   overflow: hidden
+}
+
+.account-review .review-list .table tr td.grade .ratio>span {
+   position: relative;
+   display: block;
+   overflow: hidden;
+   height: 18px
+}
+
+.account-review .review-list .table tr td.grade .ratio>span>.star {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 90px;
+   height: 18px;
+   background-image: url("../img/sprites-star.png");
+   background-repeat: no-repeat;
+   background-position: 0 0;
+   -webkit-background-size: 90px 18px;
+   -moz-background-size: 90px 18px;
+   -o-background-size: 90px 18px;
+   background-size: 90px 18px
+}
+
+.account-review .review-list .table tr td.date {
+   width: 110px
+}
+
+.account-review .review-list .table tr td.saved-money {
+   width: 112px
+}
+
+.account-review .review-list .table tr.saved .saved-money {
+   font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.account-review .review-list .page-navigator-horizon {
+   border: none
+}
+
+.account-review .review-list .page-navigator-horizon .page-number {
+   border: none
+}
+
+.privacy-guide .guide-list {
+	border-bottom: none
+}
+
+.account-order-list.guest .order-list, .account-order-view.guest .order-list
+	{
+	margin-top: 20px
+}
+
+.order-list .table {
+	max-width: inherit;
+	background: #fff;
+	margin-bottom: 0
+}
+
+.order-list .table tr.detail td {
+	text-align: left
+}
+
+.order-list .table th, .order-list .table td {
+	font-size: 12px;
+	text-align: center;
+	vertical-align: middle
+}
+
+.order-list .table th.info-caption, .order-list .table th.subject,
+	.order-list .table td.info-caption, .order-list .table td.subject {
+	text-align: left
+}
+
+.order-list .table th {
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	color: #000000;
+	white-space: nowrap;
+	border-top: 1px solid #c8c8c8 !important;
+	border-bottom: 1px solid #c8c8c8;
+	background: #c0c0c0;
+	padding-top: 12px;
+	padding-bottom: 10px
+}
+
+.order-list .table th.info-img {
+	text-align: left
+}
+
+.order-list .table td {
+	border-bottom: 1px solid #c8c8c8;
+	padding: 5px;
+	white-space: nowrap
+}
+
+.order-list .table td.info-img {
+	padding-left: 0
+}
+
+.order-list .table td.info-caption .brand, .order-list .table td.info-caption .name
+	{
+	width: 200px
+}
+
+@media ( min-width : 1024px) {
+	.order-list .table td.info-caption .brand, .order-list .table td.info-caption .name
+		{
+		width: 280px
+	}
+}
+
+@media ( min-width : 1440px) {
+	.order-list .table td.info-caption .brand, .order-list .table td.info-caption .name
+		{
+		width: 510px
+	}
+}
+
+.order-list .table td.info-caption .brand {
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.order-list .table td.info-caption .name {
+	color: #959595
+}
+
+.order-list .table td.info-caption .option {
+	margin: 5px 0
+}
+
+.order-list .table td.info-caption .option:before, .order-list .table td.info-caption .option:after
+	{
+	content: " ";
+	display: table
+}
+
+.order-list .table td.info-caption .option:after {
+	clear: both
+}
+
+@media ( min-width : 768px) {
+	.order-list .table td.info-caption .option {
+		margin-top: 10px
+	}
+}
+
+.order-list .table td.info-caption .option .button {
+	float: left
+}
+
+.order-list .table td.subject {
+	width: 200px
+}
+
+.order-list .table td.subject p {
+	width: 200px;
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+@media ( min-width : 1024px) {
+	.order-list .table td.subject {
+		width: 365px
+	}
+	.order-list .table td.subject p {
+		width: 365px
+	}
+}
+
+@media ( min-width : 1440px) {
+	.order-list .table td.subject {
+		width: 465px
+	}
+	.order-list .table td.subject p {
+		width: 465px
+	}
+}
+
+.order-list .table td.coupon .button {
+	background: #ffc000;
+	color: #fff;
+	border-color: #ffc000
+}
+
+.order-list .table td.sale .point {
+	color: #f5685d
+}
+
+.order-list .table th {
+	min-height: 41px
+}
+
+.order-list .table th.info-img {
+	padding-left: 15px
+}
+
+.order-list .table td.info-img {
+	width: 60px
+}
+
+.order-list .table td.info-img img {
+	width: 50px;
+	display: block
+}
+
+.order-list .table td.payment span {
+	display: block
+}
+
+.order-list .table td.sale span, .order-list .table td.delivery span {
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	display: block
+}
+
+.order-list .table td.number, .order-list .table td.situation {
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif
+}
+
+.order-list .table .action {
+	width: 120px;
+	padding: 0 15px
+}
+
+.order-list .table .action button {
+	width: 100%;
+	display: block;
+	font-family: "crn-md", "NanumBarunGothicBold", Dotum, sans-serif;
+	color: #fff;
+	background: #636363;
+	line-height: 2.3333333333;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-top: 5px
+}
+
+.order-list .table .action button:first-child {
+	margin-top: 0
+}
+
+.order-list .table .confirm-payment .action button {
+	background: #f9f9f9
+}
+
+.order-list .table .complete-delivery .action button {
+	background: #f9f9f9
+}
+
+.order-list .table .complete-delivery .action button:first-child {
+	background: #636363
+}
+
+@media ( min-width : 768px) {
+	.order-list .table td.info-img {
+		width: 100px
+	}
+	.order-list .table td.info-img img {
+		width: 90px;
+		display: block
+	}
+}

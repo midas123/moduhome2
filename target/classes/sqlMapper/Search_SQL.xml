@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+
+<!-- 최근 검색어 등록 -->
+	<insert id="RECENTSEARCHINSERT" parameterType="hashmap" useGeneratedKeys="true" keyProperty="SEARCH_NUMBER">
+		<selectKey keyProperty="SEARCH_NUMBER" resultType="string" order="BEFORE">
+			SELECT SEARCH_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO SEARCH
+			(
+				SEARCH_NUMBER,
+				MEMBER_NUMBER,
+				SEARCH_RECENT
+			)
+			VALUES
+			(
+				#{SEARCH_NUMBER},
+				#{MEMBER_NUMBER},
+				#{ISSEARCH}
+			)
+		]]>
+	</insert>
+	
+	<!-- 최근 검색어 리스트 -->
+	<select id="RECENTSEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    SEARCH_NUMBER,
+			    MEMBER_NUMBER,
+			    SEARCH_RECENT
+			FROM SEARCH
+			ORDER BY SEARCH_NUMBER DESC
+		]]>
+	</select>
+	
+	<!-- 공지사항 리스트 -->
+	<select id="NOTICESEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT *
+			FROM NOTICE
+			ORDER BY NOTICE_NUMBER DESC
+		]]>
+	</select>
+	
+	<!-- faq 리스트 -->
+	<select id="FAQSEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT *
+			FROM FAQ
+			ORDER BY FAQ_NUMBER DESC
+		]]>
+	</select>
+
+	<!-- 스토리 리스트 -->
+	<select id="SNSSEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT *
+			FROM SNSBOARD
+			ORDER BY SNS_REGDATE DESC
+		]]>
+	</select>
+	
+	<!-- 회원 리스트 -->
+	<select id="MEMBERSEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT *
+			FROM MEMBER
+			ORDER BY MEMBER_NUMBER DESC
+		]]>
+	</select>
+	
+	<!-- 매거진 리스트 -->
+	<select id="MGSEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT *
+			FROM MAGAZINEBOARD
+			ORDER BY MG_REGDATE DESC
+		]]>
+	</select>
+	
+	<!-- 상품 리스트 -->
+	<select id="GOODSSEARCH" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT *
+			FROM GOODS
+			ORDER BY GOODS_NUMBER DESC
+		]]>
+	</select>
+			 
+</mapper>

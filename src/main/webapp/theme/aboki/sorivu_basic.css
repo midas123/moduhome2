@@ -1,0 +1,234 @@
+#soriView * { margin: 0; padding: 0; font-size: 12px; line-height: 1.25; font-family: Dotum, AppleGothic, Sans-serif; } 
+#soriView { text-align: left; background-color: #fff;}
+#soriView li { list-style: none; }
+#soriView img { border: 0; }
+#soriView fieldset,
+#soriView img { border: 0; }
+#soriView caption,
+#soriView legend { display: none; }
+#soriView img { vertical-align: top; }
+#soriView a { color: #666; text-decoration: none; }
+#soriView .chk-rdo { width: 14px; height: 14px; vertical-align: middle; }
+#soriView .blind { display: none; }
+#soriView { color: #666; }
+/* 작성 */
+#soriView .sec-reg { position: relative; padding-top: 60px; border: 1px solid #ddd; }
+#soriView .sec-reg .rhd { zoom: 1; position: absolute; left: 0px; top: 1px; right: 0px; padding-left: 203px; }
+#soriView .sec-reg .rhd:after { content: ""; display: block; clear: both; }
+#soriView .sec-reg .rhd .s1,
+#soriView .sec-reg .rhd .s2 { float: left; position: relative; }
+#soriView .sec-reg .hide-input { visibility: hidden; position: absolute; }
+    /* s1 */
+    #soriView .sec-reg .rhd .s1 { left: -203px; width: 202px; padding-top: 10px; margin-right: -204px; border-right: 1px solid #ddd; background-color: #f6f6f6; } 
+    #soriView .sec-reg .rhd .s1 .tmb { position: relative; display: inline; float: left; width: 48px; height: 48px; margin-left: 10px; margin-right: 10px; border: 1px solid #ddd; }
+    #soriView .sec-reg .rhd .s1 .tmb .ic { position: absolute; right: 0px; bottom: 0px; }
+    #soriView .sec-reg .rhd .s1 .nam { float: left; width: 125px; overflow: hidden; height: 50px; font-weight: bold; line-height: 50px; font-size: 14px; color: #333; text-overflow: ellipsis; }
+    /* s2 */
+    #soriView .sec-reg .rhd .s2 { width: 100%; height: 59px; border-bottom: 1px solid #ddd; }
+    #soriView .sec-reg .acc { zoom: 1; padding-left: 18px; padding-top: 17px; }
+    #soriView .sec-reg .acc:after { content: ""; display: block; clear: both; }
+    #soriView .sec-reg .acc li { position: relative; float: left; margin-right: 8px; }
+    #soriView .sec-reg .acc .c-ico { display: none; position: absolute; left: -3px; top: -3px; width: 15px; height: 15px; font-size: 0; line-height: 0; background: url(http://img.sorivu.com/api/img/acc_set_ico.gif) no-repeat 0 0; }
+    #soriView .sec-reg .acc li.check .c-ico { display: block; }
+    #soriView .sec-reg .ac-layer { display: none; position: absolute; left: 5px; top: 35px; width: 115px; padding: 10px; border: 1px solid #444; background-color: #666; }
+    #soriView .sec-reg .ac-layer .edge { position: absolute; left: -1px; top: -9px; width: 8px; height: 8px; font-size: 0; line-height: 0; background: url(http://img.sorivu.com/api/img/layer_edge.gif) no-repeat 0 0; }
+    #soriView .sec-reg .ac-layer a { display: block; height: 15px; padding-left: 22px; color: #ccc; font-size: 11px; line-height: 15px; white-space: nowrap; }
+    #soriView .sec-reg .ac-layer a:hover { text-decoration: underline; }
+    #soriView .sec-reg .ac-layer a.set { background: url(http://img.sorivu.com/api/img/acc_set_ico.gif) no-repeat 0 50%; }
+    #soriView .sec-reg .ac-layer a.multi { margin-top: 5px; background: url(http://dev.sorivu.com/api/img/ico_multi.gif) no-repeat 0 50%; }
+    #soriView .sec-reg .ac-layer a.out { margin-top: 5px; background: url(http://img.sorivu.com/api/img/acc_out_ico.gif) no-repeat 0 50%; }
+    #soriView .sec-reg li.now .ac-layer { display: block; }
+
+    #soriView .sec-reg .sns-layer { display: none; position: absolute; left: 5px; top: 35px; width: 115px; padding: 10px; border: 1px solid #444; background-color: #666; }
+    #soriView .sec-reg .sns-layer dl { color:white; }
+    #soriView .sec-reg .sns-layer dl dt { font-weight:bold; font-size:11px; }
+    #soriView .sec-reg .sns-layer dl dd { padding-top:5px; color:#ccc; font-size:11px; }
+    #soriView .sec-reg .sns-layer .edge { position: absolute; left: -1px; top: -9px; width: 8px; height: 8px; font-size: 0; line-height: 0; background: url(http://img.sorivu.com/api/img/layer_edge.gif) no-repeat 0 0; }
+    #soriView .sec-reg li.now .sns-layer { display: block; }
+
+    #soriView .sec-reg .rhd .comm { position: absolute; right: 12px; top:10px; color: #ccc; }
+    #soriView .sec-reg .rhd .comm label { font-size: 11px; color: #666; }
+    #soriView .sec-reg .rhd .comm img { vertical-align: middle; cursor: pointer; }
+    #soriView .sec-reg .rhd .comm .ab-ico { position: relative; display: inline; }
+    #soriView .sec-reg .rhd .ab-layer { display: none; position: absolute; right: 3px; top: 16px; width:269px; height:200px; background: url(http://img.sorivu.com/api/img/bg_layer_sorivu.png) no-repeat 0 0 ; line-height:18px; }
+    #soriView .sec-reg .rhd .ab-layer dt { margin-bottom:10px; padding:20px 0 0 20px; color:#ffffdd; font-size:11px;}
+    #soriView .sec-reg .rhd .ab-layer dt strong { font-size:12px; }
+    #soriView .sec-reg .rhd .ab-layer dd { margin-top: 5px; padding:0 0 0 20px; font-size: 11px; letter-spacing:-0.05em; line-height:15px; color:#ccc; }
+    #soriView .sec-reg .rhd .ab-layer .l-close { position: absolute; right: 6px; top: 102px; font-size: 0; line-height: 0; text-indent:-9999px; }
+    #soriView .sec-reg .rhd .ab-layer .l-close a { display:block; width:7px; height:7px; }
+/*
+    #soriView .sec-reg .rhd .lay-w { position: absolute; right: 8px; top: 6px; width: 38px;; height: 42px; font-size: 0; line-height: 0; }
+    #soriView .sec-reg .rhd .lay-w .help,
+    #soriView .sec-reg .rhd .lay-w .by-sori { overflow: hidden; position: absolute; text-indent: -9999px; background: url(http://img.sorivu.com/api/img/by_sorivu.gif) no-repeat 0 0; }
+    #soriView .sec-reg .rhd .lay-w .help { right: 0px; top: 0px; width: 13px; height: 13px; background-position: -25px 0px; }
+    #soriView .sec-reg .rhd .lay-w .by-sori { right: 18px; top: -2px; width: 38px; height: 17px; background-position: 0px -26px; }
+    #soriView .sec-reg .rhd .lay-w .edgebook { background: url("http://img.sorivu.com/api/img/edgebook_dis.gif") no-repeat scroll 0 0 transparent; cursor: pointer; height: 16px; left: 12px; overflow: hidden; position: absolute; text-indent: -9999px; top: 24px; width: 29px; }
+    #soriView .sec-reg .rhd .lay-w .edgebook_span {height: 16px; right: 30px; position: absolute; top: 25px; width: 125px; font-size: 11px; line-height: 1.5; letter-spacing: -1px; text-decoration: underline; color:#999}
+*/
+
+    #soriView .sec-reg .rhd .lay-w .edp { display: none; overflow: hidden; position: absolute; right: 0px; top: 25px; width: 29px; height: 16px; text-indent: -9999px; background: url(http://img.sorivu.com/api/img/ebpoint.gif) no-repeat 0 0; }
+    #soriView #layerBySorivu { display: none; position: absolute; right: -10px; top: 25px; width: 269px; }
+	#soriView #layerBySorivu dl { padding: 12px 8px; color: #cccccc; border: 1px solid #444; background-color: #666; }
+	#soriView #layerBySorivu dt,
+	#soriView #layerBySorivu dd { font-size: 12px; line-height: 1.5; letter-spacing: -1px; }
+	#soriView #layerBySorivu dt { font-weight: bold; }
+	#soriView #layerBySorivu dd { margin-top: 5px; }
+	#soriView #layerBySorivu .btn-x { overflow: hidden; position: absolute; right: 0; bottom: 0; width: 19px; height: 19px; text-indent: -9999px; cursor: pointer; border: 0; background: url(http://img.sorivu.com/api/img/btn_x.gif) no-repeat 50% 50%; }
+	#soriView #layerBySorivu .edge { position: absolute; right: 0px; top: -8px; width: 8px; height: 8px; font-size: 0; line-height: 0; background: url(http://img.sorivu.com/api/img/layer_edge.gif) no-repeat 0 0; }
+	#soriView #layerBySorivu iframe { z-index: -1; position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; visibility: hidden; }
+   /* cont */
+    #soriView .sec-reg .rcont { padding: 15px 10px; background-color: #f6f6f6; }
+    #soriView .sec-reg .rcont li { zoom: 1; position: relative; padding-right: 93px; margin-top: 5px; }
+    #soriView .sec-reg .rcont li:after { content: ""; display: block; clear: both; }
+    #soriView .sec-reg .rcont .lab-txt { position: relative; display: block; font-size: 0; line-height: 0; border: 1px solid #e3e9ef; border-top: 1px solid #abadb3; background-color: #fff; }
+    #soriView .sec-reg .rcont .lab-frm { display: block; width: 100%; border: 0; }
+    #soriView .sec-reg .rcont input.lab-frm { height: 20px; font-size: 12px; line-height: 20px; }
+    #soriView .sec-reg .rcont textarea.lab-frm { height: 100px; }
+    #soriView .sec-reg .rcont label { position: absolute; top: 0px; left: 5px; heihgt: 22px; line-height: 22px; color: #cccccc; }
+		/* file, rating common */
+		#soriView .sec-reg .rcont .svr-rf { font-size: 0; line-height: 0; }
+		#soriView .sec-reg .rcont .svr-rf .afile-w { zoom: 1; overflow: hidden; position: relative; display: block; padding-left: 30px; padding-right: 90px; background: url(http://img.sorivu.com/api/img/ico_afile.gif) no-repeat 3px 50%; }
+		#soriView .sec-reg .rcont .svr-rf .up { position: absolute; right: 0px; top: 0px; width: 87px; height: 20px; line-height: 20px; text-align: center; font-family: Tahoma; font-size: 11px; border: 1px solid #ccc; background-color: #fff; }
+		#soriView .sec-reg .rcont .svr-rf .tri-input { width: 100%; height: 20px; border: 0; }
+		#soriView .sec-reg .rcont .svr-rf .file-hid { z-index: 2; position: absolute; right: 0px; top: 0px; width: 50px; height: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+		#soriView .sec-reg .rcont .svr-rf .rat { zoom: 1; display: block; padding-left: 21px; background: url(http://img.sorivu.com/api/img/ico_rat.gif) no-repeat 0 3px; }
+		#soriView .sec-reg .rcont .svr-rf .rat select { width: 100%; height: 20px; line-height: 20px; border: 1px solid #e3e9ef; border-top: 1px solid #abadb3; }
+			/* file, rating type 1 */
+			#soriView .sec-reg .rcont .svr-rf-type1 { padding-right: 245px; }
+			#soriView .sec-reg .rcont .svr-rf-type1 .rat { position: absolute; right: 93px; top: 0px; padding-left: 21px; width: 115px; background: url(http://img.sorivu.com/api/img/ico_rat.gif) no-repeat 0 3px; }
+			#soriView .sec-reg .rcont .svr-rf-type1 .rat select { width: 115px; }
+			/* file, rating type 3 */
+			#soriView .sec-reg .rcont .svr-rf-type3 { padding-left: 4px; }
+    #soriView .sec-reg .rcont .svr-cont .btn-reg { position: absolute; right: 0px; top: 0px; width: 87px; height: 100px; text-align: center; font-weight: bold; color: #333; cursor: pointer; border: 1px solid #ccc; background-color: #dadada; }
+    #soriView .sec-reg .rcont .svr-cont .btn-reg span { display: block; margin-top: 3px; font-weight: normal; font-size: 11px; color: #818181; }
+                
+    /* 뷰  */
+    #soriView .sec-lw { margin-top: 20px; }
+    /* sort */
+    #soriView .sec-lw .sv-sort { text-align: right; font-size: 0; line-height: 0;}
+    #soriView .sec-lw .sv-sort a { padding: 0px 14px; font-size: 12px; line-height: 1.25; background: url(http://img.sorivu.com/api/img/ta_div.gif) no-repeat 0 45%; }
+    #soriView .sec-lw .sv-sort a.now { font-weight: bold; color: #333; }
+    #soriView .sec-lw .sv-sort a.first { background: none; }
+    #soriView .sec-lw .sv-sort .reviewCount {float:left; font-size: 14px; font-weight: bold; color: #333;}
+    /* list */
+    #soriView .sec-lw .lw { margin-top: 10px; }
+    #soriView .sec-lw .lw ul { border: 1px solid #ddd; }
+    #soriView .sec-lw .lw li { zoom: 1; font-size: 0; line-height: 0; position: relative; padding: 10px 0px 15px 70px; border-bottom: 1px solid #ddd; }         
+    #soriView .sec-lw .lw .tmb { position: absolute; left: 10px; top: 10px; width: 48px; height: 48px; border: 1px solid #ddd; }
+    #soriView .sec-lw .lw .tmb .ic { position: absolute; right: 0px; bottom: 0px; }
+    #soriView .sec-lw .lw .lhd { height: 49px; border-bottom: 1px solid #ddd; }
+    #soriView .sec-lw .lcont { margin-top: 20px; margin-right: 20px; }
+    #soriView .sec-lw .lcont .title { margin-bottom:10px; font-size: 14px; font-weight: bold; color: #333;}
+    #soriView .sec-lw .lcont .tx { margin-top: 15px; }
+    #soriView .sec-lw .lcont .bstat { zoom: 1; overflow: hidden; margin-top: 20px; font-size: 11px; }
+    #soriView .sec-lw .lcont .bstat dt,
+    #soriView .sec-lw .lcont .bstat dd { float: left; height: 14px; line-height: 14px; cursor: pointer; }
+    #soriView .sec-lw .lcont .bstat dt { margin-right: 5px; font-weight: bold; }
+    #soriView .sec-lw .lcont .bstat dd { margin-right: 10px; }
+    #soriView .sec-lw .lcont .bstat .bcmt { float: left; }
+    #soriView .sec-lw .lcont .bstat .bcmt dt { color: #4a72da; text-decoration: underline; letter-spacing: -1px; }
+    #soriView .sec-lw .lcont .bstat .bcmt dd { color: #666;  }
+    #soriView .sec-lw .lcont .bstat .bcmt2 { float: left; }
+    #soriView .sec-lw .lcont .bstat .bcmt2 dt { color: #4a72da; text-decoration: underline; letter-spacing: -1px; }
+    #soriView .sec-lw .lcont .bstat .bcmt2 dd { color: #666;  }
+    #soriView .sec-lw .lcont .bstat .rec,
+    #soriView .sec-lw .lcont .bstat .nrec { float: right; }
+    #soriView .sec-lw .lcont .bstat .rec dt,
+    #soriView .sec-lw .lcont .bstat .rec dd,
+    #soriView .sec-lw .lcont .bstat .nrec dt,
+    #soriView .sec-lw .lcont .bstat .nrec dd { font-size: 11px; }
+    #soriView .sec-lw .lcont .bstat .nrec { float: right; color: #999; }
+    #soriView .sec-lw .lcont .bstat .nrec dd { margin-right: 0; font-weight: bold; }
+    #soriView .sec-lw .lcont .bstat .rec { font-weight: bold; color: #333; }
+    #soriView .sec-lw .lcont .vimg { position: relative; width: 245px; }
+    #soriView .sec-lw .lcont .vimg .dview,
+    #soriView .sec-lw .lcont .vimg .dview-bg { position: absolute; right: 0px; bottom: 0px; width: 29px; height: 29px; }
+    #soriView .sec-lw .lcont .vimg .dview { z-index: 2; cursor: pointer; background: url(http://img.sorivu.com/api/img/lw_dview.gif) no-repeat 50% 50%; }
+    #soriView .sec-lw .lcont .vimg .dview-bg { background-color: #000; opacity: 0.5; filter: alpha(opacity=50); }
+        /* type1 */
+        #soriView .sec-lw .lw .type-1 .lhd { position: relative; padding-right: 160px; }
+        #soriView .sec-lw .lw .type-1 .nam-w { display: block; padding-left: 27px; }
+        #soriView .sec-lw .lw .type-1 .nam-w .nam { overflow: hidden; width: 100%; height: 50px; line-height: 50px; font-weight: bold; color: #333; text-overflow: ellipsis; text-decoration: underline; }
+
+        #soriView .sec-lw .lw .type-1 .nam-ms { background: url(http://img.sorivu.com/api/img/acc_ms_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-fb { background: url(http://img.sorivu.com/api/img/acc_fb_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-tw { background: url(http://img.sorivu.com/api/img/acc_tw_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-m2 { background: url(http://img.sorivu.com/api/img/acc_m2_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-yz { background: url(http://img.sorivu.com/api/img/acc_yz_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-cy { background: url(http://img.sorivu.com/api/img/acc_cy_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-gp { background: url(http://img.sorivu.com/api/img/acc_gp_s.gif) no-repeat 7px 50%; }
+        #soriView .sec-lw .lw .type-1 .nam-we { background: url(http://img.sorivu.com/api/img/acc_we_s.gif) no-repeat 7px 50%; }
+
+
+        #soriView .sec-lw .lw .type-1 .rat-rtime { position: absolute; right: 20px; top: 7px; }
+        #soriView .sec-lw .lw .type-1 .rat,
+        #soriView .sec-lw .lw .type-1 .rtime { float: right; clear: both; }
+        #soriView .sec-lw .lw .type-1 .rat { overflow: hidden; height: 14px; text-indent: -9999px; background: url(http://img.sorivu.com/api/img/lw_rat.gif) repeat-x 0 0; }
+        #soriView .sec-lw .lw .type-1 .rat-1 { width: 18px; }
+        #soriView .sec-lw .lw .type-1 .rat-2 { width: 36px; }
+        #soriView .sec-lw .lw .type-1 .rat-3 { width: 54px; }
+        #soriView .sec-lw .lw .type-1 .rat-4 { width: 72px; }
+        #soriView .sec-lw .lw .type-1 .rat-5 { width: 90px; }
+        #soriView .sec-lw .lw .type-1 .rtime { padding-top: 3px; padding-right: 1px; text-align: right; font-size: 11px; color: #999; }
+        #soriView .sec-lw .lw .type-1 .rtime .del { display: inline-block; height: 16px; padding-left: 7px; margin-left: 7px; vertical-align: middle; font-weight: bold; font-size: 11px; line-height: 16px; color: #cd0000; background: url(http://img.sorivu.com/api/img/lw_del_div.gif) no-repeat 0 50%; }
+
+        /* type2 */
+        #soriView .sec-lw .lw .type-2 .lhd { position: relative; padding-left: 110px; padding-right: 190px; }
+        #soriView .sec-lw .lw .type-2 .nam-w { position: absolute; left: 4px; top: 8px; width: 90px; }
+        #soriView .sec-lw .lw .type-2 .nam-w .nam { overflow: hidden; display: block; width: 70px; height: 16px; padding-left: 17px; font-weight: bold; line-height: 16px; color: #333; white-space: nowrap; text-overflow: ellipsis; background: url(http://img.sorivu.com/api/img/lw_nam_star.gif) no-repeat 0 0; }
+        #soriView .sec-lw .lw .type-2 .nam-w .uip { display: block; margin-top: 3px; font-size: 11px; font-size: 10px; color: #999; font-family: Tahoma; }
+        #soriView .sec-lw .lw .type-2 .lhd .tx { overflow: hidden; display: block; width: 100%; height: 50px; line-height: 50px; font-weight: bold; font-size: 14px; color: #333; white-space: nowrap; text-overflow: ellipsis; }
+        #soriView .sec-lw .lw .type-2 .rat-rtime { position: absolute; right: 20px; top: 7px; }
+        #soriView .sec-lw .lw .type-2 .rat,
+        #soriView .sec-lw .lw .type-2 .rtime { float: right; clear: both; }
+        #soriView .sec-lw .lw .type-2 .rat { overflow: hidden; height: 14px; text-indent: -9999px; background: url(http://img.sorivu.com/api/img/lw_rat.gif) repeat-x 0 0; }
+        #soriView .sec-lw .lw .type-2 .rat-1 { width: 18px; }
+        #soriView .sec-lw .lw .type-2 .rat-2 { width: 36px; }
+        #soriView .sec-lw .lw .type-2 .rat-3 { width: 54px; }
+        #soriView .sec-lw .lw .type-2 .rat-4 { width: 72px; }
+        #soriView .sec-lw .lw .type-2 .rat-5 { width: 90px; }
+        #soriView .sec-lw .lw .type-2 .rtime { padding-top: 3px; padding-right: 1px; text-align: right; font-size: 11px; color: #999; }
+        #soriView .sec-lw .lw .type-2 .rtime .del { display: inline-block; height: 16px; padding-left: 7px; margin-left: 7px; vertical-align: middle; font-weight: bold; font-size: 11px; line-height: 16px; color: #cd0000; background: url(http://img.sorivu.com/api/img/lw_del_div.gif) no-repeat 0 50%; }
+    /* reply */	
+    #soriView .sec-lw .lw .reply { margin-top: 15px; border: 0; }
+    #soriView .sec-lw .lw .reply li { min-height: 36px; _height: 36px; padding: 15px 10px 14px 50px; border-top: 1px solid #ddd; border-bottom: 0; }
+    #soriView .sec-lw .lw .reply .rp-tmb { position: absolute; left: 0px; top: 15px; width: 36px; height: 36px; }
+    #soriView .sec-lw .lw .reply .rp-tmb a,
+    #soriView .sec-lw .lw .reply .rp-tmb img { display: block; width: 100%; height: 100%; }
+    #soriView .sec-lw .lw .reply .rp-txw { width: 100%; }
+    #soriView .sec-lw .lw .reply .nam-date { position: relative; zoom: 1; overflow: hidden; padding-right: 190px; }
+    #soriView .sec-lw .lw .reply .rp-nam { overflow: hidden; width: 100%; display: block; height: 14px; line-height: 14px; font-weight: bold; color: #333; text-overflow: ellipsis; }
+    #soriView .sec-lw .lw .reply .rp-nam-w { display: block; padding-left: 19px; }
+
+    #soriView .sec-lw .lw .reply .rp-nam-ms { background: url(http://img.sorivu.com/api/img/acc_ms_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-fb { background: url(http://img.sorivu.com/api/img/acc_fb_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-tw { background: url(http://img.sorivu.com/api/img/acc_tw_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-m2 { background: url(http://img.sorivu.com/api/img/acc_m2_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-yz { background: url(http://img.sorivu.com/api/img/acc_yz_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-cy { background: url(http://img.sorivu.com/api/img/acc_cy_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-gp { background: url(http://img.sorivu.com/api/img/acc_gp_s.gif) no-repeat 0 50%; }
+    #soriView .sec-lw .lw .reply .rp-nam-we { background: url(http://img.sorivu.com/api/img/acc_we_s.gif) no-repeat 0 50%; }
+
+
+    #soriView .sec-lw .lw .reply .rp-rtime { position: absolute; right: 10px; top: 0px; text-align: right; font-size: 11px; color: #999; }
+    #soriView .sec-lw .lw .reply .rp-rtime .del { display: inline-block; height: 16px; padding-left: 7px; margin-left: 7px; vertical-align: middle; font-weight: bold; font-size: 11px; line-height: 16px; color: #cd0000; background: url(http://img.sorivu.com/api/img/lw_del_div.gif) no-repeat 0 50%; }		
+    #soriView .sec-lw .lw .reply .rp-tx { margin-top: 5px; }
+    /* reply frm */
+    #soriView .rp-frm { margin-right: 10px; padding: 10px; border: 1px solid #ddd; background-color: #f6f6f6; }
+    #soriView .rp-frm .rp-fhd dd { zoom: 1; overflow: hidden; }
+    #soriView .rp-frm .rp-fhd dd a { float: left; width: auto; margin-right: 8px; }
+    #soriView .rp-frm .rp-fcon { zoom: 1; position: relative; margin-top: 8px; padding-left: 50px; padding-right: 82px; }
+    #soriView .rp-frm .rp-fcon .fr-tmb,
+    #soriView .rp-frm .rp-fcon .btn-reg { position: absolute; top: 0px; }
+    #soriView .rp-frm .rp-fcon .fr-tmb { left: 0px; width: 48px; height: 48px; border: 1px solid #ccc; }
+    #soriView .rp-frm .rp-fcon .fr-tmb a,
+    #soriView .rp-frm .rp-fcon .fr-tmb img { display: block; width: 48px; height: 48px; }
+    #soriView .rp-frm .rp-fcon .btn-reg { right: 0px; width: 76px; height: 50px; line-height: 50px; font-weight: bold; color: #333; text-align: center; cursor: pointer; border: 1px solid #ccc; background-color: #dadada; }
+    #soriView .rp-frm .rp-fcon .fr-txt { zoom: 1; overflow: hidden; height: 50px; border: 1px solid #e3e9ef; }
+    #soriView .rp-frm .rp-fcon .fr-txt textarea { float: left; width: 100%; height: 50px; border: 0; }
+
+/* 더보기 */   
+#soriView .sec-lw .more-bar { position: relative; top: -2px; text-align:center; /*border: 1px solid #ccc;*/ }
+#soriView .sec-lw .more-bar button { width: 100%; height: 33px; color: #333; line-height: 33px; text-align: center; font-weight: bold; font-size: 12px; cursor: pointer; border: 1px solid #ccc; background: #dadada; }
+
+.pointer { cursor:pointer}

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="snsboard">
+
+	
+
+	<!-- 매거진 타이틀 삭제 -->
+	<delete id="SNSDELETE" parameterType="hashmap">
+		<![CDATA[
+			DELETE FROM SNSBOARD 
+			WHERE SNS_NUMBER = #{SNS_NUMBER, jdbcType=INTEGER}
+		]]>
+	</delete>
+
+ <!-- 스토리 메인 이미지 등록 -->
+   <update id="SNSMAINIMAGE" parameterType="hashmap">
+      <![CDATA[
+         UPDATE SNSBOARD SET SNS_IMAGE= #{SNS_IMAGE, jdbcType=VARCHAR} WHERE SNS_NUMBER=#{SNS_NUMBER, jdbcType=INTEGER}
+      ]]>
+   </update>
+
+	 <!-- 스토리 리스트 -->
+<!--	<select id="SNSLIST" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT
+			    SNS_NUMBER,
+			    SNS_TITLE,
+			    SNS_CONTENT,
+			    SNS_IMAGE,
+			    MEMBER_NUMBER,
+			    SNS_REGDATE
+			FROM SNSBOARD
+			WHERE SNS_HIDE ='0'
+			ORDER BY SNS_REGDATE DESC
+		]]>
+	</select> -->
+	
+		<!-- 스토리 리스트 -->
+	<select id="SNSLIST" parameterType="java.lang.String" resultType="hashmap">
+		
+	       <!--  select
+            t1.SNS_NUMBER,MEMBER_NUMBER,SNS_TITLE,SNS_CONTENT,SNS_REGDATE,SNS_LIKE,SNS_HASHTAG,SNS_IMAGE,SNS_HIDE,t2.liker
+            from
+             (select * 
+             from snsboard)t1
+            left join
+             (select member_number as liker, sns_number from likes where member_number = #{MEMBER_NUMBER})t2
+            on t1.sns_number = t2.sns_number
+           where sns_hide = '0'
+           ORDER BY SNS_REGDATE DESC -->
+       <![CDATA[
+          select
+           t1.SNS_NUMBER,MEMBER_NUMBER,SNS_TITLE,SNS_CONTENT,SNS_REGDATE,SNS_LIKE,SNS_HASHTAG,SNS_IMAGE,SNS_HIDE,t2.liker,t1.MEMBER_ID,t1.STORED_FILE_NAME
+            from
+             ( select *
+           from snsboard join member USING(MEMBER_NUMBER))t1
+            left join
+             (select member_number as liker, sns_number from likes where member_number =#{MEMBER_NUMBER})t2
+            on t1.sns_number = t2.sns_number
+           where sns_hide = '0'
+           ORDER BY SNS_REGDATE DESC 
+          
+		]]>
+	</select>
+
+	<!-- 스토리 등록 -->
+	<insert id="SNSINSERT" parameterType="hashmap" useGeneratedKeys="true" keyProperty="SNS_NUMBER">
+		<selectKey keyProperty="SNS_NUMBER" resultType="string" order="BEFORE">
+			SELECT SNS_NUMBER_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		<![CDATA[
+			INSERT INTO SNSBOARD
+			(
+				SNS_NUMBER,
+			    SNS_CONTENT, 
+			    MEMBER_NUMBER,
+			    SNS_IMAGE,
+			    SNS_REGDATE 
+			)
+			VALUES
+			(
+				#{SNS_NUMBER, jdbcType=INTEGER}, 
+			    #{SNS_CONTENT, jdbcType=VARCHAR}, 
+			    #{MEMBER_NUMBER, jdbcType=INTEGER}, 
+			    #{SNS_IMAGE, jdbcType=VARCHAR},
+			    SYSDATE
+			)
+		]]>
+	</insert>
+	
+	<!-- 스토리 숨기기 -->
+	<update id="SNSHIDE" parameterType="java.lang.String">
+      <![CDATA[
+         UPDATE SNSBOARD
+         SET SNS_HIDE = '1'
+         WHERE SNS_NUMBER = #{SNS_NUM}
+      ]]>
+   </update>
+   
+      <!-- 스토리 숨기기 취소 -->
+   <update id="SNSHIDECancel" parameterType="java.lang.String">
+      <![CDATA[
+         UPDATE SNSBOARD
+         SET SNS_HIDE = '0'
+         WHERE SNS_NUMBER = #{SNS_NUMBER}
+      ]]>
+   </update>
+   
+     <!--  좋아요 수 증가 -->
+     <update id="SNSLIKEupdate" parameterType="hashmap">
+      <![CDATA[
+         UPDATE SNSBOARD
+         SET SNS_LIKE = #{like_count}
+         WHERE SNS_NUMBER = #{SNS_NUMBER}
+      ]]>
+   </update>
+   
+        <!--  좋아요 수 감소 -->
+     <update id="SNSDownLike" parameterType="hashmap">
+      <![CDATA[
+         UPDATE SNSBOARD
+         SET SNS_LIKE = #{like_count}
+         WHERE SNS_NUMBER = #{SNS_NUMBER}
+      ]]>
+   </update>
+   
+   
+   <select id="SNSWriter" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT MEMBER_NUMBER
+			FROM SNSBOARD
+			WHERE SNS_NUMBER = #{SNS_NUMBER}
+		]]>
+   </select>
+   
+	<select id="SNSMYLIST" parameterType="int" resultType="hashmap">
+		<![CDATA[   
+	        select
+            	SNS_NUMBER,MEMBER_NUMBER,SNS_TITLE,SNS_CONTENT,SNS_REGDATE,SNS_LIKE,SNS_HASHTAG,SNS_IMAGE,SNS_HIDE, (select MEMBER_ID from member where MEMBER_NUMBER = #{MEMBER_NUMBER}) as MEMBER_ID
+            from
+            	snsboard
+            where 
+            	MEMBER_NUMBER = #{MEMBER_NUMBER}
+            ORDER BY SNS_REGDATE DESC
+
+		]]>
+	</select>   
+		 
+</mapper>

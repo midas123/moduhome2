@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="faq">
+
+	<select id="selectFaqList" parameterType="hashmap" resultType="hashmap">
+		<![CDATA[
+			SELECT FAQ_NUMBER, FAQ_TITLE, FAQ_CONTENT, FAQ_CATEGORY, (SELECT FAQ_INDEX_NAME FROM FAQ_INDEX WHERE FAQ_INDEX = FAQ_CATEGORY ) AS FAQ_NAME
+			FROM FAQ
+			order by FAQ_NUMBER DESC
+		]]>
+	</select>
+	
+	<insert id="insertFaq" parameterType="hashmap">
+		<![CDATA[
+			insert into FAQ(FAQ_NUMBER, FAQ_TITLE, FAQ_CONTENT, FAQ_CATEGORY)
+				   values(FAQ_NUMBER_SEQ.NEXTVAL, #{FAQ_TITLE}, #{FAQ_CONTENT}, #{FAQ_CATEGORY})
+		]]>
+	</insert>
+	
+	<update id="updateFaq" parameterType="hashmap">
+		<![CDATA[
+			update FAQ
+			set FAQ_TITLE = #{FAQ_TITLE}, FAQ_CONTENT = #{FAQ_CONTENT}, FAQ_CATEGORY= #{FAQ_CATEGORY}
+			where FAQ_NUMBER = #{FAQ_NUMBER}
+		]]>
+	</update>
+	
+	<delete id="deleteFaq" parameterType="hashmap">
+		<![CDATA[
+			delete from FAQ
+			where FAQ_NUMBER = #{FAQ_NUMBER}
+		]]>
+	</delete>
+	
+
+
+
+
+
+
+</mapper>
