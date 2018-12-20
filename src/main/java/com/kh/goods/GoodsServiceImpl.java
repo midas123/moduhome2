@@ -29,8 +29,8 @@ public class GoodsServiceImpl implements GoodsService{
 	
 	//스토어 세부 카테고리
 	@Override
-	public List<Map<String, Object>> goodsCategory(Map<String, Object> map) throws Exception {
-		return goodsDAO.goodsCategory(map);
+	public List<Map<String, Object>> goodsListOrdered(Map<String, Object> map) throws Exception {
+		return goodsDAO.goodsListOrdered(map);
 	}
 
 	@Override
@@ -39,8 +39,13 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 	
 	@Override
-	public List<Map<String, Object>> goodsSubCategory(Map<String, Object> map) throws Exception {
-	    return goodsDAO.goodsSubCategory(map);
+	public List<String> getSubCategory(String category) throws Exception {
+	    return goodsDAO.getSubCategory(category);
+	}
+	
+	@Override
+	public List<String> getMainCategory() throws Exception {
+	    return goodsDAO.getMainCategory();
 	}
         
 	@Override

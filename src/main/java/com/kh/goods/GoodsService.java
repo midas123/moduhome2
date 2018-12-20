@@ -12,7 +12,7 @@ public interface GoodsService {
 	public List<Map<String, Object>> newItemAll(Map<String, Object> map) throws Exception;
 	
 	// 카테고리별 (대분류) 상품 정렬
-	public List<Map<String, Object>> goodsCategory(Map<String, Object> map) throws Exception;
+	public List<Map<String, Object>> goodsListOrdered(Map<String, Object> map) throws Exception;
 	
 	
 	
@@ -20,9 +20,12 @@ public interface GoodsService {
 	public List<Map<String, Object>> sortGoodsCategory(Map<String, Object> map) throws Exception;
 	
     //소분류케타고리	
-	public List<Map<String, Object>> goodsSubCategory(Map<String, Object> map) throws Exception;
+	public List<String> getSubCategory(String category) throws Exception;
 	   
-	
+	//대분류케타고리	
+	public List<String> getMainCategory() throws Exception;
+		   
+
     public List<Map<String, Object>> BestgoodsSubCategory(Map<String, Object> map) throws Exception;
 	
 	
@@ -59,4 +62,5 @@ public interface GoodsService {
 	void confirm_order(Map<String, Object> map )throws Exception;
 
 	public void OrderStateModi(Map<String, Object> map)throws Exception;
+
 }

@@ -1,6 +1,5 @@
 package com.kh.goods;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,9 @@ public class GoodsController {
 		//신상품, 인기상품 정렬
 		List<Map<String, Object>> sellBestItem = goodsService.bestSellAll(Map.getMap());
 		List<Map<String, Object>> newItem = goodsService.newItemAll(Map.getMap());
+		List<String> mainCategory = goodsService.getMainCategory();
 		
+		mv.addObject("mainCategory", mainCategory);
 		mv.addObject("sellBestItem", sellBestItem);
 		mv.addObject("newItem", newItem);
 		return mv;
@@ -77,8 +78,14 @@ public class GoodsController {
 			Map.getMap().put("CATEGORY", null);
 		}
 		//상품 게시판에서 메뉴로 출력되는 소분류 카테고리 목록
-		List<String> goodsCategory = new ArrayList<>();
-		 if (categoryName.equals("가구")) {
+		System.out.println("categoryName:"+categoryName);
+		//List<String> goodsCategory = new ArrayList<>();
+		
+		List<String> mainCategory = goodsService.getMainCategory();
+		List<String> subCategory = goodsService.getSubCategory(categoryName);
+		
+		
+	/*	 if (categoryName.equals("가구")) {
 	         goodsCategory.add("침실가구");
 	         goodsCategory.add("거실가구");
 	         goodsCategory.add("주방가구");
@@ -105,10 +112,12 @@ public class GoodsController {
 	         goodsCategory.add("홈케어");
 	         goodsCategory.add("욕실용품");
 	         goodsCategory.add("생활용품");
-		 }
+		 }*/
+		 
+
 		 //카테고리명, 상품 정렬순서 값이 담긴 Map객체로 DB검색 실행
 		if(Map.getMap() !=null) {
-		List<Map<String, Object>> goodsCategoryList = goodsService.goodsCategory(Map.getMap());
+		List<Map<String, Object>> goodsListByOrder = goodsService.goodsListOrdered(Map.getMap());
 		 //상품 게시판 페이징
 	      if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
 	            || request.getParameter("currentPage").equals("0")) {
@@ -116,19 +125,21 @@ public class GoodsController {
 	      } else {
 	         currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	      }
-	      totalCount = goodsCategoryList.size();
+	      totalCount = goodsListByOrder.size();
 	      page = new GoodsPaging(currentPage, totalCount, blockCount, blockPage);
 	      pagingHtml = page.getPagingHtml().toString();
 	      int lastCount = totalCount;
 	      if (page.getEndCount() < totalCount)
 	         lastCount = page.getEndCount() + 1;
-	      goodsCategoryList = goodsCategoryList.subList(page.getStartCount(), lastCount);
+	      goodsListByOrder = goodsListByOrder.subList(page.getStartCount(), lastCount);
+	      
 	      mv.addObject("totalCount", totalCount);
 	      mv.addObject("pagingHtml", pagingHtml);
 		  mv.addObject("categoryName", categoryName);
-		  mv.addObject("subCategory", goodsCategory);
+		  mv.addObject("mainCategory", mainCategory);
+		  mv.addObject("subCategory", subCategory);
 		  mv.addObject("subCategoryOne", subCategoryName);
-		  mv.addObject("goodsCategoryList", goodsCategoryList);
+		  mv.addObject("goodsListByOrder", goodsListByOrder);
 		}
 		return mv;
 	}

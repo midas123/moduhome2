@@ -25,8 +25,8 @@ public class GoodsDAO extends AbstractDAO{
 	
 	//스토어 세부 카테고리
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> goodsCategory(Map<String, Object> map) throws Exception{
-		return selectList("goods.goodsCategory", map);
+	public List<Map<String, Object>> goodsListOrdered(Map<String, Object> map) throws Exception{
+		return selectList("goods.goodsListOrdered", map);
 	}
 	
 
@@ -36,11 +36,7 @@ public class GoodsDAO extends AbstractDAO{
 		return selectList("goods.sortGoodsCategory",map);
 	}
 	
-	//소분류 카테고리 리스트
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> goodsSubCategory(Map<String, Object> map) throws Exception {
-	    return selectList("goods.allGoods" , map);
-	}
+
 	   
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> BestgoodsSubCategory(Map<String, Object> map) throws Exception {
@@ -53,7 +49,19 @@ public class GoodsDAO extends AbstractDAO{
 		return selectList("goods.selectOrderList", memberNum);
 	}
 	
+	//소분류 카테고리 리스트
+	@SuppressWarnings("unchecked")
+	public List<String> getSubCategory(String category) throws Exception {
+	    return selectList("goods.getSubCategory" , category);
+	}
 	
+	//대분류 카테고리 리스트
+	@SuppressWarnings("unchecked")
+	public List<String> getMainCategory() throws Exception {
+	    return selectList("goods.getMainCategory");
+	}
+	   
+	   
 	
 	
 	

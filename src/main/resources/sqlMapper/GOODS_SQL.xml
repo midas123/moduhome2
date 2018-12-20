@@ -30,8 +30,8 @@ order by A.goods_number desc
 ]]>
 </select>
 
-<!-- 카테고리 정렬 -->
-<select id="goodsCategory" resultType="hashMap" parameterType="hashMap">
+<!-- 상품 정렬 -->
+<select id="goodsListOrdered" resultType="hashMap" parameterType="hashMap">
 <choose>
 <!-- 최신순 -->
 <when test="sort == 1">
@@ -410,5 +410,17 @@ select G.GOODS_NUMBER,
 		WHERE ORDER_NUMBER = #{ORDER_NUMBER}
 	]]>
 </update>
+
+<select id="getSubCategory" parameterType="string" resultType="string">
+	<![CDATA[
+		SELECT sub_cg_name FROM SUB_CATEGORY WHERE cg_name = #{CG_NAME}
+	]]>
+</select>
+
+<select id="getMainCategory" resultType="string">
+	<![CDATA[
+		SELECT cg_name FROM CATEGORY
+	]]>
+</select>
 
 </mapper>

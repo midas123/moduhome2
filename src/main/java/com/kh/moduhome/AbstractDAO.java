@@ -77,9 +77,6 @@ public class AbstractDAO {
 	}
 	
 
-	
-	
-
 	// 가입한 회원 아이디 검색
 	@SuppressWarnings("rawtypes")
 	public List searchMemberList0(String map, Object params) {
@@ -95,24 +92,12 @@ public class AbstractDAO {
 	}
 
 
-	// 이름 검색
-
-
 	// 가입한 회원 이름 검색
 	@SuppressWarnings("rawtypes")
 	public List searchMemberList1(String queryId, Object params) {
 		printQueryId(queryId);
 		return sqlSession.selectList(queryId, params);
 	}
-
-
-	// 회원아이디로 검색
-
-	// 가입한 회원 전화번호 검색
-
-
-	// 회원아이디로 검색
-
 
 	// 가입한 회원 전화번호 검색
 
@@ -121,18 +106,6 @@ public class AbstractDAO {
 		printQueryId(queryId);
 		return sqlSession.selectList(queryId, params);
 	}
-
-
-
-	// E-Mail 검색
-
-	// 가입한 회원 이메일 검색
-
-
-
-	// E-Mail 검색
-	// 가입한 회원 이메일 검색
-
 
 	// 가입한 회원 이메일 검색
 

@@ -97,11 +97,16 @@ $("li").on("click", function(){
 	<div class="commerce-menu" >
 			<div class="col-md-8 col-md-offset-2" style="margin-bottom:5px;">
 				<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=전체" style="color: black;">전체상품</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가구" style="color: black;">가구</a></div>
+			<!-- 	<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가구" style="color: black;">가구</a></div>
 				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가전" style="color: black;">가전</a></div>	
 				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=패브릭" style="color: black;">패브릭</a></div>
 				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=주방" style="color: black;">주방</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=생활·수납" style="color: black;">생활·수납</a></div>
+				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=생활·수납" style="color: black;">생활·수납</a></div> -->
+				<c:forEach items="${mainCategory}" var="mainCategory" varStatus="status">
+			<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=${mainCategory}" style="color: black;">${mainCategory}</a></div>
+	</c:forEach>
+				
+				
 	<hr style="color:#99999; width:90%; padding:20px;">
 			</div>
 		</div>
@@ -148,29 +153,29 @@ $("li").on("click", function(){
 			<div>
 			</div>
 			<div>
-				<c:forEach items="${goodsCategoryList}" var="CategoryList">
+				<c:forEach items="${goodsListByOrder}" var="goodsListByOrder">
 					<%-- <c:forEach items="${newItem}" var="newItem" begin="0" varStatus="status" end="2"> --%>
 					<c:url var="goodsUrl"
-						value="/goods/detail?GOODS_NUMBER=${CategoryList.GOODS_NUMBER}" />
+						value="/goods/detail?GOODS_NUMBER=${goodsListByOrder.GOODS_NUMBER}" />
 					<div class="col-md-4 probootstrap-animate">
 						<a href="${goodsUrl}"><img
-							src="/ModuHome/images/goods/${CategoryList.GOODS_THUMBNAIL}"
+							src="/ModuHome/images/goods/${goodsListByOrder.GOODS_THUMBNAIL}"
 							alt="Free Bootstrap Template by uicookies.com"
 							class="img-responsive"></a>
 					<div class="goods-textinfo" style="background:fff3;">
 						<div class="name" style="width:300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color:#85C8DD;">
-							<a href="${goodsUrl}">${CategoryList.GOODS_NAME}</a>
+							<a href="${goodsUrl}">${goodsListByOrder.GOODS_NAME}</a>
 						</div>
 						<div>
 							<del>
 								<span class="price_original"><fmt:formatNumber
-										value="${CategoryList.GOODS_PRICE}" /></span>
+										value="${goodsListByOrder.GOODS_PRICE}" /></span>
 							</del>
 							원
 						</div>
 						<span class="price_discount"><fmt:formatNumber
-								value="${CategoryList.GOODS_DISPRICE}" /></span> <span class="unit">원</span><span>(<fmt:formatNumber
-								value="${(CategoryList.GOODS_PRICE - CategoryList.GOODS_DISPRICE)*100 / CategoryList.GOODS_PRICE}"
+								value="${goodsListByOrder.GOODS_DISPRICE}" /></span> <span class="unit">원</span><span>(<fmt:formatNumber
+								value="${(goodsListByOrder.GOODS_PRICE - goodsListByOrder.GOODS_DISPRICE)*100 / goodsListByOrder.GOODS_PRICE}"
 								type="number" />%)
 						</span>
 					</div>
@@ -178,7 +183,7 @@ $("li").on("click", function(){
 				</c:forEach>
 			</div>
 		</div>
-		<c:if test="${empty goodsCategoryList}">
+		<c:if test="${empty goodsListByOrder}">
 		<center>
 		상품 준비중 입니다.
 		</center>
@@ -187,7 +192,7 @@ $("li").on("click", function(){
 		<br>
 		<br>
 		</c:if>
-		<c:if test="${not empty goodsCategoryList}">
+		<c:if test="${not empty goodsListByOrder}">
        <center>
            <input type="hidden" id="currentPage" value="${currentPage}"/>
                ${pagingHtml}
