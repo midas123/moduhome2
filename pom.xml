@@ -391,7 +391,7 @@
 	
     <build>
     	<defaultGoal>install</defaultGoal>
-		<directory>${basedir}/target</directory>
+		<!-- <directory>${basedir}/target</directory> -->
 		<finalName>ModuHome</finalName>
         <plugins>
             <plugin>
