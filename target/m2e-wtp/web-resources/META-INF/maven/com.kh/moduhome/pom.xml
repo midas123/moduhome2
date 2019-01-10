@@ -303,11 +303,11 @@
 			<version>1</version>
 		</dependency>
 		
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-war-plugin</artifactId>
 			<version>2.3</version>
-		</dependency>
+		</dependency> -->
 						
 		<!-- Test -->
 		<dependency>
@@ -431,11 +431,11 @@
             </plugin>
             
             <!-- JavaDoc -->
-            <plugin>
+        <!--     <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.5</version>
-			</plugin>
+			</plugin> -->
         </plugins>
     </build>
 </project>
