@@ -31,98 +31,44 @@ public class CartController {
 	@Resource(name="orderService")
 	private OrderService orderService;
 	
-	List<Map<String, Object>> cartSession = new ArrayList<Map<String, Object>>();
 	
 	//장바구니 담기
-	@SuppressWarnings("unused")
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/cart/cartAdd")
 	public ModelAndView cartAdd(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/cart/cartList");
+		
 		HttpSession session = request.getSession();
-		System.out.println("MEMBER_NUMBER:"+session.getAttribute("MEMBER_NUMBER"));
-		System.out.println("장바구니commandMap:"+commandMap.getMap());
 		
-		//비회원용 세션 카트
-		Map<String, Object> cartMap = new HashMap<String, Object>();
+		//장바구니 상품 목록
+		List<Map<String, Object>> cartIventory = new ArrayList<>(); 
 		
+		//회원 장바구니 담기 - DB
 		if(session.getAttribute("MEMBER_NUMBER") != null) {
-			commandMap.put("GOODS_NUMBER", commandMap.get("goodsno"));
+			//회원은 commandMap에 회원번호를 담아서 makeCartInventory로 전달
 			commandMap.put("MEMBER_NUMBER", session.getAttribute("MEMBER_NUMBER"));
-			commandMap.put("CART_AMOUNT", commandMap.get("ea[]"));
-			cartService.cartInsert(commandMap.getMap());
-		} else {
-			commandMap.put("GOODS_NUMBER", commandMap.get("goodsno"));
 			
-			if (commandMap.get("optno[]") instanceof String) { // 하나의 정보만 전송되면
-				// System.out.println("여기 if문 들어오는건지");
-				String b = (String) commandMap.get("ea[]"); // 수량
-				String c = (String) commandMap.get("kinds[]"); // 종류
-				Integer e = Integer.parseInt(commandMap.get("GOODS_NUMBER").toString());
-
-				int dup = 0; // 중복데이터 있으면 1, 없으면 0유지
-
-				// 중복 상품 제외
-				if (cartSession.size() != 0) {
-					for (int i = 0; i < cartSession.size(); i++) {
-						if (cartSession.get(i).get("GOODS_KIND_NUMBER").equals(c)) {
-							dup = 1;
-						}
-					}
-					if (dup == 0) {
-						cartMap = new HashMap<String, Object>();
-						cartMap.put("GOODS_KIND_NUMBER", c);
-						cartMap.put("CART_AMOUNT", b);
-						cartMap.put("GOODS_NUMBER", e);
-						cartSession.add(cartMap);
-					}
-				} else {
-					cartSession = new ArrayList<Map<String, Object>>();
-					cartMap = new HashMap<String, Object>();
-					cartMap.put("GOODS_KIND_NUMBER", c);
-					cartMap.put("CART_AMOUNT", b);
-					cartMap.put("GOODS_NUMBER", e);
-					cartSession.add(cartMap);
-				}
-
-			} else { // 로그인정보도 없고, 전송된 데이터가 여러개면
-				String a[] = (String[]) commandMap.get("kinds[]");
-				String b[] = (String[]) commandMap.get("ea[]");
-				Integer e = Integer.parseInt(commandMap.get("GOODS_NUMBER").toString());
-				int dup = 0;
-				System.out.println("cartSession:"+cartSession);
-				if (cartSession.size() != 0) {
-					System.out.println("장바구니가 이미 존재할때 추가 등록하는 경우");
-					for (int i = 0; i < a.length; i++) {
-						dup = 0; // 0이면 중복 없음. 1이면 중복있음
-						for (int j = 0; j < cartSession.size(); j++) {
-							if (a[i].equals(cartSession.get(j).get("GOODS_KIND_NUMBER"))) {
-								dup = 1;
-							}
-						}
-						if (dup == 0) {
-							cartMap = new HashMap<String, Object>();
-							cartMap.put("GOODS_KIND_NUMBER", a[i]);
-							cartMap.put("CART_AMOUNT", b[i]);
-							cartMap.put("GOODS_NUMBER", e);
-							cartSession.add(cartMap);
-						}
-					}
-				} else {
-					cartSession = new ArrayList<Map<String, Object>>();
-					for (int i = 0; i < a.length; i++) {
-						System.out.println("장바구니가 비었을때 등록하는 경우");
-						cartMap = new HashMap<String, Object>();
-						cartMap.put("GOODS_KIND_NUMBER", a[i]);
-						cartMap.put("CART_AMOUNT", b[i]);
-						cartMap.put("GOODS_NUMBER", e);
-						cartSession.add(i, cartMap);
-					}
-				}
+		} else {
+			//비회원용 장바구니 담기 - 세션
+			List<Map<String, Object>> cartInSession = new ArrayList<Map<String, Object>>();
+			
+			if(session.getAttribute("cartSession") != null) { 
+				//세션에 존재하는 이전 장바구니
+				cartInSession = (List<Map<String, Object>>) session.getAttribute("cartSession");
+				//비회원은 commandMap에 세션 장바구니를 담아서 makeCartInventory로 전달
+				commandMap.put("cartSession", cartInSession);
 			}
 		}
-		session.setAttribute("cartSession", cartSession);
-		System.out.println("최종 cartSession : " + session.getAttribute("cartSession"));
+			
+		//장바구니 상품 목록 생성
+		cartIventory = cartService.makeCartInventory(commandMap.getMap());
+		
+		//비회원 세션에 장바구니 저장 
+		if(session.getAttribute("MEMBER_NUMBER") == null) {
+			session.setAttribute("cartSession", cartIventory);
+		}
+	
 		
 		return mv;
 	}

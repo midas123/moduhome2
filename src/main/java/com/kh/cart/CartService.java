@@ -5,8 +5,14 @@ import java.util.Map;
 
 public interface CartService {
 
-	// 장바구니 담기
-	public void cartInsert(Map<String, Object> map) throws Exception;
+	// 장바구니 상품 담기
+	public List<Map<String, Object>> makeCartInventory(Map<String, Object> map) throws Exception;
+
+	//장바구니 아이템 중복체크
+	public Map<String, Object> sessionCartCheck(Map<String, Object> map, List<Map<String, Object>> cartSession) throws Exception;
+	
+	// 장바구니 담기 DB
+	public void cartInsert(Map<String, Object> cartIventroy) throws Exception;
 
 	// 회원 장바구니 목록
 	public List<Map<String, Object>> cartList(Map<String, Object> map) throws Exception;

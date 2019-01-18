@@ -9,9 +9,14 @@ import com.kh.moduhome.AbstractDAO;
 public class CartDAO extends AbstractDAO {
 
 	// 장바구니 등록
-	public void cartInsert(Map<String, Object> map) throws Exception {
+	public void cartInsertDB(Map<String, Object> map) throws Exception {
 		insert("cart.insertCart", map);
 	}
+	
+	/*public void cartInsertSession(Map<String, Object> map) throws Exception {
+		insert("cart.insertCart", map);
+	}
+	*/
 
 	// 장바구니에 이미 들어있나 확인
 	@SuppressWarnings("unchecked")

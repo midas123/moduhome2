@@ -61,7 +61,7 @@ function delchk() {
 </script>
 
 </head>
-<body style="background: #fff">
+<body class="goods-detail-page"style="background: #fff">
 	<form name="fmOrder">
 			<input type="hidden" name="mode"> 
 			<input type="hidden" name="goodsno" value="${goodsBasic.GOODS_NUMBER }"> 
@@ -751,9 +751,11 @@ function detailView(element) {
 				optno[index] = $(this).val();
 			    console.log("optno:"+$(this).val());
 			});
-			console.log("goodsno:"+goodsno);
-			console.log("GOODS_NAME:"+GOODS_NAME);
-			console.log("deliverypayment:"+deliverypayment);
+			console.log("1goodsno:"+goodsno);
+			console.log("1GOODS_NAME:"+GOODS_NAME);
+			console.log("1kinds:"+kinds);
+			console.log("1ea:"+ea);
+			console.log("1deliverypayment:"+deliverypayment);
 			
 			$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
 			
@@ -772,19 +774,21 @@ function detailView(element) {
 <script>
 //장바구니 상품 추가시 알림 메세지
 function cartPopover() {
+	$('.goods-detail-page').css("overflow", "hidden");
 	console.log("팝오버");
-	$(document).ready(function(){
 		
 	$('#cartmenu').popover({
 	    container: 'body', content:"장바구니에 상품이 추가되었습니다.", trigger: 'manual'
 	  });	
 	$('#cartmenu').popover("show");	
+		$('.goods-detail-page').css("overflow", "hidden");	
 	
 	setTimeout(function(){ 
-		$('#cartmenu').popover("hide"); }, 3000);
-
-	});
-} 
+		$('#cartmenu').popover("hide"); 
+		$('.goods-detail-page').css("overflow", "visible");
+	}
+	, 2000);
+}
 </script>
 </form>
 </body>
