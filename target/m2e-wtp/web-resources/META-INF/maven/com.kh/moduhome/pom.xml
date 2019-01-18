@@ -286,10 +286,12 @@
 			<version>2.3</version>
 		</dependency> -->
 						
+		<!-- Test -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
+			<scope>test</scope>
 		</dependency>	
 		
 		<!-- MultipartHttpServletRequest -->

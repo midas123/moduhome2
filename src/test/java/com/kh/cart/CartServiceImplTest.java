@@ -1,13 +1,13 @@
 package com.kh.cart;
 
+
 import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 class CartServiceImplTest {
 	
@@ -66,7 +66,6 @@ class CartServiceImplTest {
 	     NotMemberGoods.put("kinds[]", new String[] {"344", "345", "350" });//상품 종류 번호
 	     NotMemberGoods.put("goodsno", "500"); //상품 번호
 	     NotMemberGoods.put("cartSession", BeforesessionCart); //장바구니 담기 기능 실행 전 세션 카트(컨트롤러에서 map 객채에 저장합니다.)
-	     
 		CartServiceImpl arrayCheck = new CartServiceImpl();
 		assertFalse(AftersessionCart == arrayCheck.makeCartInventory(NotMemberGoods));
 		
