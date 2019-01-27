@@ -36,16 +36,14 @@ public interface GoodsService {
 	public List<Map<String, Object>> selectOneGood(Map<String, Object> map) throws Exception;
 	//상품이미지가져오기
 	public List<Map<String, Object>> selectImage(Map<String, Object> map) throws Exception;
-	//구매확인(샀으면 리뷰작성가능)
+	//구매확인(구매 후 리뷰 작성 가능)
 	public int checkBuy(Map<String, Object> map) throws Exception;
 	//관련상품
 	public List<Map<String, Object>> selectRelatedGoods(Map<String, Object> map) throws Exception;
-	//qna가져오기
-	public List<Map<String, Object>> selectQNA(Map<String, Object> map) throws Exception;
-	//리뷰가져오기
-	public List<Map<String, Object>> selectReview(Map<String, Object> map) throws Exception;
+	
 	//리뷰평점내기
-	public int reviewScore(Map<String, Object> map) throws Exception;
+	/*public int reviewScore(Map<String, Object> map) throws Exception;*/
+	
 	//*상세보기끝//
 	
 	//마이페이지 - 주문내역

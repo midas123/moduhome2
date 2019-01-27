@@ -65,7 +65,6 @@ public class ReviewServiceImpl implements ReviewService {
 	public void reviewPoint(Map<String, Object> map) throws Exception {
 		reviewDAO.reviewPoint(map);
 	}
-	
 
 	// 리뷰 리스트(Admin Page)
 	@Override
@@ -101,6 +100,20 @@ public class ReviewServiceImpl implements ReviewService {
 		return reviewDAO.searchReviewList2(map);
 	}
 
+	@Override
+	public int reviewCheck(Map<String, Object> map) throws Exception {
+		return reviewDAO.reviewCheck(map);
+	}
 
+	@Override
+	public List<Map<String, Object>> selectQNA(Map<String, Object> map) throws Exception {
+		return reviewDAO.selectQNA(map);
+	}
 
+	@Override
+	public List<Map<String, Object>> selectReview(Map<String, Object> map) throws Exception {
+		return reviewDAO.selectReview(map);
+	}
+	
+	
 }

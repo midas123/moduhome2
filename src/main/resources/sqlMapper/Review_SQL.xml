@@ -140,7 +140,36 @@
 			ORDER BY REVIEW_NUMBER DESC
 		]]>
 	</select>
-
+	
+		<!-- 리뷰 꺼내오기 -->
+	<select id="selectReview" parameterType="hashMap" resultType="hashMap">
+		<![CDATA[
+			SELECT D.MEMBER_NUMBER, A.REVIEW_NUMBER, D.MEMBER_NAME,A.REVIEW_TITLE, A.REVIEW_CONTENT, A.REVIEW_SCORE * 20 AS REVIEW_SCORE, A.REVIEW_IMAGE, 
+			A.REVIEW_REGDATE FROM REVIEW A, MEMBER D 
+			WHERE GOODS_NUMBER = ${GOODS_NUMBER} 
+			AND D.MEMBER_NUMBER = A.MEMBER_NUMBER
+			ORDER BY REVIEW_NUMBER DESC
+		]]>
+	</select>
+	
+	<!-- Q&A 꺼내오기 -->
+	<select id="selectQNA" parameterType="hashMap" resultType="hashMap">
+		<![CDATA[
+			SELECT * 
+			FROM (SELECT * FROM QNA NATURAL JOIN MEMBER) A 
+			WHERE GOODS_NUMBER = #{GOODS_NUMBER} 
+			ORDER BY QNA_NUMBER DESC
+		]]>
+	</select>	
+	
+	<!-- 후기 작성 여부 확인 -->
+	<select id="checkReview" resultType="java.lang.Integer" parameterType="hashMap">
+	<![CDATA[
+		SELECT * FROM REVIEW a INNER JOIN ORDERLIST b ON a.MEMBER_NUMBER  = b.MEMBER_NUMBER AND 
+		a.GOODS_NUMBER = b.GOODS_NUMBER
+        AND a.MEMBER_NUMBER = #{MEMBER_NUMBER} AND a.GOODS_NUMBER = #{GOODS_NUMBER} AND ORDER_DELIVERY_STATE = '배송완료' AND ORDER_STATE != '구매확정'
+		]]>
+	</select>
 </mapper>
 	
 	

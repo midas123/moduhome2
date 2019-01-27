@@ -104,17 +104,7 @@ public class GoodsServiceImpl implements GoodsService{
 		return goodsDAO.selectOrderList(memberNum);
 	}
 		
-	@Override
-	public List<Map<String, Object>> selectQNA(Map<String, Object> map) throws Exception {
-		return goodsDAO.selectQNA(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectReview(Map<String, Object> map) throws Exception {
-		return goodsDAO.selectReview(map);
-	}
-
-	@Override
+/*	@Override
 	public int reviewScore(Map<String, Object> map) throws Exception {
 		try {
 		return goodsDAO.reviewScore(map);
@@ -122,7 +112,7 @@ public class GoodsServiceImpl implements GoodsService{
 		}catch(Exception e) { //평점없으면 
 			return 0;
 		}
-	}
+	}*/
 	
 	@Override
 	public List<Map<String, Object>> goodsSearchList(Map<String, Object> map) throws Exception {

@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- <link type="text/css" rel="stylesheet" href="/ModuHome/css/store/ggumim-1.2.04.min.css"/> -->
 <style>
 .img-responsive {
 	display: block;

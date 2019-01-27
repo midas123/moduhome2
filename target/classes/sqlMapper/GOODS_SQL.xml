@@ -201,6 +201,7 @@ order by REVIEWCOUNT DESC
 	]]>
 </select>
 
+
 <!-- 상품 상세보기 조회수 증가 -->
 <update id="goodsCountUp" parameterType="hashMap">
 	<![CDATA[
@@ -359,26 +360,6 @@ select G.GOODS_NUMBER,
 	]]>
 </insert>
 
-	<!-- 리뷰 꺼내오기 -->
-	<select id="selectReview" parameterType="hashMap" resultType="hashMap">
-		<![CDATA[
-			SELECT D.MEMBER_NUMBER, A.REVIEW_NUMBER, D.MEMBER_NAME,A.REVIEW_TITLE, A.REVIEW_CONTENT, A.REVIEW_SCORE * 20 AS REVIEW_SCORE, A.REVIEW_IMAGE, 
-			A.REVIEW_REGDATE FROM REVIEW A, MEMBER D 
-			WHERE GOODS_NUMBER = ${GOODS_NUMBER} 
-			AND D.MEMBER_NUMBER = A.MEMBER_NUMBER
-			ORDER BY REVIEW_NUMBER DESC
-		]]>
-	</select>
-	
-	<!-- Q&A 꺼내오기 -->
-	<select id="selectQNA" parameterType="hashMap" resultType="hashMap">
-		<![CDATA[
-			SELECT * 
-			FROM (SELECT * FROM QNA NATURAL JOIN MEMBER) A 
-			WHERE GOODS_NUMBER = #{GOODS_NUMBER} 
-			ORDER BY QNA_NUMBER DESC
-		]]>
-	</select>	
 	
 <select id="selectOrderList" parameterType="String" resultType="hashmap">
 		<![CDATA[

@@ -25,33 +25,52 @@ public class ReviewDAO extends AbstractDAO {
 		update("review.insertReviewImage", map);
 	}
 	// 전체 리스트(Admin Page)
-		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception {
-			return selectList("review.reviewList", map);
-		}
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception {
+		return selectList("review.reviewList", map);
+	}
 
-		// 리뷰 삭제(Admin Page)
-		public void reviewDelete(Map<String, Object> map) throws Exception {
-			delete("review.reviewDelete", map);
-		}
+	// 리뷰 삭제(Admin Page)
+	public void reviewDelete(Map<String, Object> map) throws Exception {
+		delete("review.reviewDelete", map);
+	}
 
-		// 리뷰 검색(회원 ID)
-		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> searchReviewList0(Map<String, Object> map) throws Exception {
-			return selectList("review.searchReviewList0", map);
-		}
+	// 리뷰 검색(회원 ID)
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> searchReviewList0(Map<String, Object> map) throws Exception {
+		return selectList("review.searchReviewList0", map);
+	}
 
-		// 리뷰 검색(상품 이름)
-		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> searchReviewList1(Map<String, Object> map) throws Exception {
-			return selectList("review.searchReviewList1", map);
-		}
+	// 리뷰 검색(상품 이름)
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> searchReviewList1(Map<String, Object> map) throws Exception {
+		return selectList("review.searchReviewList1", map);
+	}
 
-		// 리뷰 검색(상품 번호)
-		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> searchReviewList2(Map<String, Object> map) throws Exception {
-			return selectList("review.searchReviewList2", map);
-		}
+	// 리뷰 검색(상품 번호)
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> searchReviewList2(Map<String, Object> map) throws Exception {
+		return selectList("review.searchReviewList2", map);
+	}
+		
+	
+	
+	//상품문의리스트
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectQNA(Map<String, Object> map) throws Exception{
+		return selectList("review.selectQNA",map);
+	}
+	
+	//리뷰가져오기
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectReview(Map<String, Object> map) throws Exception{
+		return selectList("review.selectReview",map);
+	}
+	
+	//리뷰 작성 여부 확인
+	public int reviewCheck(Map<String, Object> map) throws Exception {
+		return (int) selectOne("review.checkReview", map);
+	}
 }
 
 

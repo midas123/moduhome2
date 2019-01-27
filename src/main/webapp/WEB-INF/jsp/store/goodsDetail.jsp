@@ -21,15 +21,6 @@
 
 <link rel="stylesheet" type="text/css" href="/ModuHome/theme/slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="/ModuHome/theme/slick/slick-theme.css"/>	
-
-<!-- 
-헤더에서 선언
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="/ModuHome/theme/slick/slick.min.js"></script>	
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
 <link rel="stylesheet" type="text/css" href="/ModuHome/css/store/goodsDetail.css">
 <style>
 i {
@@ -51,15 +42,6 @@ i {
 
 
 </style>
-<script>
-function delchk() {
-	
-	return confirm('삭제하시겠습니까?');
-}
-
-
-</script>
-
 </head>
 <body class="goods-detail-page"style="background: #fff">
 	<form name="fmOrder">
@@ -115,7 +97,7 @@ function delchk() {
 						<div class="option-set">
 						<select id="option" onchange="setOption(this)"
 							style="width: 225px">
-							<option selected value="">-옵션 선택-</option>
+							<option selected value="opt-default">-옵션 선택-</option>
 							<c:forEach var="goodsDetail" items="${goodsDetail}"
 								varStatus="stat">
 							<c:choose>
@@ -143,6 +125,7 @@ function delchk() {
 								</c:forEach>
 						</select>
 						</div>	
+						<br><br>
 						<div>
 							<ul class="MK_inner-opt-cm" id="MK_innerOpt_01"></ul>
 						</div>
@@ -190,36 +173,28 @@ function delchk() {
 		<div class="cboth p_review" id="changeReviewList"> 
                         <div id="powerReview">
                            <div class="hd-t">
-                        <c:if test="${sessionScope.MEMBER_ID eq null}">
                                   <h2 style="margin-bottom: 0px; font-size: 20px;">상품 후기</h2>
-                                  <div class="review-write-btn" style="border: 1px solid black; background: #fff; color: black; text-align: center;">
-				
-									<a href="#"  data-size="md" data-label="구매 후기 작성"
-				                               onClick="alert('로그인을 해주세요.'); return false;">후기 작성하기</a>
-				                                  </div>
-                         </c:if> 
-           				<c:if test="${sessionScope.MEMBER_ID ne null and checkBuy ne goodsBasic.GOODS_NUMBER}">
-            				<h2 style="margin-bottom: 0px; font-size: 20px;">상품 후기</h2>
-		                    <div class="review-write-btn" style="border: 1px solid black; background: #fff; color: black; text-align: center;">
+                        <c:if test="${sessionScope.MEMBER_ID eq null}">
+                        </c:if>
+           			<%-- 	<c:if test="${sessionScope.MEMBER_ID ne null and checkBuy ne goodsBasic.GOODS_NUMBER}">
+            				<!-- <h2 style="margin-bottom: 0px; font-size: 20px;">상품 후기</h2> -->
+		                  <!--   <div class="review-write-btn" style="border: 1px solid black; background: #fff; color: black; text-align: center;">
 		
 							<a href="#"  data-size="md" data-label="구매 후기 작성"
-		                                    onClick="alert('구매 후 작성 가능합니다.'); return false;">후기 작성하기</a></div>
-           				</c:if> 
-                              <c:if test="${sessionScope.MEMBER_ID ne null and checkBuy eq goodsBasic.GOODS_NUMBER}">
-                                       <h2 style="margin-bottom: 0px; font-size: 20px;">상품 후기</h2>
-                                       
+		                                    onClick="alert('구매 후 작성 가능합니다.'); return false;">후기 작성하기</a></div> -->
+           				</c:if> --%> 
+                        <c:if test="${sessionScope.MEMBER_ID ne null and checkBuy eq goodsBasic.GOODS_NUMBER and reviewCheck > 0}">
                         	<div class="review-write-btn" style="border: 1px solid black; background: #fff; color: black; text-align: center;">
                            <a href="/ModuHome/review/reviewForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" 
                            data-toggle="modal" data-target="#myModal">후기 작성하기</a>
                             </div>
-                              </c:if> 
+                        </c:if> 
                            </div>     
-                         	<c:if test="${reviewSize == 0}">
-		                  	<div style="text-align:center; padding:20px;color: #8b8e94; line-height: 28px;font-size: 15px;">
-		                  	작성된 상품 후기가 없습니다.
-		                  	</div>
-		                  	</c:if> 
-                           
+              		<c:if test="${reviewSize == 0}">
+                  	<div style="text-align:center; padding:20px;color: #8b8e94; line-height: 28px;font-size: 15px;">
+                  	작성된 상품 후기가 없습니다.
+                  	</div>
+                  	</c:if> 
                            
                            <div id="listPowerReview" class="MS_power_review_list">
                            <c:forEach var="goodsReview" items="${reviewList}" varStatus="stat">
@@ -766,6 +741,9 @@ function detailView(element) {
 			       success:function(data){
 			          cartPopover();
 			          console.log("cartAjax Done");
+			          $('.MK_li_1_1').remove();
+			          $('#MK_txt-won').html("0원");
+			          $('#option').val('opt-default');
 			       }
 			    });
 		}
@@ -788,6 +766,30 @@ function cartPopover() {
 		$('.goods-detail-page').css("overflow", "visible");
 	}
 	, 2000);
+}
+</script>
+<script>
+function delchk() {
+	
+	return confirm('삭제하시겠습니까?');
+}
+
+
+</script>
+<script>
+	var loginCheck = '${sessionScope.MEMBER_ID}';
+	var checkBuy = '${checkBuy}';
+	var reviewCheck = '${reviewCheck}';
+	var goodsNum = '${goodsBasic.GOODS_NUMBER}';
+	console.log("c:"+ checkBuy + " " + "r"+reviewCheck);
+function reviewCheck() {
+	if(loginCheck == null){
+		alert("로그인 후 작성 가능합니다.");
+	} else if(checkBuy != goodsNum){
+		alert("상품 구매 후 작성 가능합니다.");
+	} else if(reviewCheck > 0){
+		alert("이미 상품 후기를 작성하셨습니다.");
+	}
 }
 </script>
 </form>

@@ -28,7 +28,6 @@ public class GoodsDAO extends AbstractDAO{
 	public List<Map<String, Object>> goodsListOrdered(Map<String, Object> map) throws Exception{
 		return selectList("goods.goodsListOrdered", map);
 	}
-	
 
 	// 카테고리별 상품 정렬 소트 동적쿼리 (기본값  판매량수
 	@SuppressWarnings("unchecked")
@@ -36,7 +35,6 @@ public class GoodsDAO extends AbstractDAO{
 		return selectList("goods.sortGoodsCategory",map);
 	}
 	
-
 	   
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> BestgoodsSubCategory(Map<String, Object> map) throws Exception {
@@ -64,7 +62,6 @@ public class GoodsDAO extends AbstractDAO{
 	   
 	
 	
-	
 	///////////////상세보기 (트랜잭션 묶음-->추후 추가)//////////////////
 	//조회수증가
 	public int goodsCountUp(Map<String, Object> map) throws Exception{
@@ -81,7 +78,7 @@ public class GoodsDAO extends AbstractDAO{
 		return selectList("goods.selectImage",map);
 	}
 	
-	//체크바이(구매했나 안했나 --> 상품리뷰작성가능)
+	//구매 여부 확인
 	public int checkBuy(Map<String, Object> map) throws Exception{
 		return (int)selectOne("goods.checkBuy",map);
 	}
@@ -92,23 +89,12 @@ public class GoodsDAO extends AbstractDAO{
 	      return selectOne1("goods.selectRelatedGoods",map);
 	   }
 	
-	//상품문의리스트
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectQNA(Map<String, Object> map) throws Exception{
-		return selectList("goods.selectQNA",map);
-	}
-	
-	//리뷰가져오기
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectReview(Map<String, Object> map) throws Exception{
-		return selectList("goods.selectReview",map);
-	}
 	
 	//리뷰평점
-	@SuppressWarnings("unchecked")
+/*	@SuppressWarnings("unchecked")
 	public int reviewScore(Map<String, Object> map) throws Exception{
 		return (int)selectOne("goods.reviewScore",map);
-	}
+	}*/
 	//////////////////////////////상품 디테일 끝 //////////////////////////////////////////////
 	
 	@SuppressWarnings("unchecked")

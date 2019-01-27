@@ -9,9 +9,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="/ModuHome/dist/jquery/jquery-1.11.0.min.js"></script>
-<script src="/ModuHome/dist/jquery/jquery-ui.js"></script>
-<script src="/ModuHome/dist/jquery/jquery-migrate-1.2.1.min.js"></script>
 <script>
 var sum = 0;
 var disSum= 0;
@@ -142,7 +139,7 @@ function checkedRows(index){
 		<div class="section-head left border" style="padding: 30px; margin-top:20px; margin-left:50px; background-color:#fff; text-align: center;">
 			<span style="font-size: 28px; color:black;">장바구니</span>
 		</div>
-		<hr style="color:#999999; width:90%; padding:20px;">
+		<!-- <hr style="color:#999999; width:90%; padding:20px;"> -->
 		<div id="changeCartGoodlist" class="section-body col-md-12" style="background-color:#fff; !important;">
 			<form name="fmCart" action="/ModuHome/cart/cartDelete">
 			<div class="container">

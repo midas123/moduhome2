@@ -6,10 +6,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="/ModuHome/dist/jquery/jquery-1.11.0.min.js"></script>
-<script src="/ModuHome/dist/jquery/jquery-ui.js"></script>
-<script src="/ModuHome/dist/jquery/jquery-migrate-1.2.1.min.js"></script>	
-	
+<script type="text/javascript" src="/ModuHome/js/store/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/ModuHome/js/store/jquery-ui.js"></script>
+<script type="text/javascript" src="/ModuHome/js/store/jquery-migrate-1.2.1.min.js"></script>	
 
 <meta charset="UTF-8">
 <style>
@@ -53,20 +52,7 @@
 	display: inline;
 }
 
-.commerce-menu ul li a:hover{
-	color: #85C8DD;
-	font-weight: bold;
-	border-bottom: 1px solid #85C8DD;
-	border-bottom-width: 2px;
-}
 </style>
-<script>
-$("li").on("click", function(){
-		$("li").removeClass("selected");
-			$(this).addClass("selected");
-})
-
-</script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -91,7 +77,7 @@ $("li").on("click", function(){
 
 <section id="category-section" style="background: #fff">
 
-	<div class="upper-menu" style=" background: #fff; width:100%; height:50px;">
+	<!-- <div class="upper-menu" style=" background: #fff; width:100%; height:50px;"> -->
 	<div class="container">
 			<div class="row">
 	<div class="commerce-menu" >
@@ -145,7 +131,6 @@ $("li").on("click", function(){
 			</div>
 			</div>
 			</div>
-
 	<!-- upper-menu end -->
 	
 	<section id="changeList">
@@ -203,21 +188,13 @@ $("li").on("click", function(){
 	
 	<script>
 		function ajaxList(pageNum) {
-			//대분류
-			var isCategory = '${categoryName}';
-			
-			//소분류
-			var subCategory = '${subCategoryOne}';
-			
+			var isCategory = '${categoryName}';//대분류
+			var subCategory = '${subCategoryOne}';//소분류
 			//option 태그에서 선택된 값-상품정렬(최신/인기/낮은가격/높은가격 중 1)
 			var sort = $("#orderSelector option:selected").val()
-			
-			//상품 정렬순서
 			if (sort == null) {
-				//정렬 상태에서 페이지 이동시 필요함
 				sort = '${sort}';
 			}
-
 			if (pageNum != null) {
 				//현재 페이지 번호
 				var currentPage = pageNum;
@@ -225,7 +202,6 @@ $("li").on("click", function(){
 				//기본 페이지 번호
 				var currentPage = 1;
 			}
-			
 			//jquery로 ajax 실행
 			$.ajaxSettings.traditional = true;
 			$.ajax({
@@ -237,13 +213,19 @@ $("li").on("click", function(){
 					"SUBCATEGORY" : subCategory,
 					"sort" : sort
 				},
-				//컨트롤러에서 뷰로 설정한 jsp페이지가 data에 담겨 넘어옴
+				//ajax 성공시 컨트롤러에서 넘어온 data
 				success : function(data) {
-					//아래 태그에 jsp페이지를 삽입
+					//페이지 삽입
 					$("#changeList").html(data);
 				}
 			});
 		}
 	</script>
+	<script>
+$("li").on("click", function(){
+		$("li").removeClass("selected");
+			$(this).addClass("selected");
+});
+</script>
 </body>
 </html>
