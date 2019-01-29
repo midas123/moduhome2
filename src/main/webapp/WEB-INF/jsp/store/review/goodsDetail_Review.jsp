@@ -10,16 +10,18 @@
 <body>
 	<div class="cboth p_review" id="changeReviewList"> 
             <div id="review">
-                   <div class="review-top">
-                        <h2 style="font-family: 'Nanum Gothic';">구매 후기</h2><sub style="color:gray;">총 ${reviewSize }개의 구매 후기</sub>
-                        <hr>
-                        <c:if test="${sessionScope.MEMBER_ID ne null and checkBuy eq goodsBasic.GOODS_NUMBER and reviewCheck > 0}">
-                        <div class="review-write-btn" style="border: 1px solid black; background: #fff; color: black; text-align: center;">
-                           <a href="/ModuHome/review/reviewForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" 
-                           data-toggle="modal" data-target="#myModal">후기 작성하기</a>
-                        </div>
-                        </c:if> 
-                    </div>     
+                        <div class="review-top">
+                        <div style="float:left;"><h2 style="font-family: 'Nanum Gothic';">구매 후기</h2><sub style="color:gray;">총 ${reviewSize }개의 구매 후기</sub></div>
+                   <c:if test="${sessionScope.MEMBER_ID ne null and checkBuy eq goodsBasic.GOODS_NUMBER and reviewCheck > 0}">
+                       <div class="review-write-btn" style="float:right; margin-top:30px; border: 1px solid black; background: #fff; color: black;">
+                          <a href="/ModuHome/review/reviewForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" 
+                          data-toggle="modal" data-target="#myModal">후기 작성하기</a>
+                       </div>
+                   </c:if> 
+                   </div>     
+                  	<div style="clear:both; padding: 10px;">
+                  	<hr> 
+                  	</div>    
 	                     <c:forEach var="goodsReview" items="${reviewList}" varStatus="stat">
 	                     <c:if test="${reviewEndPagingNum >= stat.count}">
 	                     <c:if test="${reviewStartPagingNum < stat.count}">

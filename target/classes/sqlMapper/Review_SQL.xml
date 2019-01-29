@@ -165,9 +165,8 @@
 	<!-- 후기 작성 여부 확인 -->
 	<select id="checkReview" resultType="java.lang.Integer" parameterType="hashMap">
 	<![CDATA[
-		SELECT * FROM REVIEW a INNER JOIN ORDERLIST b ON a.MEMBER_NUMBER  = b.MEMBER_NUMBER AND 
-		a.GOODS_NUMBER = b.GOODS_NUMBER
-        AND a.MEMBER_NUMBER = #{MEMBER_NUMBER} AND a.GOODS_NUMBER = #{GOODS_NUMBER} AND ORDER_DELIVERY_STATE = '배송완료' AND ORDER_STATE != '구매확정'
+		SELECT * FROM ORDERLIST WHERE MEMBER_NUMBER = #{MEMBER_NUMBER} AND GOODS_NUMBER = #{GOODS_NUMBER} 
+		AND ORDER_DELIVERY_STATE = '배송완료' AND ORDER_STATE != '구매확정'
 		]]>
 	</select>
 </mapper>

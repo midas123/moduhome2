@@ -26,6 +26,7 @@ body {
 	border: 1px solid #85C8DD;
     background: #85C8DD;
     color: #fff;
+    text-align:center;
 }
 .btn-cart {
 	border: 1px solid #b2b2b2;
@@ -113,7 +114,6 @@ i {
   border: 1px solid #4CAF50;
 }
 
-.pagination a:hover:not(.active) {background-color: #ddd;}
 
 #pagination a:hover:not(.active) {background-color: #ddd;}
 
@@ -121,7 +121,7 @@ i {
 </style>
 
 </head>
-<body class="goods-detail-page"style="background: #fff">
+<body class="goods-detail-page" style="background: #fff">
 	<form name="fmOrder">
 			<input type="hidden" name="mode"> 
 			<input type="hidden" name="goodsno" value="${goodsBasic.GOODS_NUMBER }"> 
@@ -251,26 +251,28 @@ i {
 		<div id="changeReviewList" style="color:#262626;"> 
               <div id="review">
                    <div class="review-top">
-                        <h2 style="font-family: 'Nanum Gothic';">구매 후기</h2><sub style="color:gray;">총 ${reviewSize }개의 구매 후기</sub>
-                        <hr>
-                        <c:if test="${sessionScope.MEMBER_ID ne null and checkBuy eq goodsBasic.GOODS_NUMBER and reviewCheck > 0}">
-                        <div class="review-write-btn" style="border: 1px solid black; background: #fff; color: black; text-align: center;">
-                           <a href="/ModuHome/review/reviewForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" 
-                           data-toggle="modal" data-target="#myModal">후기 작성하기</a>
-                        </div>
-                        </c:if> 
-                    </div>     
+                        <div style="float:left;"><h2 style="font-family: 'Nanum Gothic';">구매 후기</h2><sub style="color:gray;">총 ${reviewSize }개의 구매 후기</sub></div>
+                   <c:if test="${sessionScope.MEMBER_ID ne null and reviewCheck > 0}">
+                       <div class="review-write-btn" style="float:right; margin-top:30px; border: 1px solid black; background: #fff; color: black;">
+                          <a href="/ModuHome/review/reviewForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" 
+                          data-toggle="modal" data-target="#myModal">후기 작성하기</a>
+                       </div>
+                   </c:if> 
+                   </div>     
+                  	<div style="clear:both; padding: 10px;">
+                  	<hr> 
+                  	</div>
               		<c:if test="${reviewSize == 0}">
-                  	<div style="text-align:center; padding:20px;color: #8b8e94; line-height: 28px;font-size: 15px;">
+                  	<div style="clear:left; text-align:center; padding:20px;color: #8b8e94; line-height: 28px; font-size: 15px;">
                   	작성된 상품 후기가 없습니다.
                   	</div>
-                  	</c:if> 
+                  	</c:if>
 	                     <c:forEach var="goodsReview" items="${reviewList}" varStatus="stat">
 	                     <c:if test="${reviewEndPagingNum >= stat.count}">
 	                     <c:if test="${reviewStartPagingNum < stat.count}">
+                      <div style="width:auto;" class="comment-title"><strong>${goodsReview.REVIEW_TITLE }</strong></div>	
                       <div style="width:auto; height:100px;">
                    		    <div style="float:left; width:22%; height:100%;">
-                    		  <div class="comment-title"><strong>${goodsReview.REVIEW_TITLE }</strong></div>	
                     		  <div class="star-icon">
                     		    <span class="star">
 	                            <c:if test="${goodsReview.REVIEW_SCORE == 20 }"><font color="#FFBF00" size="5">★</font>
@@ -337,7 +339,7 @@ i {
 				</div> <!-- changeReviewList END -->
 		<!-- qna 상품문의 -->
 		<div class="qna-list" id="changeQnaList" style="width:100%; color:#262626;">
-			<div>
+			<div class="qna-top">
 		 	<div style="padding:5px;"> 
 		 			<h2>Q&A</h2>
 					<div class="qna-wrapper">
@@ -349,7 +351,7 @@ i {
                               </c:if> 
                                <c:if test="${sessionScope.MEMBER_ID ne null }">
                                  <div class="review-write-btn" style="float:right; border: 1px solid black;">
-                                <a href="/ModuHome/qna/modal_qnaForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" data-toggle="modal" data-target="#myModal">QNA 작성하기</a>
+                                <a href="/ModuHome/qna/modal_qnaForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" data-toggle="modal" data-target="#myModal2">QNA 작성하기</a>
                                   </div>
                               </c:if> 
 					</div>
@@ -365,11 +367,13 @@ i {
                   <ul class="list-dropdown">
                      <c:forEach var="goodsQna" items="${qnaList}" varStatus="stat">
                      <c:if test="${qnaEndPagingNum >= stat.count}">
-                     <li>
+	                 <c:if test="${qnaStartPagingNum < stat.count}">
+                     
+                     <li style="margin-bottom:30px; list-style-type: none;">
                          <ul style="float:right; display:inline-block; list-style:none;">
                          <li class="author">${goodsQna.MEMBER_NAME}</li>
                          <li class="date">
-                         <fmt:formatDate value="${goodsQna.QNA_REPDATE}" pattern="yyyy-MM-dd"/></li>
+                         <fmt:formatDate value="${goodsQna.QNA_REGDATE}" pattern="yyyy-MM-dd"/></li>
                          <li>
                          		<c:if test="${goodsQna.MEMBER_NUMBER eq sessionScope.MEMBER_NUMBER }">
 									<c:url var="viewURL" value="/qnaDelete">
@@ -383,11 +387,22 @@ i {
                          </ul>
                         <!-- 질문자 제목 -->
                         	<div>
+                           <div style="float:left; margin-right:20px;">
                            <strong class="title">${goodsQna.QNA_TITLE}</strong>
+                           </div>
+                           <c:choose>
+                           <c:when test="${goodsQna.QNA_REPCONTENT == null}">
+                           <div style="float:left; text-align:center; width:70px; height:30px; background-color:lightgray; font-size:14px;">${goodsQna.QNA_REPSTATE}</div>
+                           </c:when>
+                           <c:when test="${goodsQna.QNA_REPCONTENT != null}">
+                           <div style="float:left; text-align:center; width:70px; height:30px; background-color:black; font-size:14px; color:white;">${goodsQna.QNA_REPSTATE}</div>
+                           </c:when>
+                           </c:choose>
                         	</div>
                         <!-- 질문자내용 -->
-                        <div>
-                                 <p style="width:60%;">${goodsQna.QNA_CONTENT}</p>
+                        <div style="clear:left; width:60%; height:50px;">
+                                 <div class="qna-content-class"  style="width:90%; float:left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${goodsQna.QNA_CONTENT}</div>
+                                 <div class="qna-content-button"  style="width:10%; font-size:12px; color:#a6a6a6; font-weight: bold;"></div>
                         </div>
                         <!-- 답변내용 -->
                         <c:if test="${goodsQna.QNA_REPCONTENT ne null}">
@@ -396,32 +411,32 @@ i {
                               ┗관리자:
                               </strong>${goodsQna.QNA_REPCONTENT}</p>
                            </div> 
-                           <hr>
                         </c:if>
-                  
+                           <div><hr style="padding:5px;"></div>
                      </li>
+                     </c:if>
                      </c:if>
                      </c:forEach> 
                   </ul>
-                        </div>
-                     <div id="pagination" style="text-align:center; padding-bottom:60px;">
-                           <c:if test="${qnaSize gt 5 }">
-                           <br>
-	                           <c:if test="${qnaNowPage ne 1 }">
-	                           <a onclick="javascript:ajaxQnaPaging(1,${qnaEndPagingNum},${qnaStartPagingNum},${qnaNowPage});">&laquo;</a>
-	                           </c:if>
-	                      <%--      <c:forEach var="pgNum" begin="1" end="${reviewTotalPage}" step="1">
-	                           <a>${pgNum}</a>
-	                           </c:forEach> --%>
-                              <a class="pg_current" >${qnaNowPage}</a>
-	                           <c:if test="${qnaNowPage ne qnaTotalPage }">
-	                           <a onclick="javascript:ajaxQnaPaging(2,${qnaEndPagingNum},${qnaStartPagingNum},${qnaNowPage});">&raquo;</a>
-	                           </c:if>
-                             <br>
-                           </c:if>
-                       </div>
-                   
-        	 </div>  
+             </div>
+             <!-- QnA 페이징 -->
+             <div id="pagination" style="text-align:center; padding-bottom:60px;">
+                   <c:if test="${qnaSize gt 5 }">
+                   <br>
+                    <c:if test="${qnaNowPage ne 1 }">
+                    <a onclick="javascript:ajaxQnaPaging(1,${qnaEndPagingNum},${qnaStartPagingNum},${qnaNowPage});">&laquo;</a>
+                    </c:if>
+               <%--      <c:forEach var="pgNum" begin="1" end="${reviewTotalPage}" step="1">
+                    <a>${pgNum}</a>
+                    </c:forEach> --%>
+                      <a class="pg_current" >${qnaNowPage}</a>
+                    <c:if test="${qnaNowPage ne qnaTotalPage }">
+                    <a onclick="javascript:ajaxQnaPaging(2,${qnaEndPagingNum},${qnaStartPagingNum},${qnaNowPage});">&raquo;</a>
+                    </c:if>
+                     <br>
+                   </c:if>
+               </div>
+       </div>  <!-- qna-list END -->
 			<c:if test="${not empty relatedGoods}">
 			<div class="bottom-product-list" style="width: 100%;">
 				<div class="commerce-title">
@@ -454,6 +469,14 @@ i {
 	<br />
 <!-- modal trigger 삭제금지 -->
 <div class="modal fade bs-example-modal-sm mymodal" id="myModal" tabindex="-1" role="dialog" 
+aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm" style="width:500px;">
+		<div class="modal-content">
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bs-example-modal-sm mymodal" id="myModal2" tabindex="-1" role="dialog" 
 aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-sm" style="width:500px;">
 		<div class="modal-content">
@@ -672,7 +695,48 @@ $(document).ready(function(){
     });
 });
 </script>
+<script>
+//최초 페이지 요청시
+$(document).ready(function(){
+	makeQnaButton();
+	DoQnaButton();
+});
+//ajax 완료 후
+$(document).ajaxComplete(function () {
+	makeQnaButton();
+	DoQnaButton();
+});
 
+//QnA 글자수 47자 초과시 '더보기'생성
+function makeQnaButton(){
+	$('.qna-content-class').each(function() {
+		var qnaContent = $(this).html();
+		var qnaLength = qnaContent.length;
+		if(qnaLength > 47){
+			$(this).next().html('더보기');
+		}
+		})
+}
+
+//var qnaHeight = $('#qna-content-text2').css('height');//QnA 내용의 높이 css값
+//'더보기' 클릭시 QnA 내용 전체 표시 '접기' 클릭시 내용 감추기
+function DoQnaButton(){
+	$('.qna-content-button').each(function(){
+		$(this).click(function(){
+			if($(this).html() == '더보기'){
+				$(this).parent().css('height',120);
+				$(this).parent().css('word-break','normal');
+				$(this).prev().removeAttr("style")
+				$(this).html('접기');
+			} else { //'접기'
+				$(this).prev().css({'width':'90%', 'float':'left', 'text-overflow':'ellipsis', 'overflow':'hidden', 'white-space':'nowrap'});
+				$(this).html('더보기');
+				$(this).parent().css('height',50);
+			}
+		});
+	})
+}
+</script>
 
 <script>
 //상품 후기, QnA - aJax
@@ -717,22 +781,10 @@ $(document).ready(function(){
 	  	});
 	  
 	  $('.product-recommend-slider').slick({
-		  infinite: false,
+		  infinite: true , //'${fn:length(relatedGoods) gt 3}'
+		  variableWidth: true, 
 		  slidesToShow: 3,
-		  responsive: [
-		    {
-		      breakpoint: 450,
-		      settings: {
-		    	  arrows: true,
-		        slidesToShow: 3
-		      }
-		    },
-		    {
-		      breakpoint: 450,
-		      settings: {
-		    	  arrows: true,
-		        slidesToShow: 1
-		      }}]
+		  arrows: true
 	  	});
 	  });
 </script>
@@ -836,24 +888,6 @@ function cartPopover() {
 function delchk() {
 	
 	return confirm('삭제하시겠습니까?');
-}
-
-
-</script>
-<script>
-	var loginCheck = '${sessionScope.MEMBER_ID}';
-	var checkBuy = '${checkBuy}';
-	var reviewCheck = '${reviewCheck}';
-	var goodsNum = '${goodsBasic.GOODS_NUMBER}';
-	console.log("c:"+ checkBuy + " " + "r"+reviewCheck);
-function reviewCheck() {
-	if(loginCheck == null){
-		alert("로그인 후 작성 가능합니다.");
-	} else if(checkBuy != goodsNum){
-		alert("상품 구매 후 작성 가능합니다.");
-	} else if(reviewCheck > 0){
-		alert("이미 상품 후기를 작성하셨습니다.");
-	}
 }
 </script>
 </form>
