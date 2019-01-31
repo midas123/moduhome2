@@ -91,13 +91,9 @@ function checkedRows(index){
 	border: none;
 	color: white;
 	width:100px; 
-	/* height:30px; */
-	/* padding: 1px; */
-	/* border-radius: 12px; */
 	border-radius: 30px;
  	padding-top:5px;
  	padding-bottom:5px;
- 	/* line-height: 1.5; */
  	margin-right : 10px;
  	text-transform: uppercase;
 }
@@ -164,7 +160,7 @@ function checkedRows(index){
 					</tr> 
 				</thead>
 				<tbody>
-						<c:if test="${!empty cartList}">
+				<c:if test="${!empty cartList}">
 						<c:forEach var="cartList" items="${cartList}" varStatus="stat">
 						<tr>
 						<td>
@@ -186,6 +182,7 @@ function checkedRows(index){
 									<b>${cartList.GOODS_OPTION1} / ${cartList.GOODS_OPTION2}</b>
 									<input type="hidden" name="cart" value="${cartList.CART_NUMBER }">
 									<span id="cartNum${stat.index}" value="${cartList.CART_NUMBER }"></span>
+									<input type="hidden" name="GOODS_NAME" value="${cartList.GOODS_NAME }">
 									<input type="hidden" name="kinds[]" value="${cartList.GOODS_KIND_NUMBER }">
 									<input type="hidden" name="goodsno[]" value="${cartList.GOODS_NUMBER }">
 									<input type="hidden" class="mstock" value="${cartList.GOODS_AMOUNT }">
@@ -255,15 +252,14 @@ function checkedRows(index){
 					</tr>
 					</c:forEach>
 					</c:if>
-						<c:if test="${empty cartList }">
-						<c:if test="${empty sessionScope.CartSession}">
+					
+					<c:if test="${empty cartList}">
 							<tr>
 								<td colspan="7" style="padding:30px 0;" align="center">
 									장바구니에 주문하실 상품을 담아주세요<br>
 								</td>
 							</tr>
-						</c:if>
-					</c:if>	
+					</c:if>
 					</tbody>
 	</table>
 </div>
@@ -285,25 +281,6 @@ function checkedRows(index){
 		</button>
 	</div>
 </c:if>
-</td>
-</tr>
-<tr>
-<td>
-	<c:if test="${empty cartList }">
-		<c:if test="${empty sessionScope.cartKinds0}">
-		<div class="button-wrap">
-			<button class="button" id="btn-checked-all">
-				<span class="button-label">전체선택</span>
-			</button>
-			<button class="button" id="btn-unchecked-all">
-				<span class="button-label">전체해제</span>
-			</button>
-			<button class="button" id="btn-checked-one">
-				<span class="button-label">선택삭제</span>
-			</button>
-		</div>
-		</c:if>
-	</c:if>
 </td>
 </tr>
 <tr>
@@ -356,46 +333,41 @@ function cartBuy(){
 	}
 </script>
 <script>
+//최초 페이지 요청시 실행
 $(document).ready(function(){
-$("#btn-checked-all").click(function(){
-	$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']").not(":checked").trigger("click");
-	return false;
+	cartDelete();
+});
+//ajax 완료 후 다시 한번 실행
+$(document).ajaxComplete(function () {
+	cartDelete();
 });
 
-$("#btn-unchecked-all").click(function(){
-	$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']:checked").trigger("click");
-	return false;
-});
 
-$("#btn-checked-one").click(function(){
-	if (!$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']").is(":checked")){
-		alert("삭제하실 상품을 선택해주세요");
+function cartDelete(){
+	$(document).ready(function(){
+	$("#btn-checked-all").click(function(){
+		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']").not(":checked").trigger("click");
 		return false;
-	} else {
-	
-	if(confirm("정말로 상품을 삭제하시겠습니까?")){
-	//선택상품 삭제로직
-	var goodsNum = new Array();
-	$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']:checked").each(function() {
-		goodN = $(this).attr("value");
-		goodsNum.push(goodN);
 	});
-	$.ajax({
-	     url: "/ModuHome/cart/cartDelete",
-	       type : "post",
-	       data: {"GOODS_KIND_NUMBER":goodsNum},
-	       success:function(data){
-	    	  $("#changeCartGoodlist").html(data);
-	       }
-	    });  
-	}
-	}
-	return false;
 	
-});
-
-$("span.button-label-delete").click(function(){
-		var goodsNum = $(this).attr("value");
+	$("#btn-unchecked-all").click(function(){
+		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']:checked").trigger("click");
+		return false;
+	});
+	
+	$("#btn-checked-one").click(function(){
+		if (!$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']").is(":checked")){
+			alert("삭제하실 상품을 선택해주세요");
+			return false;
+		} else {
+		
+		if(confirm("정말로 상품을 삭제하시겠습니까?")){
+		//선택 상품 삭제
+		var goodsNum = new Array();
+		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']:checked").each(function() {
+			goodN = $(this).attr("value");
+			goodsNum.push(goodN);
+		});
 		$.ajax({
 		     url: "/ModuHome/cart/cartDelete",
 		       type : "post",
@@ -404,8 +376,24 @@ $("span.button-label-delete").click(function(){
 		    	  $("#changeCartGoodlist").html(data);
 		       }
 		    });  
+		}
+		}
+		return false;
 	});
-});
+	//버튼 삭제
+	$("span.button-label-delete").click(function(){
+			var goodsNum = $(this).attr("value");
+			$.ajax({
+			     url: "/ModuHome/cart/cartDelete",
+			       type : "post",
+			       data: {"GOODS_KIND_NUMBER":goodsNum},
+			       success:function(data){
+			    	  $("#changeCartGoodlist").html(data);
+			       }
+			    });  
+		});
+	});
+}	
 </script>
 <script>
 function ajaxChangeEa(cartNum, index, idx) {

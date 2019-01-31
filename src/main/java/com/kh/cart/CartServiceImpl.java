@@ -19,6 +19,7 @@ public class CartServiceImpl implements CartService {
 	private CartDAO cartDAO;
 
 	// 장바구니 등록
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Map<String, Object>> makeCartInventory(Map<String, Object> map) throws Exception {
 	/*	단품 or 여러개 상품 추가(종류만 다른 같은 상품)
@@ -102,8 +103,9 @@ public class CartServiceImpl implements CartService {
 			for(int i=0; i<cartOldSession.size(); i++) {
 				//중복 상품의 수량을 업데이트
 				if(cartOldSession.get(i).get("GOODS_KIND_NUMBER").equals(map.get("GOODS_KIND_NUMBER"))){ //같은 상품 일 경우
-					int oldEA = Integer.parseInt((String)cartOldSession.get(i).get("CART_AMOUNT"));//이전에 저장된 상품 수량
-					int newEA = Integer.parseInt((String)map.get("CART_AMOUNT")); //새로 추가된 상품 수량
+//					int oldEA = Integer.parseInt((String)cartOldSession.get(i).get("CART_AMOUNT"));//이전에 저장된 상품 수량
+					int oldEA = Integer.parseInt((String) cartOldSession.get(i).get("CART_AMOUNT"));//이전에 저장된 상품 수량
+					int newEA = Integer.parseInt((String) map.get("CART_AMOUNT")); //새로 추가된 상품 수량
 					//수량 더하기 
 					map.replace("CART_AMOUNT", (oldEA + newEA));
 					//수량 합산한 상품을 세션 장바구니에서 제거, 업데이트 된 상품은 map에 저장됨
@@ -143,8 +145,8 @@ public class CartServiceImpl implements CartService {
 
 	// 회원 장바구니 목록
 	@Override
-	public List<Map<String, Object>> cartList(Map<String, Object> map) throws Exception {
-		return cartDAO.cartList(map);
+	public List<Map<String, Object>> selectMyCart(Map<String, Object> map) throws Exception {
+		return cartDAO.selectMyCart(map);
 	}
 	
 	@Override

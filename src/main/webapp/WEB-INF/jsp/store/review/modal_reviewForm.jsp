@@ -25,8 +25,8 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 <div class="modal-header">
         <div class="modal-title" style="height:20px;">
            <div class="container-fluid">
-              <div class="col-xs-6" style="align:left; text-align:left;"><h5 style="font:맑은고딕;">
-              <strong>상품 후기</strong></h5></div>
+              <div class="col-xs-6" style="align:left; text-align:left;">
+              <strong style="font-color:#262626;">상품 후기</strong></div>
               <div class="col-xs-6" style="align:right; text-align:right;">                                         
               </div></div></div></div>
 <form method="post" class="form-horizontal" action="/ModuHome/reviewWrite" enctype="multipart/form-data">

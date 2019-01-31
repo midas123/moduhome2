@@ -152,7 +152,6 @@ public class GoodsController {
 	public ModelAndView goodsDetail(HttpServletResponse response, HttpServletRequest request, CommandMap Map, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		session = request.getSession();
-		System.out.println("qna확인:"+Map.getMap());
 		//상품 상세페이지 첫 요청시 (ajax 요청X)
 		if(Map.getMap().get("pagingReviewOnOff") == null && Map.getMap().get("pagingQnaOnOff") == null) {
 			mv.setViewName("goodsDetail");
@@ -171,22 +170,17 @@ public class GoodsController {
 		    	Map.put("GOODS_NUMBER", goodsDetail.get(0).get("GOODS_NUMBER"));
 		    	Map.put("MEMBER_NUMBER", session.getAttribute("MEMBER_NUMBER"));
 		    	
-			    	 //int checkBuy;
 			    	 int reviewCheck;
 			         String mem_num = session.getAttribute("MEMBER_NUMBER").toString();
 			         String goods_num = request.getParameter("GOODS_NUMBER");
 			         Map.put("MEMBER_NUMBER", mem_num);
 			         Map.put("GOODS_NUMBER", goods_num);
 			         try { 
-			        	//후기 중복 작성 방지
 			        	 reviewCheck = reviewService.reviewCheck(Map.getMap());
-			            //checkBuy = goodsService.checkBuy(Map.getMap());
 			            
 			         } catch (Exception e) { 
-			            //checkBuy = 0;
 			            reviewCheck = 0;
 			         }
-			         //mv.addObject("checkBuy", checkBuy);
 			         mv.addObject("reviewCheck", reviewCheck);
 	         
 		  }

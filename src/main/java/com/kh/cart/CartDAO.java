@@ -26,7 +26,7 @@ public class CartDAO extends AbstractDAO {
 
 	// 회원 개인의 장바구니 목록 불러오기(OFF된 상품은 제외)
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> cartList(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> selectMyCart(Map<String, Object> map) throws Exception {
 		return selectList("cart.selectMyCart", map);
 	}
 
