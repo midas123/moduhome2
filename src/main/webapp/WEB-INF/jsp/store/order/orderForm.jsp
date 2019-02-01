@@ -310,7 +310,7 @@ function copydata2() {
 					    <c:forEach var="orderForm"  items="${goods}" varStatus="stat">
 					    <input type="hidden" id="ea[]" name="ea[]" value="${orderForm.EA }">
 					    <input type="hidden" id="kinds[]" name="kinds[]" value= "${orderForm.GOODS_KIND_NUMBER }">
-					    <input type="hidden" name="GOODS_NUMBER" value="${orderForm.GOODS_NUMBER }">
+					    <input type="hidden" name="GOODS_NUMBER[]" value="${orderForm.GOODS_NUMBER }">
 					    </c:forEach>
 					    <input type="hidden" name="MEMBER_ID" value="${orderMember.MEMBER_ID }">
 					    <input type="hidden" name="ORDER_CODE" value="${ORDER_CODE}">

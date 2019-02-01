@@ -1,5 +1,6 @@
 package com.kh.order;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,10 +41,8 @@ public class OrderController {
 		mv.setViewName("orderForm");
 		HttpSession session = request.getSession();
 		String memn = session.getAttribute("MEMBER_NUMBER").toString();
-		System.out.println("memn:"+memn);
 		commandMap.getMap().put("MEMBER_NUMBER", memn);
 		Map<String, Object> orderMember = orderService.orderMember(commandMap.getMap());
-		System.out.println("orderMember:"+orderMember);
 		mv.addObject("orderMember", orderMember);
 		
 		//주문코드 생성
@@ -61,26 +60,20 @@ public class OrderController {
 		String[] ea = request.getParameterValues("ea[]");
 		String[] goodsno = request.getParameterValues("goodsno[]");
 		String[] goodsName = request.getParameterValues("GOODS_NAME");
-		
-		System.out.println("goodsno[]"+goodsno);
 		List<Map<String, Object>> goods = new ArrayList<Map<String, Object>>();
 		
 		for (int i = 0; i < goods_kinds_number.length; i++) {
 			commandMap.put("GOODS_NUMBER", request.getParameter("goodsno"));
 			if(goodsno !=null) { //장바구니 구매시 상품번호
 				commandMap.put("GOODS_NUMBER", goodsno[i]);
-				System.out.println("goodsno[" + i + "] = " + goodsno[i]);
 			}
 			commandMap.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
 			commandMap.put("EA", ea[i]);
-			System.out.println("CommandMap!! :" +commandMap.getMap());
 			
 			Map<String, Object> orderGoods = orderService.orderGoods(commandMap.getMap());
-			System.out.println("orderGoods : " + orderGoods);
 
 			orderGoods.put("EA", ea[i]);
 			goods.add(orderGoods);
-			System.out.println("goods : " + goods);
 		}
 		
 		mv.addObject("GOODS_NAME", goodsName[0]);
@@ -98,16 +91,11 @@ public class OrderController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("orderEnd");
 		commandMap.put("MEMBER_NUMBER", request.getParameter("MEMBER_NUMBER"));
-		
-		System.out.println("주문처리:"+ commandMap.getMap().toString());
-		Map<String, Object> orderMember = orderService.orderMember(commandMap.getMap());
-		List<Map<String, Object>> goods = new ArrayList<Map<String, Object>>();
-
+	
 		String[] goods_kinds_number = request.getParameterValues("kinds[]");
 		String[] ea = request.getParameterValues("ea[]");
-		String[] goods_number = request.getParameterValues("GOODS_NUMBER");
-		String payType = request.getParameter("payType");
-		System.out.println("payType:"+payType);
+		String[] goods_number = request.getParameterValues("GOODS_NUMBER[]");
+		List<BigDecimal> goods_Disprice = new ArrayList<>();
 		
 		//현재 날짜와 시각
 		Date date = new Date();
@@ -115,21 +103,34 @@ public class OrderController {
 		SimpleDateFormat sf  = new SimpleDateFormat("YY/MM/dd");
 		//SimpleDateFormat 클래스의 format 메소드로 타입을 Date -> String으로 변환
 		String orderDate = sf.format(date);
-
+		
+		//주문완료 페이지에서 출력할 상품 정보 저장
+		List<Map<String, Object>> GoodsList = new ArrayList<Map<String, Object>>();
 		for (int i = 0; i < goods_kinds_number.length; i++) {
-			commandMap.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
-			commandMap.put("EA", ea[i]);
-			commandMap.put("GOODS_NUMBER", goods_number[i]);
-			Map<String, Object> orderGoods = orderService.orderGoods(commandMap.getMap());
-			orderGoods.put("EA", ea[i]);
-			goods.add(orderGoods);
-			System.out.println("주문한 상품목록 : " + goods);
+			Map<String, Object> orderGoods = new HashMap<>();
+			orderGoods.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
+			orderGoods.put("EA", ea[i]); 
+			orderGoods.put("GOODS_NUMBER", goods_number[i]);
+			orderGoods = orderService.orderGoods(orderGoods);
+			orderGoods.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
+			orderGoods.put("EA", ea[i]); 
+			orderGoods.put("GOODS_NUMBER", goods_number[i]);
+			goods_Disprice.add((BigDecimal) orderGoods.get("GOODS_DISPRICE"));
+			GoodsList.add(orderGoods);
 		}
+		mv.addObject("goodsList", GoodsList);
 		
+		//주문완료 페이지에서 출력할 주문자 정보
+		Map<String, Object> orderMember = orderService.orderMember(commandMap.getMap());
+		mv.addObject("orderMember", orderMember);
+		
+		//주문서에 포함될 상품가격을 객체에 저장
+		commandMap.put("ORDER_TOTAL_PRICE[]", goods_Disprice);
+		
+		//주문서에 포함될 배송정보를 객체에 저장
 		String ORDER_CODE = request.getParameter("ORDER_CODE");
-		System.out.println("ORDER_CODE:"+ORDER_CODE);
+		mv.addObject("ORDER_CODE", ORDER_CODE);
 		
-		//배송정보 저장
 		commandMap.put("ORDER_CODE", ORDER_CODE);
 		commandMap.put("BUYER_ZIPCODE", orderMember.get("MEMBER_ZIPCODE"));
 		commandMap.put("BUYER_ADDRESS1", orderMember.get("MEMBER_ADDRESS1"));
@@ -142,7 +143,6 @@ public class OrderController {
 			commandMap.put("DELIVERY_MESSAGE", " ");
 		}
 
-		commandMap.put("GOODS_NUMBER", request.getParameter("GOODS_NUMBER"));
 		commandMap.put("RECEIVER_NAME", request.getParameter("RECEIVER_NAME"));
 		commandMap.put("RECEIVER_ZIPCODE", request.getParameter("RECEIVER_ZIPCODE"));
 		commandMap.put("RECEIVER_ADDRESS1", request.getParameter("RECEIVER_ADDRESS1"));
@@ -153,19 +153,9 @@ public class OrderController {
 		commandMap.put("TOTALPRICE", request.getParameter("TOTALPRICE"));
 		commandMap.put("ORDER_DATE", orderDate);
 		
-		//주문 상품 정보 저장
-		for (int i = 0; i < goods_kinds_number.length; i++) {
-			commandMap.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
-			commandMap.put("ORDER_AMOUNT", ea[i]);
-			commandMap.put("ORDER_TOTAL_PRICE", request.getParameter("TOTALPRICE"));
-			commandMap.put("GOODS_NUMBER", goods_number[i]);
-		}
-		
 		//상품 구매 트랜잭션 처리
 		orderService.orderGoodsAction(commandMap.getMap());
 
-		mv.addObject("orderMember", orderMember);
-		mv.addObject("goods", goods);
 		mv.addObject("goods_kind_number", goods_kinds_number);
 		mv.addObject("ea", ea);
 		
@@ -175,7 +165,7 @@ public class OrderController {
 		mv.addObject("usePoint", usePoint);
 		}
 		
-		mv.addObject("ORDER_CODE", ORDER_CODE);
+		mv.addObject("ORDER_INFO", commandMap);
 		mv.addObject("BUYER_NUMBER", commandMap.get("BUYER_NUMBER"));
 		mv.addObject("TOTALPRICE", commandMap.get("TOTALPRICE"));
 		mv.addObject("RECEIVER_NAME", commandMap.get("RECEIVER_NAME"));

@@ -264,7 +264,7 @@ i {
                   	</div>
               		<c:if test="${reviewSize == 0}">
                   	<div style="clear:left; text-align:center; padding:20px;color: #8b8e94; line-height: 28px; font-size: 15px;">
-                  	작성된 상품 후기가 없습니다.
+                  	작성된 구매 후기가 없습니다.
                   	</div>
                   	</c:if>
 	                     <c:forEach var="goodsReview" items="${reviewList}" varStatus="stat">
@@ -351,7 +351,7 @@ i {
                               </c:if> 
                                <c:if test="${sessionScope.MEMBER_ID ne null }">
                                  <div class="review-write-btn" style="float:right; border: 1px solid black;">
-                                <a href="/ModuHome/qna/modal_qnaForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" data-toggle="modal" data-target="#myModal2">QNA 작성하기</a>
+                                <a href="/ModuHome/qna/modal_qnaForm?GOODS_NUMBER=${goodsBasic.GOODS_NUMBER}" data-toggle="modal" data-target="#myModal2">Q&A 작성하기</a>
                                   </div>
                               </c:if> 
 					</div>
@@ -361,7 +361,7 @@ i {
                <div class="section-body">
                   	<c:if test="${qnaSize == 0}">
                   	<div style="text-align:center; padding:20px;color: #8b8e94; line-height: 28px;font-size: 15px;">
-                  	작성된 qna가 없습니다.
+                  	작성된 Q&A가 없습니다.
                   	</div>
                   	</c:if>
                   <ul class="list-dropdown">
@@ -578,6 +578,7 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				totprice = totprice + price;
 				$("#MK_txt-won").data("price", totprice);
 				$("#MK_txt-won").html(comma(totprice) + "원"); 
+				//$('#option').val('opt-default');
 			});
 	}
 	//상품옵션 삭제
@@ -696,12 +697,12 @@ $(document).ready(function(){
 });
 </script>
 <script>
-//최초 페이지 요청시
+//최초 페이지 요청시 실행
 $(document).ready(function(){
 	makeQnaButton();
 	DoQnaButton();
 });
-//ajax 완료 후
+//ajax 완료 후 다시 한번 실행
 $(document).ajaxComplete(function () {
 	makeQnaButton();
 	DoQnaButton();
@@ -718,7 +719,6 @@ function makeQnaButton(){
 		})
 }
 
-//var qnaHeight = $('#qna-content-text2').css('height');//QnA 내용의 높이 css값
 //'더보기' 클릭시 QnA 내용 전체 표시 '접기' 클릭시 내용 감추기
 function DoQnaButton(){
 	$('.qna-content-button').each(function(){
@@ -739,7 +739,7 @@ function DoQnaButton(){
 </script>
 
 <script>
-//상품 후기, QnA - aJax
+//상품 후기, QnA - ajax
 function ajaxReviewPaging(pagingCheck,reviewEndPagingNum,reviewStartPagingNum,reviewNowPage) {
  var tempScrollTop = $("#changeReviewList").offset().top-100;
  var pagingReviewOnOff="ON";
@@ -828,25 +828,17 @@ function detailView(element) {
 			var ea = new Array();
 			$("input[name='ea[]']").each(function(i) {
 				ea[i] =  $(this).val();
-			    console.log("ea:"+ $(this).val());
 			});
 			var kinds = new Array();
 			$("input[name='kinds[]']").each(function(index) {
 				kinds[index] = $(this).val();
-			    console.log("kinds:"+$(this).val());
 			});
 			var GOODS_NAME = $("input[name='GOODS_NAME']").attr('value');
 			var deliverypayment = $("input[name='delivery-payment']").attr('value');
 			var optno = new Array();
 			$("input[name='optno[]']").each(function(index) {
 				optno[index] = $(this).val();
-			    console.log("optno:"+$(this).val());
 			});
-			console.log("1goodsno:"+goodsno);
-			console.log("1GOODS_NAME:"+GOODS_NAME);
-			console.log("1kinds:"+kinds);
-			console.log("1ea:"+ea);
-			console.log("1deliverypayment:"+deliverypayment);
 			
 			$.ajaxSettings.traditional = true;//배열 형태로 서버쪽 전송을 위한 설정
 			
@@ -856,7 +848,6 @@ function detailView(element) {
 			       data: {"mode":mode,"goodsno":goodsno,"ea[]":ea,"kinds[]":kinds,"GOODS_NAME":GOODS_NAME,"delivery-payment":deliverypayment, "optno[]":optno},
 			       success:function(data){
 			          cartPopover();
-			          console.log("cartAjax Done");
 			          $('.MK_li_1_1').remove();
 			          $('#MK_txt-won').html("0원");
 			          $('#option').val('opt-default');
@@ -869,7 +860,6 @@ function detailView(element) {
 //장바구니 상품 추가시 알림 메세지
 function cartPopover() {
 	$('.goods-detail-page').css("overflow", "hidden");
-	console.log("팝오버");
 		
 	$('#cartmenu').popover({
 	    container: 'body', content:"장바구니에 상품이 추가되었습니다.", trigger: 'manual'

@@ -79,7 +79,7 @@
 							<em>${orderMember.MEMBER_NAME }</em>
 							</c:when>
 							<c:otherwise>
-							<em>${BUYER_NAME }</em>
+							<em>${BUYER_NAME } - ${ORDER_INFO.BUYER_NAME }</em>
 							</c:otherwise>
 							</c:choose></span></div></td>
                         <th scope="row"><div class="tb-center">이메일</div></th>
@@ -155,7 +155,7 @@
                 <tfoot>
                 </tfoot>
                 <tbody>
-                <c:forEach var="orderEnd"  items="${goods}" varStatus="stat">
+                <c:forEach var="orderEnd"  items="${goodsList}" varStatus="stat">
                 <tr>
                 <c:url var="viewURL" value="/goods/detail">
                 <c:param name="GOODS_NUMBER" value="${orderEnd.GOODS_NUMBER }" />

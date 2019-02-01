@@ -1,5 +1,6 @@
 package com.kh.order;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -45,10 +46,36 @@ public class OrderServiceImpl implements OrderService {
 		//트랜잭션 시작
 		TransactionStatus status = transactionManager.getTransaction(def);
 		try {
-		//배송 정보
+		//배송 정보 생성
 		orderDAO.createDeliveryList(map);
-		//주문 정보
-		orderDAO.createOrderList(map);
+		//주문 정보 생성
+		if(map.get("kinds[]") instanceof String) {
+			map.put("GOODS_KIND_NUMBER", map.get("kinds[]"));
+			map.put("ORDER_AMOUNT", map.get("ea[]"));
+			map.put("GOODS_NUMBER", map.get("GOODS_NUMBER[]"));
+			List<BigDecimal> orderPrice = (List<BigDecimal>) map.get("ORDER_TOTAL_PRICE[]");
+			map.put("ORDER_TOTAL_PRICE", orderPrice.get(0));
+			orderDAO.createOrderList(map);
+		} else {
+			String[] goodsKindNum = (String[]) map.get("kinds[]");
+			String[] ea = (String[]) map.get("ea[]");
+			String[] goodsNum = (String[]) map.get("GOODS_NUMBER[]");
+			List<BigDecimal> orderPrices = (List<BigDecimal>) map.get("ORDER_TOTAL_PRICE[]");
+		/*	map.remove("kinds[]");
+			map.remove("ea[]");
+			map.remove("GOODS_NUMBER[]");
+			map.remove("ORDER_TOTAL_PRICE[]");*/
+			
+			for(int i=0; i<goodsKindNum.length; i++) {
+				map.put("GOODS_KIND_NUMBER", Integer.parseInt(goodsKindNum[i]));
+				map.put("ORDER_AMOUNT", Integer.parseInt(ea[i]));
+				map.put("GOODS_NUMBER", Integer.parseInt(goodsNum[i]));
+				map.put("ORDER_TOTAL_PRICE", orderPrices.get(i));
+				orderDAO.createOrderList(map);
+			}
+		}
+		
+		
 		//상품 재고 수량 빼기
 		orderDAO.goodsCountDown(map);
 		//포인트 적립

@@ -132,8 +132,8 @@ function checkedRows(index){
 </div>
 <body style="background-color:#fff; !important;">
 <div class="order-shoppingBag" style="margin-top:100px; background-color:#fff;" align="center">
-		<div class="section-head left border" style="padding: 30px; margin-top:20px; margin-left:50px; background-color:#fff; text-align: center;">
-			<span style="font-size: 28px; color:black;">장바구니</span>
+		<div class="section-head left border" style="padding: 40px; margin-top:20px; margin-left:50px; background-color:#fff; text-align: center;">
+			<span style="font-size: 28px; color:#1a1a1a;">장바구니</span>
 		</div>
 		<!-- <hr style="color:#999999; width:90%; padding:20px;"> -->
 		<div id="changeCartGoodlist" class="section-body col-md-12" style="background-color:#fff; !important;">
@@ -183,7 +183,7 @@ function checkedRows(index){
 									<input type="hidden" name="cart" value="${cartList.CART_NUMBER }">
 									<span id="cartNum${stat.index}" value="${cartList.CART_NUMBER }"></span>
 									<input type="hidden" name="GOODS_NAME" value="${cartList.GOODS_NAME }">
-									<input type="hidden" name="kinds[]" value="${cartList.GOODS_KIND_NUMBER }">
+									<input type="hidden" name="kinds[]" class="goods_kind${stat.index}" value="${cartList.GOODS_KIND_NUMBER }">
 									<input type="hidden" name="goodsno[]" value="${cartList.GOODS_NUMBER }">
 									<input type="hidden" class="mstock" value="${cartList.GOODS_AMOUNT }">
 									<span id="mstock${stat.index}" value="${cartList.GOODS_AMOUNT }"></span>
@@ -397,12 +397,15 @@ function cartDelete(){
 </script>
 <script>
 function ajaxChangeEa(cartNum, index, idx) {
-	var idx = idx; //상품 수량
+	console.log("장바구니 수량변경");
+	var idx = idx; //추가한 상품 수량
 	var index = index;//장바구니 목록 중 상품의 인덱스
-	var ea = parseInt($(".input_ea"+index).val(), 10);
+	var ea = parseInt($(".input_ea"+index).val(), 10);//현재 상품 수량
+	var goodKind = parseInt($(".goods_kind"+index).val(), 10);
+	console.log("goodKind:"+goodKind);
 	$.ajax({
 		url: "/ModuHome/cart/modifyEa",
-		data: {"CART_NUMBER": cartNum, "CART_AMOUNT":idx},
+		data: {"CART_NUMBER": cartNum, "CART_AMOUNT":idx, "GOODS_KIND_NUMBER":goodKind},
 		dataType: "json",
 		success:function(data){
 			//수량 변경
@@ -460,16 +463,13 @@ $(document).off().on("click", ".btn-ea-up"+index, function(e) {
         return false;
     }
     
-	if('${sessionScope.MEMBER_ID}' == null || '${sessionScope.MEMBER_ID}' == ''){
-		change_ea(index,1); 
-	} else {
+	//상품 수량 변경 ajax
     ajaxChangeEa(cartNum, index, 1);
-	}
-	
+
 	inputEa = inputEa + 1
     total = price + total;
     
-  //배송비
+  	//배송비
   	var delfee = 0;
 	if(total < 30000){
 			 delfee= 2500;
@@ -509,14 +509,12 @@ $(document).off().on("click", "li a.btn-ea-dn"+index, function(e) {
 		alert("1개 이상을 주문하셔야 합니다");
 		return false;
 	}
-	if('${sessionScope.MEMBER_ID}' == null || '${sessionScope.MEMBER_ID}' == ''){
-		change_ea(index,-1); 
-	} else {
-		ajaxChangeEa(cartNum, index, -1);
-	}
+
+	ajaxChangeEa(cartNum, index, -1);
+	
     total = total - price;
     inputEa = inputEa - 1
-  //배송비
+  	//배송비
   	var delfee = 0;
 	if(total < 30000){
 			 delfee= 2500;
