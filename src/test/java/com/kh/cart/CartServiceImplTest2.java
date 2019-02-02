@@ -57,7 +57,6 @@ public class CartServiceImplTest2 {
 			 cartMap3.put("GOODS_NUMBER", "500");
 			 AftersessionCart.add(cartMap3);
 			 //비회원 세션 장바구니 끝
-			 
 		     
 		     //비회원 장바구니 담기(3개 상품)
 		     Map<String, Object> NotMemberGoods = new HashMap<>();
@@ -71,7 +70,7 @@ public class CartServiceImplTest2 {
 		     NotMemberGoods.put("goodsno", "500"); //상품 번호
 		     NotMemberGoods.put("cartSession", BeforesessionCart); //장바구니 담기 기능 실행 전 세션 카트(컨트롤러에서 map 객채에 저장합니다.)
 			CartServiceImpl arrayCheck = new CartServiceImpl();
-			assertFalse(AftersessionCart == arrayCheck.makeCartInventory(NotMemberGoods));
+			assertFalse(AftersessionCart == arrayCheck.makeCart(NotMemberGoods));
 			
 		
 	}

@@ -9,22 +9,17 @@ import com.kh.moduhome.AbstractDAO;
 public class CartDAO extends AbstractDAO {
 
 	// 장바구니 등록
-	public void cartInsertDB(Map<String, Object> map) throws Exception {
+	public void insertCart(Map<String, Object> map) throws Exception {
 		insert("cart.insertCart", map);
 	}
 	
-	/*public void cartInsertSession(Map<String, Object> map) throws Exception {
-		insert("cart.insertCart", map);
-	}
-	*/
-
-	// 장바구니에 이미 들어있나 확인
+	// 장바구니에 중복 상품 확인
 	@SuppressWarnings("unchecked")
-	public Map<String, Object> confirmCart(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("cart.confirmCart", map);
+	public Map<String, Object> duplicateCart(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("cart.duplicateCart", map);
 	}
 
-	// 회원 개인의 장바구니 목록 불러오기(OFF된 상품은 제외)
+	// 회원 개인의 장바구니 목록 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectMyCart(Map<String, Object> map) throws Exception {
 		return selectList("cart.selectMyCart", map);
@@ -41,30 +36,14 @@ public class CartDAO extends AbstractDAO {
 		delete("cart.deleteMyCart", map);
 	}
 
-	// 장바구니 옵션에서 해당 상품에 대한 정보 불러오기
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> selectOption(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("cart.selectOption", map);
-	}
-
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> sessionOption(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("cart.sessionOption", map);
-	}
-
 	// 장바구니 수정(옵션변경)
 	public void updateCarts(Map<String, Object> map) throws Exception {
 		update("cart.updateCarts", map);
 	}
 
-	// 3일 이후 장바구니 자동삭제
-	public void deleteCarts(Map<String, Object> map) throws Exception {
-		delete("cart.deleteCarts", map);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public Map<String, Object> buyInCart(Map<String, Object> map) throws Exception {
-		return (Map<String, Object>) selectOne("cart.buyInCart", map);
+	//7일 이상 지난 장바구니 상품 삭제
+	public void cleanUpCarts(Map<String, Object> map) throws Exception {
+		delete("cart.cleanUpCarts", map);
 	}
 
 }

@@ -5,7 +5,7 @@
 
 
 <!-- 장바구니 품목 중복체크 -->
-<select id="confirmCart" parameterType="hashmap" resultType="hashmap">
+<select id="duplicateCart" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
 	SELECT * FROM CART 
 	WHERE GOODS_KIND_NUMBER=#{GOODS_KIND_NUMBER} AND 
@@ -72,11 +72,11 @@ WHERE CART_NUMBER=#{CART_NUMBER}
 ]]>
 </update>
 
-<!-- 장바구니 3일 자동삭제 -->
-<delete id="deleteCarts" parameterType="hashmap">
+<!-- 7일 이상 지난 장바구니 상품 삭제 -->
+<delete id="cleanUpCarts" parameterType="hashmap">
 <![CDATA[
 
-		DELETE FROM CART WHERE CART_REG_DATE<SYSDATE-3 
+		DELETE FROM CART WHERE CART_REG_DATE<SYSDATE-7 
 		AND MEMBER_NUMBER= #{MEMBER_NUMBER}
 ]]>
 </delete>

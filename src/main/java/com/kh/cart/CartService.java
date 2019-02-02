@@ -5,38 +5,39 @@ import java.util.Map;
 
 public interface CartService {
 
-	// 장바구니 상품 담기
-	public List<Map<String, Object>> makeCartInventory(Map<String, Object> map) throws Exception;
+	//장바구니 상품 담기
+	public List<Map<String, Object>> makeCart(Map<String, Object> map) throws Exception;
 
-	//장바구니 아이템 중복체크
+	//세션 장바구니 수량 업데이트
 	public Map<String, Object> sessionCartCheck(Map<String, Object> map, List<Map<String, Object>> cartSession) throws Exception;
 	
-	// 장바구니 담기 DB
+	//세션 장바구니 결합
+	public List<Map<String, Object>> sessionCartJoin(List<Map<String, Object>> oldCart, List<Map<String, Object>> newCart) throws Exception;
+	
+	//로그인시 세션 장바구니를 DB에 저장
+	public void getSessionCart(List<Map<String, Object>> sessionCart, String mem) throws Exception;
+	
+	//장바구니 담기 DB
 	public void cartInsert(Map<String, Object> cartIventroy) throws Exception;
 
-	// 회원 장바구니 목록
+	//회원 장바구니 목록
 	public List<Map<String, Object>> selectMyCart(Map<String, Object> map) throws Exception;
 	
-	//비회원 장바구니 로그인시 넣기
-	public void cartInsert2(Map<String, Object> map) throws Exception;
-
-	// 세션에서 장바구니 목록 불러오기
+	//세션에서 장바구니 목록 불러오기
 	public Map<String, Object> sessionCartList(Map<String, Object> map) throws Exception;
 
-	// 장바구니 삭제
+	//장바구니 삭제
 	public void deleteMyCart(Map<String, Object> map) throws Exception;
 
-	// 장바구니 옵션에서 상품에 대한 정보 불러오기(회원)
-	public Map<String, Object> selectOption(Map<String, Object> map) throws Exception;
-
-	// 장바구니 옵션에서 상품에 대한 정보 불러오기(노회원)
-	public Map<String, Object> sessionOption(Map<String, Object> map) throws Exception;
-
-	// 장바구니 수정(옵션변경)
+	//장바구니 수정(옵션변경)
 	public void updateCarts(Map<String, Object> map) throws Exception;
 
-	//3일이상된 장바구니 목록 삭제
-	public void deleteCarts(Map<String, Object> map) throws Exception;
-
-	Map<String, Object> buyInCart(Map<String, Object> map) throws Exception;
+	//7일 이상 지난 장바구니 상품 삭제
+	public void cleanUpCarts(Map<String, Object> map) throws Exception;
+	
+	//장바구니 중복 상품 확인
+	public Map<String, Object> duplicateCart(Map<String, Object> map) throws Exception;
+	
+	
+	
 }

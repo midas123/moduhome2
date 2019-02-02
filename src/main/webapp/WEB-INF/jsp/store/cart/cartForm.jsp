@@ -184,7 +184,7 @@ function checkedRows(index){
 									<span id="cartNum${stat.index}" value="${cartList.CART_NUMBER }"></span>
 									<input type="hidden" name="GOODS_NAME" value="${cartList.GOODS_NAME }">
 									<input type="hidden" name="kinds[]" class="goods_kind${stat.index}" value="${cartList.GOODS_KIND_NUMBER }">
-									<input type="hidden" name="goodsno[]" value="${cartList.GOODS_NUMBER }">
+									<input type="hidden" name="GOODS_NUMBER[]" value="${cartList.GOODS_NUMBER }">
 									<input type="hidden" class="mstock" value="${cartList.GOODS_AMOUNT }">
 									<span id="mstock${stat.index}" value="${cartList.GOODS_AMOUNT }"></span>
 									<input type="text" name="ea[]" value="${cartList.CART_AMOUNT }" class="input_ea${stat.index}" size="2" readonly>
@@ -402,7 +402,6 @@ function ajaxChangeEa(cartNum, index, idx) {
 	var index = index;//장바구니 목록 중 상품의 인덱스
 	var ea = parseInt($(".input_ea"+index).val(), 10);//현재 상품 수량
 	var goodKind = parseInt($(".goods_kind"+index).val(), 10);
-	console.log("goodKind:"+goodKind);
 	$.ajax({
 		url: "/ModuHome/cart/modifyEa",
 		data: {"CART_NUMBER": cartNum, "CART_AMOUNT":idx, "GOODS_KIND_NUMBER":goodKind},

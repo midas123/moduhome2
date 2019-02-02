@@ -61,9 +61,8 @@ public class CartController {
 			}
 		}
 			
-		//장바구니 상품 목록 생성
-		cartIventory = cartService.makeCartInventory(commandMap.getMap());
-		System.out.println("cartIventory:"+cartIventory);
+		//장바구니 상품 목록 생성, 회원은 바로 DB에 저장
+		cartIventory = cartService.makeCart(commandMap.getMap());
 		//비회원 세션에 장바구니 저장 
 		if(session.getAttribute("MEMBER_NUMBER") == null) {
 			session.setAttribute("cartSession", cartIventory);
@@ -88,6 +87,7 @@ public class CartController {
 
 		if (session.getAttribute("MEMBER_NUMBER") != null) {
 			commandMap.put("MEMBER_NUMBER", session.getAttribute("MEMBER_NUMBER"));
+			cartService.cleanUpCarts(commandMap.getMap());
 			cartList = cartService.selectMyCart(commandMap.getMap());
 		} else {
 			if (session.getAttribute("cartSession") != null) {
@@ -194,10 +194,29 @@ public class CartController {
 	
 	@RequestMapping(value="/cart/modifyEa")
 	@ResponseBody
-	public Map<String, Object> modifyEa(CommandMap commandMap) throws Exception {
+	public Map<String, Object> modifyEa(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
-
-		cartService.updateCarts(commandMap.getMap());
+		HttpSession session = request.getSession();
+		//회원 장바구니 상품 수량변경
+		if(session.getAttribute("MEMBER_NUMBER") != null) {
+			cartService.updateCarts(commandMap.getMap());
+		} else {
+			//비회원 장바구니 상품 수량변경
+			int goodKind = Integer.parseInt((String)commandMap.get("GOODS_KIND_NUMBER"));
+			List<Map<String, Object>> sessionCart = (List<Map<String, Object>>) session.getAttribute("cartSession");
+			for(int i=0; i<sessionCart.size(); i++) {
+				int session_goodKind = Integer.parseInt(sessionCart.get(i).get("GOODS_KIND_NUMBER").toString()); 
+				if(session_goodKind == goodKind) {
+					int cart_amount = Integer.parseInt(sessionCart.get(i).get("CART_AMOUNT").toString());
+					//int cart_amount2 = Integer.parseInt(cart_amount1);
+					cart_amount += 1;
+					sessionCart.get(i).replace("CART_AMOUNT", cart_amount);
+				}
+			}
+			session.removeAttribute("cartSession");
+			session.setAttribute("cartSession", sessionCart);
+		}
+		
 		return param;
 	}
 

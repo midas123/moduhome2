@@ -124,7 +124,7 @@ i {
 <body class="goods-detail-page" style="background: #fff">
 	<form name="fmOrder">
 			<input type="hidden" name="mode"> 
-			<input type="hidden" name="goodsno" value="${goodsBasic.GOODS_NUMBER }"> 
+			<input type="hidden" name="GOODS_NUMBER" value="${goodsBasic.GOODS_NUMBER }"> 
 				<input type="hidden" name="GOODS_NAME" value="${goodsBasic.GOODS_NAME}">
 	<div class="container" style="margin: auto; width: 1000px;">
 		<div class="furniture-view">
@@ -823,7 +823,7 @@ function detailView(element) {
 				return;
 			}
 			//var mode = 'cart';
-		 	var goodsno = $("input[name='goodsno']").attr('value');
+		 	var goodsno = $("input[name='GOODS_NUMBER']").attr('value');
 			//var ea = $("input[name='ea[]']").attr('value');
 			var ea = new Array();
 			$("input[name='ea[]']").each(function(i) {
@@ -845,7 +845,7 @@ function detailView(element) {
 			  $.ajax({
 			       url: "/ModuHome/cart/cartAdd",
 			       type : "post",
-			       data: {"mode":mode,"goodsno":goodsno,"ea[]":ea,"kinds[]":kinds,"GOODS_NAME":GOODS_NAME,"delivery-payment":deliverypayment, "optno[]":optno},
+			       data: {"mode":mode,"GOODS_NUMBER":goodsno,"ea[]":ea,"kinds[]":kinds,"GOODS_NAME":GOODS_NAME,"delivery-payment":deliverypayment, "optno[]":optno},
 			       success:function(data){
 			          cartPopover();
 			          $('.MK_li_1_1').remove();

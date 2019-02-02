@@ -1,5 +1,7 @@
 package com.kh.login;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.alarm.AlarmModel;
 import com.kh.alarm.AlarmService;
+import com.kh.cart.CartService;
 //import kh.spring.cart.CartService;
 import com.kh.moduhome.CommandMap;
 
@@ -24,8 +27,8 @@ import spring.siroragi.member.MemberService;
 public class LoginController {
   
 	//장바구니
-/*   @Resource(name = "cartService")
-   private CartService cartService;*/
+   @Resource(name = "cartService")
+   private CartService cartService;
    
    /*
     * @Resource(name = "memberService") private MemberService memberService;
@@ -63,6 +66,7 @@ public class LoginController {
       
       
       HttpSession session = request.getSession();
+    
       
       System.out.println("아이디" + commandMap.get("MEMBER_ID"));
       
@@ -115,13 +119,15 @@ public class LoginController {
     		String mem_id = chk.get("MEMBER_NUMBER").toString();
     		if(alarmService.alarmExist(mem_id) != 0){
     			mem_alarm = alarmService.alarmLoad(mem_id);
-    			System.out.println("mem_id ? "+mem_id);
     		}
     		session.setAttribute("session_mem_alarm", mem_alarm);
              
+    		
+    		//회원 장바구니에 세션 장바구니 추가
+    		List<Map<String, Object>> sessionCart = (List<Map<String, Object>>) session.getAttribute("cartSession");
+    		String mem = chk.get("MEMBER_NUMBER").toString();
+    		cartService.getSessionCart(sessionCart,mem);
             return mv;
-            
-
             
          } else {	//비밀번호 틀렸을때
         	 mv.addObject("message", "비밀번호를 확인해 주세요.");
@@ -129,6 +135,11 @@ public class LoginController {
             return mv;
          }
       }
+      
+      
+      
+      
+      
     }
       
 

@@ -3,10 +3,8 @@ package com.kh.cart;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -21,16 +19,15 @@ public class CartServiceImpl implements CartService {
 	// 장바구니 등록
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Map<String, Object>> makeCartInventory(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> makeCart(Map<String, Object> map) throws Exception {
 	/*	단품 or 여러개 상품 추가(종류만 다른 같은 상품)
 		비어있는 장바구니에 상품 추가
 		상품이 있는 장바구니에 상품 추가 (상품 종류까지 같은 중복 상품은 등록X)*/
-		List<Map<String, Object>> cartIventory = new ArrayList<>(); //새로운 장바구니
-		Map<String, Object> cartItemOld = new HashMap<>(); //이전 장바구니 품목
+		List<Map<String, Object>> newCart = new ArrayList<>(); //새로운 장바구니
+		Map<String, Object> updatedCartItem = new HashMap<>(); //이전 장바구니 상품
 		
-		List<Map<String, Object>> sessionCart = new ArrayList<>();
-		sessionCart = (List<Map<String, Object>>) map.get("cartSession"); //이전 세션 장바구니
-		int goodsNum = Integer.parseInt(map.get("goodsno").toString()); //상품번호
+		List<Map<String, Object>> oldSessionCart = (List<Map<String, Object>>) map.get("cartSession"); //이전 세션 장바구니
+		int goodsNum = Integer.parseInt(map.get("GOODS_NUMBER").toString()); //상품번호
 		
 		if (map.get("optno[]") instanceof String) { //단품 주문
 			String goodsKind = (String) map.get("kinds[]"); 
@@ -39,18 +36,19 @@ public class CartServiceImpl implements CartService {
 				cartItem.put("GOODS_NUMBER", goodsNum);
 				cartItem.put("CART_AMOUNT", goodsAmount);
 				cartItem.put("GOODS_KIND_NUMBER", goodsKind);
-				
+				//회원
 				if(map.get("MEMBER_NUMBER") != null) {
 					cartItem.put("MEMBER_NUMBER", map.get("MEMBER_NUMBER"));
+					//DB에 장바구니 상품 저장
 					cartInsert(cartItem);
-				}	
-
-				cartItemOld = sessionCartCheck(cartItem, sessionCart);
-				if(cartItemOld == null) {
-					cartIventory.add(cartItem);
-				} else {
-					cartItem = cartItemOld;
-					cartIventory.add(cartItem);
+				} else {//비회원	
+					updatedCartItem = sessionCartCheck(cartItem, oldSessionCart);
+					if(updatedCartItem == null) {
+						newCart.add(cartItem);
+					} else {
+						cartItem = updatedCartItem;
+						newCart.add(cartItem);
+					}
 				}
 				
 		} else { // 여러개 주문
@@ -61,40 +59,32 @@ public class CartServiceImpl implements CartService {
 					cartItem.put("GOODS_NUMBER", goodsNum);
 					cartItem.put("GOODS_KIND_NUMBER", goodsKind[i]);
 					cartItem.put("CART_AMOUNT", goodsAmount[i]);
-					
+					//회원
 					if(map.get("MEMBER_NUMBER") != null) {
 						cartItem.put("MEMBER_NUMBER", map.get("MEMBER_NUMBER"));
+						//DB에 장바구니 상품 저장
 						cartInsert(cartItem);
-					} 
-					
-					cartItemOld = sessionCartCheck(cartItem, sessionCart);
-					if(cartItemOld == null) {
-						cartIventory.add(cartItem);
-					} else {
-						cartItem = cartItemOld;
-						cartIventory.add(cartItem);
+					} else {//비회원
+						updatedCartItem = sessionCartCheck(cartItem, oldSessionCart);
+						if(updatedCartItem == null) {
+							newCart.add(cartItem);
+						} else {
+							cartItem = updatedCartItem;
+							newCart.add(cartItem);
+						}
 					}
 			}
 		}
 		
 		//이전 세션 카트에서 중복 상품을 제거하고 새로운 카트 리스트와 결합
-		if(sessionCart != null) {
-		for(int i=0; i<cartIventory.size(); i++) {
-			for(int j=0; j<sessionCart.size(); j++) {
-				if(cartIventory.get(i).get("GOODS_KIND_NUMBER").equals(sessionCart.get(j).get("GOODS_KIND_NUMBER"))) {
-			 		sessionCart.remove(j);
-				}
-			}	
-		}
-		List<Map<String, Object>> finalCartInventory = new ArrayList<>(cartIventory);
-		finalCartInventory.addAll(sessionCart);
-		
-		return finalCartInventory;
+		if(oldSessionCart != null) {
+			newCart = sessionCartJoin(oldSessionCart, newCart);
 		}
 		
-		return cartIventory;
+		return newCart;
 	}
 	
+	@Override
 	public Map<String, Object> sessionCartCheck(Map<String, Object> map, List<Map<String, Object>> cartSession) throws Exception{
 		//세션에 이미 장바구니가 저장되어 있을 경우
 		if(cartSession != null) {
@@ -103,7 +93,6 @@ public class CartServiceImpl implements CartService {
 			for(int i=0; i<cartOldSession.size(); i++) {
 				//중복 상품의 수량을 업데이트
 				if(cartOldSession.get(i).get("GOODS_KIND_NUMBER").equals(map.get("GOODS_KIND_NUMBER"))){ //같은 상품 일 경우
-//					int oldEA = Integer.parseInt((String)cartOldSession.get(i).get("CART_AMOUNT"));//이전에 저장된 상품 수량
 					int oldEA = Integer.parseInt((String) cartOldSession.get(i).get("CART_AMOUNT"));//이전에 저장된 상품 수량
 					int newEA = Integer.parseInt((String) map.get("CART_AMOUNT")); //새로 추가된 상품 수량
 					//수량 더하기 
@@ -113,20 +102,54 @@ public class CartServiceImpl implements CartService {
 				} 
 			}
 			return map;
-		} 
+		} else {
+			
 		return null;
+		}
 	}
+	
+	@Override
+	public List<Map<String, Object>> sessionCartJoin(List<Map<String, Object>> oldCart, List<Map<String, Object>> newCart) throws Exception {
+		for(int i=0; i<newCart.size(); i++) {
+			for(int j=0; j<oldCart.size(); j++) {
+				if(newCart.get(i).get("GOODS_KIND_NUMBER").equals(oldCart.get(j).get("GOODS_KIND_NUMBER"))) {
+					oldCart.remove(j);
+				}
+			}	
+		}
+		//이전 세션 장바구니
+		List<Map<String, Object>> finalCartInventory = new ArrayList<>(oldCart);
+		//새로운 장바구니 결합
+		finalCartInventory.addAll(newCart);
+		
+		return finalCartInventory;
+	}
+	
+	@Override
+	public void getSessionCart(List<Map<String, Object>> sessionCart, String mem) throws Exception {
+		if(sessionCart != null) {
+			List<Map<String, Object>> cartList = new ArrayList<Map<String, Object>>();
+			cartList = sessionCart;
+			
+		  for(int i=0; i<cartList.size(); i++ ){
+			  Map<String, Object> cartItem = cartList.get(i);
+			  cartItem.put("MEMBER_NUMBER", mem);
+			  cartInsert(cartList.get(i));
+		  }
+		}
+	}
+	
 		
 	@Override
 	public void cartInsert(Map<String, Object> map) throws Exception {
-		
 		if(map.get("MEMBER_NUMBER") != null) { 
 			Map<String, Object> cartOld = new HashMap<>();
-			//DB에 저장된 이전 장바구니 목록
-			cartOld = cartDAO.confirmCart(map);
+			//DB에 이전 장바구니에 있는 중복 상품 확인
+			cartOld = cartDAO.duplicateCart(map);
 			
+			//중복 상품이 있을 경우
 			if(cartOld != null) {
-				//이전 장바구니 삭제
+				//이전 장바구니 중복 상품 삭제
 				cartDAO.deleteMyCart(map);
 				
 				//장바구니 상품 수량 업데이트
@@ -134,11 +157,11 @@ public class CartServiceImpl implements CartService {
 				int NewEa = Integer.parseInt((String) map.get("CART_AMOUNT"));
 				map.put("CART_NUMBER", cartOld.get("CART_NUMBER"));
 				map.put("CART_AMOUNT", Integer.toString(OldEa + NewEa));
-				//DB 저장
-				cartDAO.cartInsertDB(map);
+				//DB에 장바구니 저장
+				cartDAO.insertCart(map);
 			} else {
-				//이전 장바구니에 없는 상품은 바로 DB에 저장
-				cartDAO.cartInsertDB(map);
+				//이전 장바구니에 중복 상품이 없는 경우 바로 DB에 저장
+				cartDAO.insertCart(map);
 			}
 		}
 	}
@@ -147,14 +170,6 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public List<Map<String, Object>> selectMyCart(Map<String, Object> map) throws Exception {
 		return cartDAO.selectMyCart(map);
-	}
-	
-	@Override
-	public void cartInsert2(Map<String, Object> map) throws Exception {
-		if (cartDAO.confirmCart(map) != null)
-			return;
-		else
-			cartDAO.cartInsertDB(map);
 	}
 
 	// 비회원 장바구니 목록
@@ -168,33 +183,24 @@ public class CartServiceImpl implements CartService {
 	public void deleteMyCart(Map<String, Object> map) throws Exception {
 		cartDAO.deleteMyCart(map);
 	}
-
-	// 장바구니 옵션에서 해당 상품에 대한 정보 불러오기
-	@Override
-	public Map<String, Object> selectOption(Map<String, Object> map) throws Exception {
-		return cartDAO.selectOption(map);
-	}
-
-	@Override
-	public Map<String, Object> sessionOption(Map<String, Object> map) throws Exception {
-		return cartDAO.sessionOption(map);
-	}
-
+	
+	//장바구니 상품 수량변경
 	@Override
 	public void updateCarts(Map<String, Object> map) throws Exception {
 		cartDAO.updateCarts(map);
 	}
 
-	// 3일이상된 장바구니 목록 삭제
+	//7일 이상 지난 장바구니 상품 삭제
 	@Override
-	public void deleteCarts(Map<String, Object> map) throws Exception {
-		cartDAO.deleteCarts(map);
+	public void cleanUpCarts(Map<String, Object> map) throws Exception {
+		cartDAO.cleanUpCarts(map);
 	}
 	
+	//장바구니 중복 상품 확인
 	@Override
-	public Map<String, Object> buyInCart(Map<String, Object> map) throws Exception {
-		return cartDAO.buyInCart(map);
+	public Map<String, Object> duplicateCart(Map<String, Object> map) throws Exception {
+		return cartDAO.duplicateCart(map);
 	}
-
+	
 
 }
