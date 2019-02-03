@@ -42,7 +42,7 @@ public class CartServiceImpl implements CartService {
 					//DB에 장바구니 상품 저장
 					cartInsert(cartItem);
 				} else {//비회원	
-					updatedCartItem = sessionCartCheck(cartItem, oldSessionCart);
+					updatedCartItem = updateSessionCart(cartItem, oldSessionCart);
 					if(updatedCartItem == null) {
 						newCart.add(cartItem);
 					} else {
@@ -65,7 +65,7 @@ public class CartServiceImpl implements CartService {
 						//DB에 장바구니 상품 저장
 						cartInsert(cartItem);
 					} else {//비회원
-						updatedCartItem = sessionCartCheck(cartItem, oldSessionCart);
+						updatedCartItem = updateSessionCart(cartItem, oldSessionCart);
 						if(updatedCartItem == null) {
 							newCart.add(cartItem);
 						} else {
@@ -85,7 +85,7 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
-	public Map<String, Object> sessionCartCheck(Map<String, Object> map, List<Map<String, Object>> cartSession) throws Exception{
+	public Map<String, Object> updateSessionCart(Map<String, Object> map, List<Map<String, Object>> cartSession) throws Exception{
 		//세션에 이미 장바구니가 저장되어 있을 경우
 		if(cartSession != null) {
 			List<Map<String, Object>> cartOldSession = new ArrayList<>();
@@ -118,15 +118,15 @@ public class CartServiceImpl implements CartService {
 			}	
 		}
 		//이전 세션 장바구니
-		List<Map<String, Object>> finalCartInventory = new ArrayList<>(oldCart);
+		List<Map<String, Object>> finalCart = new ArrayList<>(oldCart);
 		//새로운 장바구니 결합
-		finalCartInventory.addAll(newCart);
+		finalCart.addAll(newCart);
 		
-		return finalCartInventory;
+		return finalCart;
 	}
 	
 	@Override
-	public void getSessionCart(List<Map<String, Object>> sessionCart, String mem) throws Exception {
+	public void saveSessionCart(List<Map<String, Object>> sessionCart, String mem) throws Exception {
 		if(sessionCart != null) {
 			List<Map<String, Object>> cartList = new ArrayList<Map<String, Object>>();
 			cartList = sessionCart;
@@ -166,33 +166,80 @@ public class CartServiceImpl implements CartService {
 		}
 	}
 
-	// 회원 장바구니 목록
+	//회원 장바구니 목록
 	@Override
 	public List<Map<String, Object>> selectMyCart(Map<String, Object> map) throws Exception {
 		return cartDAO.selectMyCart(map);
 	}
 
-	// 비회원 장바구니 목록
+	//비회원 세션 장바구니 목록
 	@Override
 	public Map<String, Object> sessionCartList(Map<String, Object> map) throws Exception {
 		return cartDAO.sessionCartList(map);
 	}
 
-	// 장바구니 삭제
+	//장바구니 삭제
 	@Override
 	public void deleteMyCart(Map<String, Object> map) throws Exception {
-		cartDAO.deleteMyCart(map);
+		Map<String, Object> cartItem = new HashMap<String, Object>(); //회원 장바구니 아이템
+        if (map.get("GOODS_KIND_NUMBER") instanceof String) {//장바구니 단품 삭제
+       	 cartItem.put("MEMBER_NUMBER", map.get("MEMBER_NUMBER"));
+       	 cartItem.put("GOODS_KIND_NUMBER", map.get("GOODS_KIND_NUMBER"));
+       	 cartDAO.deleteMyCart(cartItem);
+           
+        } else { // 장바구니 여러개 상품 삭제
+        	String[] cart_number = (String[]) map.get("cart_number");
+        	for (int j = 0; j < cart_number.length; j++) {
+	           	cartItem = new HashMap<String, Object>();
+	           	cartItem.put("MEMBER_NUMBER", map.get("MEMBER_NUMBER"));
+	           	cartItem.put("GOODS_KIND_NUMBER", cart_number[j]);
+	           	cartDAO.deleteMyCart(cartItem);
+           }
+        }
 	}
 	
+	//세션 장바구니 삭제
+	@Override
+	public List<Map<String, Object>> deleteSessionCart(List<Map<String, Object>> sessionCart, Map<String, Object> map) throws Exception {
+		List<Map<String, Object>> cartList = new ArrayList<Map<String, Object>>();//장바구니
+		if (map.get("GOODS_KIND_NUMBER") instanceof String) { //단품 삭제
+			for (int i = 0; i < sessionCart.size(); i++) {
+				if (sessionCart.get(i).get("GOODS_KIND_NUMBER").equals(map.get("GOODS_KIND_NUMBER").toString())) {
+					sessionCart.remove(i);
+				}
+			}
+		} else {//여러 상품 삭제
+			String[] cart_number = (String[]) map.get("cart_number");
+			for (int j = 0; j < cart_number.length; j++) {
+				for (int i = 0; i < sessionCart.size(); i++) {
+					if (sessionCart.get(i).get("GOODS_KIND_NUMBER").equals(cart_number[j])) {
+						sessionCart.remove(i);}
+				}
+			}
+		}
+		
+		for(int i=0; i<sessionCart.size(); i++) {
+			Map<String, Object> cartItem = new HashMap<String, Object>();
+			cartItem.put("GOODS_NUMBER",sessionCart.get(i).get("GOODS_NUMBER"));
+			cartItem.put("GOODS_KIND_NUMBER",sessionCart.get(i).get("GOODS_KIND_NUMBER"));
+			cartItem = sessionCartList(cartItem);
+			cartItem.put("CART_AMOUNT", sessionCart.get(i).get("CART_AMOUNT"));
+			cartList.add(cartItem);
+		}
+		
+		return cartList;
+		
+	}
+
 	//장바구니 상품 수량변경
 	@Override
-	public void updateCarts(Map<String, Object> map) throws Exception {
+	public void updateCart(Map<String, Object> map) throws Exception {
 		cartDAO.updateCarts(map);
 	}
 
 	//7일 이상 지난 장바구니 상품 삭제
 	@Override
-	public void cleanUpCarts(Map<String, Object> map) throws Exception {
+	public void cleanUpCart(Map<String, Object> map) throws Exception {
 		cartDAO.cleanUpCarts(map);
 	}
 	

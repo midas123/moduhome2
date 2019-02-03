@@ -126,7 +126,7 @@ public class LoginController {
     		//회원 장바구니에 세션 장바구니 추가
     		List<Map<String, Object>> sessionCart = (List<Map<String, Object>>) session.getAttribute("cartSession");
     		String mem = chk.get("MEMBER_NUMBER").toString();
-    		cartService.getSessionCart(sessionCart,mem);
+    		cartService.saveSessionCart(sessionCart,mem);
             return mv;
             
          } else {	//비밀번호 틀렸을때
