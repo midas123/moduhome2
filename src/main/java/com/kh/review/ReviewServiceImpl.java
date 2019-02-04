@@ -19,6 +19,7 @@ import com.kh.moduhome.GoodsImageUtils;
 public class ReviewServiceImpl implements ReviewService {
 
 	private static final String filePath = "C:\\Users\\yk\\Desktop\\upload\\images\\review\\";
+	//private static final String filePath = "C:\\Users\\yk\\Desktop\\upload\\images\\review\\";
 	
 	@Resource(name = "reviewDAO")
 	private ReviewDAO reviewDAO;
@@ -103,11 +104,6 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public int reviewCheck(Map<String, Object> map) throws Exception {
 		return reviewDAO.reviewCheck(map);
-	}
-
-	@Override
-	public List<Map<String, Object>> selectQNA(Map<String, Object> map) throws Exception {
-		return reviewDAO.selectQNA(map);
 	}
 
 	@Override

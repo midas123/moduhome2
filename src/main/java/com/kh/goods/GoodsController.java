@@ -16,16 +16,18 @@ import com.kh.moduhome.CommandMap;
 
 import com.kh.paging.GoodsPaging;
 import com.kh.review.ReviewService;
-
+import com.kh.qna.QnaService;
 
 @Controller
 public class GoodsController {
-
 	@Resource(name="goodsService")
 	private GoodsService goodsService;
 	
 	@Resource(name="reviewService")
 	private ReviewService reviewService;
+	
+	@Resource(name="qnaService")
+	private QnaService QnaService;
 	
 	 public static final int pagingSet = 5;
 	 private int currentPage = 1;
@@ -190,7 +192,7 @@ public class GoodsController {
 		  mv.addObject("reviewSize", reviewList.size());
 	    
 	    //QnA 리스트
-	    List<Map<String, Object>> qnaList = reviewService.selectQNA(Map.getMap());
+	    List<Map<String, Object>> qnaList = QnaService.selectQNA(Map.getMap());
 	    
 	    //QNA 페이징
 	    int qnaEndPagingNum = pagingSet; // 5

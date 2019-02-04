@@ -152,16 +152,6 @@
 		]]>
 	</select>
 	
-	<!-- Q&A 꺼내오기 -->
-	<select id="selectQNA" parameterType="hashMap" resultType="hashMap">
-		<![CDATA[
-			SELECT * 
-			FROM (SELECT * FROM QNA NATURAL JOIN MEMBER) A 
-			WHERE GOODS_NUMBER = #{GOODS_NUMBER} 
-			ORDER BY QNA_NUMBER DESC
-		]]>
-	</select>	
-	
 	<!-- 후기 작성 여부 확인 -->
 	<select id="checkReview" resultType="java.lang.Integer" parameterType="hashMap">
 	<![CDATA[
