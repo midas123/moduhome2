@@ -407,7 +407,7 @@ function ajaxChangeEa(cartNum, index, idx) {
 		data: {"CART_NUMBER": cartNum, "CART_AMOUNT":idx, "GOODS_KIND_NUMBER":goodKind},
 		dataType: "json",
 		success:function(data){
-			//수량 변경
+			//수량 변경 후 페이지에 삽입
 			$(".input_ea"+index).val(idx+ea);
 		}
 	});

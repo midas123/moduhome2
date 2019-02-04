@@ -30,17 +30,17 @@ public class GoodsDAO extends AbstractDAO{
 	}
 
 	// 카테고리별 상품 정렬 소트 동적쿼리 (기본값  판매량수
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> sortGoodsCategory(Map<String, Object> map) throws Exception{
 		return selectList("goods.sortGoodsCategory",map);
 	}
-	
+	*/
 	   
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> BestgoodsSubCategory(Map<String, Object> map) throws Exception {
 	    return selectList("goods.bestGoods" , map);
 	}
-	
+	*/
 	//마이페이지 - 주문내역
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectOrderList(String memberNum) throws Exception{

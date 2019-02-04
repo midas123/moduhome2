@@ -56,12 +56,9 @@ public class GoodsController {
 	public ModelAndView goodsCategory(HttpServletResponse response, HttpServletRequest request, CommandMap Map) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("goodsCategory");
-		//대분류 카테고리
-		String categoryName = (String) Map.getMap().get("CATEGORY");
-		//소분류 카테고리
-		String subCategoryName = (String) Map.getMap().get("SUBCATEGORY");
-		//상품 정렬 순서
-		String sort = (String) Map.getMap().get("sort");
+		String categoryName = (String) Map.getMap().get("CATEGORY"); //메인 카테고리
+		String subCategoryName = (String) Map.getMap().get("SUBCATEGORY");//서브 카테고리
+		String sort = (String) Map.getMap().get("sort");//상품 정렬순서
 		//상품 정렬순서 값
 		if(sort != null) {
 			//ajax로 전송되는 상품 정렬 페이지 설정
@@ -72,78 +69,43 @@ public class GoodsController {
 			sort = "1";
 			Map.getMap().put("sort", sort);
 		}
-		//요청으로 넘어온 소분류 카테고리가 있을 경우
+		//요청으로 넘어온 서브 카테고리가 있을 경우
 		if(subCategoryName == null || subCategoryName == "") {
 			subCategoryName = null;
 			Map.getMap().put("SUBCATEGORY", subCategoryName);
 		}
 		if(categoryName.equals("전체")) {
-			System.out.println("전체출력");
 			Map.getMap().put("CATEGORY", null);
 		}
-		//상품 게시판에서 메뉴로 출력되는 소분류 카테고리 목록
-		System.out.println("categoryName:"+categoryName);
-		//List<String> goodsCategory = new ArrayList<>();
-		
+		//DB에서 메인/서브 카테고리 목록을 가져옴 
 		List<String> mainCategory = goodsService.getMainCategory();
 		List<String> subCategory = goodsService.getSubCategory(categoryName);
-		
 	    mv.addObject("mainCategory", mainCategory);
 	    mv.addObject("subCategory", subCategory);
-		
-	/*	 if (categoryName.equals("가구")) {
-	         goodsCategory.add("침실가구");
-	         goodsCategory.add("거실가구");
-	         goodsCategory.add("주방가구");
-	         goodsCategory.add("홈오피스");
-	         goodsCategory.add("테이블");
-	         goodsCategory.add("체어");
-		 }
-		 if (categoryName.equals("가전")) {
-	         goodsCategory.add("생활가전");
-	         goodsCategory.add("주방가전");
-	         goodsCategory.add("시즌가전");
-		 }
-		 if (categoryName.equals("패브릭")) {
-	         goodsCategory.add("커튼/블라인드");
-	         goodsCategory.add("매트·러그");
-	         goodsCategory.add("패브릭소품");
-		 }
-		 if (categoryName.equals("주방")) {
-	         goodsCategory.add("주방용품");
-	         goodsCategory.add("주방수납");
-	         goodsCategory.add("주방소품");
-		 }
-		 if (categoryName.equals("생활·수납")) {
-	         goodsCategory.add("홈케어");
-	         goodsCategory.add("욕실용품");
-	         goodsCategory.add("생활용품");
-		 }*/
-		 
 
-		 //카테고리명, 상품 정렬순서 값이 담긴 Map객체로 DB검색 실행
 		if(Map.getMap() !=null) {
-		List<Map<String, Object>> goodsListByOrder = goodsService.goodsListOrdered(Map.getMap());
-		 //상품 게시판 페이징
-	      if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
-	            || request.getParameter("currentPage").equals("0")) {
-	         currentPage = 1;
-	      } else {
-	         currentPage = Integer.parseInt(request.getParameter("currentPage"));
-	      }
-	      totalCount = goodsListByOrder.size();
-	      page = new GoodsPaging(currentPage, totalCount, blockCount, blockPage);
-	      pagingHtml = page.getPagingHtml().toString();
-	      int lastCount = totalCount;
-	      if (page.getEndCount() < totalCount)
-	         lastCount = page.getEndCount() + 1;
-	      goodsListByOrder = goodsListByOrder.subList(page.getStartCount(), lastCount);
-	      
-	      mv.addObject("totalCount", totalCount);
-	      mv.addObject("pagingHtml", pagingHtml);
-		  mv.addObject("categoryName", categoryName);
-		  mv.addObject("subCategoryOne", subCategoryName);
-		  mv.addObject("goodsListByOrder", goodsListByOrder);
+			//메인/서브 카테고리와 상품 정렬 순서 값으로 DB에서 상품 목록을 가져옴
+			List<Map<String, Object>> goodsListByOrder = goodsService.goodsListOrdered(Map.getMap());
+			//상품 게시판 페이징
+		    if (request.getParameter("currentPage") == null || request.getParameter("currentPage").trim().isEmpty()
+		            || request.getParameter("currentPage").equals("0")) {
+		         currentPage = 1;
+		    } else {
+		         currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		    }
+	        totalCount = goodsListByOrder.size();
+	        page = new GoodsPaging(currentPage, totalCount, blockCount, blockPage);
+	        pagingHtml = page.getPagingHtml().toString();
+	        int lastCount = totalCount;
+	        if (page.getEndCount() < totalCount)
+	        lastCount = page.getEndCount() + 1;
+	        goodsListByOrder = goodsListByOrder.subList(page.getStartCount(), lastCount);
+		      
+		    mv.addObject("totalCount", totalCount);
+		    mv.addObject("pagingHtml", pagingHtml);
+			mv.addObject("categoryName", categoryName);
+			mv.addObject("subCategoryOne", subCategoryName);
+			mv.addObject("goodsListByOrder", goodsListByOrder);
 		}
 		return mv;
 	}
@@ -156,7 +118,7 @@ public class GoodsController {
 		if(Map.getMap().get("pagingReviewOnOff") == null && Map.getMap().get("pagingQnaOnOff") == null) {
 			mv.setViewName("goodsDetail");
 			
-			List<Map<String, Object>> goodsDetail = goodsService.selectOneGood(Map.getMap()); //상품 정보(상품 선택 옵션 포함)
+			List<Map<String, Object>> goodsDetail = goodsService.selectOneGood(Map.getMap()); //상품 정보
 		    List<Map<String, Object>> goodsImage = goodsService.selectImage(Map.getMap()); //상품 이미지
 		    
 		    Map<String, Object> goodsBasic = goodsDetail.get(0);
@@ -164,26 +126,23 @@ public class GoodsController {
 		    mv.addObject("GOODS_NUMBER", goodsDetail.get(0).get("GOODS_NUMBER"));
 		    //추천 상품 목록
 		    List<Map<String, Object>> relatedGoods = goodsService.selectRelatedGoods(goodsBasic);
-		    System.out.println(session.getAttribute("MEMBER_NUMBER"));
 		    //상품 구매 및 후기 작성 여부확인
 		    if (session.getAttribute("MEMBER_NUMBER") != null) {
-		    	Map.put("GOODS_NUMBER", goodsDetail.get(0).get("GOODS_NUMBER"));
-		    	Map.put("MEMBER_NUMBER", session.getAttribute("MEMBER_NUMBER"));
-		    	
-			    	 int reviewCheck;
-			         String mem_num = session.getAttribute("MEMBER_NUMBER").toString();
-			         String goods_num = request.getParameter("GOODS_NUMBER");
-			         Map.put("MEMBER_NUMBER", mem_num);
-			         Map.put("GOODS_NUMBER", goods_num);
-			         try { 
-			        	 reviewCheck = reviewService.reviewCheck(Map.getMap());
-			            
-			         } catch (Exception e) { 
+		         String mem_num = session.getAttribute("MEMBER_NUMBER").toString();
+		         String goods_num = request.getParameter("GOODS_NUMBER");
+		         Map.put("MEMBER_NUMBER", mem_num);
+		         Map.put("GOODS_NUMBER", goods_num);
+		         Map.put("MEMBER_NUMBER", session.getAttribute("MEMBER_NUMBER"));
+		         Map.put("GOODS_NUMBER", goodsDetail.get(0).get("GOODS_NUMBER"));
+		         int reviewCheck;
+			     try { 
+			    	 	
+			        	reviewCheck = reviewService.reviewCheck(Map.getMap());
+			     } catch (Exception e) { 
 			            reviewCheck = 0;
-			         }
-			         mv.addObject("reviewCheck", reviewCheck);
-	         
-		  }
+			     }
+			     mv.addObject("reviewCheck", reviewCheck);
+		     }
 		     mv.addObject("goodsDetail", goodsDetail);
 		     mv.addObject("relatedGoods", relatedGoods);
 			 mv.addObject("goodsImage", goodsImage);

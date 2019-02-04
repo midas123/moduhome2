@@ -21,6 +21,7 @@ public class GoodsServiceImpl implements GoodsService{
 	public List<Map<String, Object>> bestSellAll(Map<String, Object> map) throws Exception {
 		return goodsDAO.bestSellAll(map);
 	}
+	
 	//스토어 메인, 상품 판매순 정렬
 	@Override
 	public List<Map<String, Object>> newItemAll(Map<String, Object> map) throws Exception {
@@ -34,11 +35,6 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 
 	@Override
-	public List<Map<String, Object>> sortGoodsCategory(Map<String, Object> map) throws Exception {		
-		return goodsDAO.sortGoodsCategory(map);
-	}
-	
-	@Override
 	public List<String> getSubCategory(String category) throws Exception {
 	    return goodsDAO.getSubCategory(category);
 	}
@@ -49,16 +45,6 @@ public class GoodsServiceImpl implements GoodsService{
 	}
         
 	@Override
-    public List<Map<String, Object>> BestgoodsSubCategory(Map<String, Object> map) throws Exception {
-	    return goodsDAO.BestgoodsSubCategory(map);
-	}
-
-	@Override
-	public int goodsCountUp(Map<String, Object> map) throws Exception {
-		return goodsDAO.goodsCountUp(map);
-	}
-
-	@Override
 	public List<Map<String, Object>> selectOneGood(Map<String, Object> map) throws Exception {
 		return goodsDAO.selectOneGood(map);
 	}
@@ -66,11 +52,6 @@ public class GoodsServiceImpl implements GoodsService{
 	@Override
 	public List<Map<String, Object>> selectImage(Map<String, Object> map) throws Exception {
 		return goodsDAO.selectImage(map);
-	}
-
-	@Override
-	public int checkBuy(Map<String, Object> map) throws Exception {
-		return goodsDAO.checkBuy(map);
 	}
 
 	@Override
@@ -94,9 +75,12 @@ public class GoodsServiceImpl implements GoodsService{
 	                 
 	              }
 	         }
-	         
-	         System.out.println("relatedGoodsList :" +relatedGoodsList);
 	           return relatedGoodsList;
+	}
+	
+	@Override
+	public List<Map<String, Object>> goodsSearchList(Map<String, Object> map) throws Exception {
+		return goodsDAO.goodsSearchList(map);
 	}
 	
 	@Override
@@ -104,36 +88,7 @@ public class GoodsServiceImpl implements GoodsService{
 		return goodsDAO.selectOrderList(memberNum);
 	}
 		
-/*	@Override
-	public int reviewScore(Map<String, Object> map) throws Exception {
-		try {
-		return goodsDAO.reviewScore(map);
-		
-		}catch(Exception e) { //평점없으면 
-			return 0;
-		}
-	}*/
 	
-	@Override
-	public List<Map<String, Object>> goodsSearchList(Map<String, Object> map) throws Exception {
-	   return goodsDAO.goodsSearchList(map);
-	}
-	
-	
-	@Override
-	public List<Map<String,Object>> selectCategoryCount(String category1) throws Exception{
-	    return goodsDAO.selectCategoryCount(category1);
-    }
-	
-	@Override
-	public void cancel_order(Map<String, Object> map) throws Exception {
-		goodsDAO.cancle_order(map);
-	}
-	
-	@Override
-	public void confirm_order(Map<String, Object> map) throws Exception {
-		goodsDAO.confirm_order(map);	
-	}
 	@Override
 	public void OrderStateModi(Map<String, Object> map) throws Exception {
 		goodsDAO.Modify_Order(map);

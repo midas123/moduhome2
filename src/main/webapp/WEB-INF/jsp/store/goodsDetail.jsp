@@ -584,11 +584,10 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	//상품옵션 삭제
 	$(document).ready(function() {
 		$("#MK_innerOpt_01").on("click", ".MK_btn-del", function() {
-			var ritem = $(this).attr("optno");
-			console.log("ritem:"+ritem);
-			var thisIdx = $(".MK_btn-del").index(this);
-			var price = parseInt($(".MK_price").eq(thisIdx).data("price"), 10);
-			var totprice = parseInt($("#MK_txt-won").data("price"), 10);
+			var thisIdx = $(".MK_btn-del").index(this); //인덱스
+			var price = parseInt($(".MK_price").eq(thisIdx).data("price"), 10);//상품 가격
+			var totprice = parseInt($("#MK_txt-won").data("price"), 10); //총액
+			//총액에서 삭제한 상품 가격 빼기
 			totprice = parseInt(totprice - price);
 			$("#MK_txt-won").data("price", totprice);
 			$("#MK_txt-won").html(comma(totprice) + "원");
@@ -601,18 +600,12 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	//수량증가
 				$("#MK_innerOpt_01").on("click","li a.MK_btn-up",
 						function(e) {
-							//현재 옵션의 리스트 인덱스							
-							var thisIdx = parseInt($(".MK_btn-up").index(this),10);
-							//수량 변경 함수
-							change_ea(this, 1);
-							//입력 수량
-							var inputEa = parseInt($(".input_ea").eq(thisIdx).val(), 10);
-							//상품 재고 수량
-							var mStock = parseInt($(".mstock").eq(thisIdx).val(), 10);
-							//단품 가격
-							var price = parseInt($('.MK_price').eq(thisIdx).attr("data-price"), 10);
-							//합계 가격
-							var totprice = parseInt($("#MK_txt-won").data("price"), 10);
+							var thisIdx = parseInt($(".MK_btn-up").index(this),10);//현재 옵션의 인덱스
+							change_ea(this, 1);//수량 변경 함수
+							var inputEa = parseInt($(".input_ea").eq(thisIdx).val(), 10);//입력 수량
+							var mStock = parseInt($(".mstock").eq(thisIdx).val(), 10);//상품 재고 수량
+							var price = parseInt($('.MK_price').eq(thisIdx).attr("data-price"), 10);//단품 가격
+							var totprice = parseInt($("#MK_txt-won").data("price"), 10);//합계 가격
 							//재고 수량  체크
 							if (inputEa > mStock) {
 								alert(mStock + "개 이상 주문하실 수 없습니다.");
