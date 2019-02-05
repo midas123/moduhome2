@@ -9,9 +9,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="/ModuHome/dist/jquery/jquery-1.11.0.min.js"></script>
+<!-- <script src="/ModuHome/dist/jquery/jquery-1.11.0.min.js"></script>
 <script src="/ModuHome/dist/jquery/jquery-ui.js"></script>
-<script src="/ModuHome/dist/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script src="/ModuHome/dist/jquery/jquery-migrate-1.2.1.min.js"></script> -->
 
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
@@ -280,10 +280,17 @@ function copydata2() {
 .lastprice-footer {
 	margin-top: 20px;
 	margin-bottom: 40px;
+	color: #1a1a1a;
+}
+.lastprice-footer div{
+	padding: 1px;
 }
 
-#order {
+.order_title {
+	font-family: 'Nanum Gothic';
 }
+
+
 </style>
 
 </head>
@@ -294,11 +301,12 @@ function copydata2() {
 <br>
 <br>
 <br>
-<div id="wrap" style="margin-top: 0px;">
+<div id="wrap" style="margin-top: 20px;">
    <div id="contentWrapper" style="background-color:white;">
         <div id="contentWrap">
            <div id="content">
                 <div id="order">
+                <div style="text-align:center;"><h3 class="order_title">주문/결제</h3></div>
                		<dl class="loc-navi">
                         <dt class="blind">현재 위치</dt>
                         <dd>
@@ -316,8 +324,8 @@ function copydata2() {
 					    <input type="hidden" name="ORDER_CODE" value="${ORDER_CODE}">
                    	<!-- <h3 class="stit"><img src="/MODA/theme/pshp/img_MODA/order_prd_tit.gif" alt="주문할 상품" title="주문할 상품"></h3> -->
                     <div class="table-cart table-order-prd">
+                    <h3 class="order_title" style="margin-top:30px;"><small>상품 정보</small></h3>
                     <table class="order-table">
-                    <h3>상품 정보</h3>
                     <caption>주문할 상품</caption>
                     <colgroup>
                                     <col width="70">
@@ -426,7 +434,7 @@ function copydata2() {
    
    	</table>
     </div><!-- table-cart table-order-prd -->
-                           <h3>주문자 정보</h3>
+                           <h3 class="order_title" style="margin-top:50px;"><small>주문자 정보</small></h3>
                            <div class="table-order-info table-user">
                               <table class="order-table">
                                  <caption>주문자 정보</caption>
@@ -508,8 +516,8 @@ function copydata2() {
                                     </tbody>
                               </table><!-- order-table -->
                            </div><!-- table-order-info table-user -->
-                           <div>
-                           <h3>배송 정보</h3>
+                           <div style="margin-top:50px;">
+                           <h3 class="order_title"><small>배송 정보</small></h3>
                                <label> <input
                                  type="checkbox" name="same2" id="same2"
                                  onclick="javascript:copydata2();"> 배송지 주문자 정보 입력
@@ -671,14 +679,9 @@ function copydata2() {
                                     </div><!-- table-order-info -->
                         
                         <!-- 포인트 -->
-     <%--                    <c:if test="${not empty sessionScope.MEMBER_ID}">
-                        <h3 class="stit">
-                              <img
-                                 src="/MODA/theme/pshp/img_MODA/order_mileage_use_tit.gif"
-                                 alt="적립금 사용" title="적립금 사용">
-                        </h3> --%>
-                      		  	<h3>포인트</h3>
-                        <div class="table-order-info">
+     
+                      		  	<h3 class="order_title" style="margin-top:50px;"><small>포인트</small></h3>
+                   <div class="table-order-info">
                            <table>
                            <colgroup>
                                     <col width="90">
@@ -727,49 +730,49 @@ function copydata2() {
                                  <button type="button" onclick="javascript:changePoint();" >포인트 적용</button>
                                  <button type="button" onclick="javascript:rollbackPoint();" style="background: #b2b2b2; margin-left:2px;">적용 취소</button>
                                  </div>
-                        		</div><!-- table-order-info -->
+                </div><!-- table-order-info -->
              		
-                  <h3 class="stit"><h2>결제방법</h2></h3>
-                               <div class="cnt-box">
-                                 <div>
-                                 <input type="radio" name="payType" value="cash"><p> 무통장 입금 : <span style="color: #0054A6;">농협중앙회 301-0548-7870-42 (예금주:(주)모두의집 ))</span> 
-                                 </div>
-                                 <div>
-                                <input type="radio" name="payType" value="inicisPay"><p> 이니시스 페이</p>
-                                </div>
-                                 </div>
-                           <div class="lastprice-footer">
-                                         <strong>총 결제금액 :</strong><fmt:formatNumber value="${sum}" type="number" />원 
-                                          + 배송료 : <c:choose>
+                <div style="margin-top:80px;"><h3 class="order_title"><small>결제 방법</small></h3></div>
+                <div class="cnt-box" style="float:left; width:100%;">
+                       <div><input type="radio" name="payType" value="cash"><span class="custom-radio"></span>&nbsp;&nbsp;무통장 입금 :<span style="color: #0054A6;">농협중앙회 301-0548-7870-42 (예금주:(주)모두의집 ))</span></div>
+                       <div><input type="radio" name="payType" value="inicisPay"><span class="custom-radio"></span>&nbsp;&nbsp;이니시스 페이</div>
+                </div>
+                 <div style="float:left; margin-top:30px; width:100%;"><h3 class="order_title"><small>최종 결제 금액</small></h3></div>
+                 <div><hr style="clear:both; display:block; width: 100%; background-color:#b7b7b7; height: 1px;"></div>
+                 <div class="lastprice-footer" style="float:left; margin-top:10px; width:60%; font-color:#1a1a1a;">
+                                         <div style="float:left; width:50%;">상품금액</div><div style="float:right; width:50%;"><fmt:formatNumber value="${sum}" type="number" />원</div> 
+                                                <div style="float:left; width:50%;"><strong style="color:#ff6666;">포인트 차감</strong></div> <div style="float:right; width:50%;"><strong style="color:#ff6666;"><span id="pointDis">0</span>점</strong></div>
+                                         		 <div style="float:left; width:50%;">배송료</div>
+                                         		 <div style="float:right; width:50%;">
+                                         		 <c:choose>
                                                 <c:when test="${sum >= 30000}">
                                                 0원
                                                 </c:when>
                                                 <c:otherwise>      
                                                 2,500원
                                                 </c:otherwise>
-                                                </c:choose>   
-                                                <strong>- 포인트 할인 : <span id="pointDis">0</span>원</strong>
-                                          = <strong id="totalPrice"><c:choose>
+                                                </c:choose>       
+                                         		 </div>
+                                          <br>
+                                          <div style="float:left; width:50%;"><strong>총 결제금액</strong></div><div style="float:right; width:50%;">
+                                          <strong id="totalPrice"><c:choose>
                                           <c:when test="${sum >= 30000}">
                                           <fmt:formatNumber value="${sum }" type="number" />
                                           </c:when>
                                           <c:otherwise>
                                           <fmt:formatNumber value="${sum + 2500}" type="number" />
                                           </c:otherwise>
-                                          </c:choose></strong>원
+                                          </c:choose></strong><strong>원</strong>
+                                          </div>
                           </div>
+                 <div><hr style="clear:both; display:block; width: 100%; background-color:#b7b7b7; height: 1px;"></div>
                     					<input type="hidden" name="TOTALPRICE" value="${sum}">
                     					<span id="oritotalprice" value=""></span>
                     					<input type="hidden" name="usePoint" value="0">  
-                         <center>                
-                        <div class="endorder-footer">
+                        <div class="endorder-footer" style="margin:auto; width:50%;">
                                <button type="button" onclick="javaScript:sendGoods();">주문하기</button> 
                                <button type="button" class="button2" onclick="location.href='/ModuHome/goods/detail?GOODS_NUMBER=${GOODS_NUMBER}';">주문취소</button> 
-                              <%-- <a href="/ModuHome/goods/detail?GOODS_NUMBER=${GOODS_NUMBER}">주문취소</a> --%>
                         </div>
-                        </center>
-                        
-               </fieldset>
                     </form>
                     </div><!-- page-body -->
             </div><!-- order -->

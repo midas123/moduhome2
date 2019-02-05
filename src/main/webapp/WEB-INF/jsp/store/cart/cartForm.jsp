@@ -9,59 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script>
-var sum = 0;
-var disSum= 0;
-var totSum = 0;
-var delfee =0;
 
-//체크된 상품 합계금액 계산
-function checkedRows(index){
-	    var index = index;
-	    console.log("주문요약인덱스:"+index);
-	    var tagName = "#checkbox"+index;
-	    var price = $(".price").eq(index).attr("value"); //상품 가격
-	    console.log("price:"+price);
-	    var disprice = $(".disprice").eq(index).attr("value2"); //할인 금액
-	    console.log("총disprice:"+disprice);
-	    var totprice = rm_comma($("#pricesum"+index).html()); //상품 합계가격
-	    console.log("총totprice:"+totprice);
-	    price = parseInt(price, 10);
-	    disprice = parseInt(disprice, 10);
-	    totprice = parseInt(totprice, 10);
-      		if($(tagName).is(":checked")){
-      			   sum = sum + price; 
-      			   disSum = disSum + disprice;	//할인 금액합계
-      			   totSum = totSum + totprice;  //최종 결제 금액
-      	   		
-      			//배송비
-      			if(totSum < 30000){
-      				 delfee= 2500;
-      				 $("#delfee").html(comma(delfee));
-      			   } else {
-      				 delfee= 0;
-      				$("#delfee").html(comma(delfee));
-      			   } 
-      			   
-	        	   $("#realtotalPrice").html(comma(totSum));
-	        	   $("#disCountPirce").html(comma(disSum));
-	        	}else{
-	        	    sum = sum-price;
-	        	    disSum = disSum - disprice;
-	        	    totSum = totSum - totprice;
-	        		$("#realtotalPrice").html(comma(totSum));
-	        		$("#disCountPirce").html(comma(disSum));
-	        		
-	        		if(totSum >= 30000 || totSum == 0){
-	        			 delfee= 0;
-	       				$("#delfee").html(comma(delfee));
-	        		} else {
-	        			delfee= 2500;
-	      				 $("#delfee").html(comma(delfee));
-	        		}
-	        }
-	};
-</script>
 <style>
 .order-shoppingBag{
 	background: #fff;
@@ -137,7 +85,7 @@ function checkedRows(index){
 		</div>
 		<!-- <hr style="color:#999999; width:90%; padding:20px;"> -->
 		<div id="changeCartGoodlist" class="section-body col-md-12" style="background-color:#fff; !important;">
-			<form name="fmCart" action="/ModuHome/cart/cartDelete">
+			<form name="fmCart" action="#">
 			<div class="container">
 			<div class="table-order-list" align="center">
 				<table class="table" >
@@ -165,12 +113,11 @@ function checkedRows(index){
 						<tr>
 						<td>
 						&nbsp;&nbsp;
-						<input type="checkbox" id="checkbox${stat.index}" name="GOODS_KIND_NUMBER" value="${cartList.GOODS_KIND_NUMBER}" onclick="javascript:checkedRows('${stat.index}');">
+						<input type="checkbox" id="checkbox${stat.index}" name="GOODS_KIND_NUMBER[]" value="${cartList.GOODS_KIND_NUMBER}" onclick="javascript:checkedRows('${stat.index}');">
 						</td>
 						<td class="info-img">
-						<a href="/ModuHome/goodsDetail?GOODS_NUMBER=${cartList.GOODS_NUMBER }">
-						<img img_layer="/ModuHome/images/goods/${cartList.GOODS_THUMBNAIL}" goodsno="${cartList.GOODS_NUMBER }"
-								src="/ModuHome/images/goods/${cartList.GOODS_THUMBNAIL}"
+						<a href="/ModuHome/goods/detail?GOODS_NUMBER=${cartList.GOODS_NUMBER }">
+						<img src="/ModuHome/images/goods/${cartList.GOODS_THUMBNAIL}"
 								width="167" class="img-responsive"></a></td>
 						<td class="info-caption">
 							<em class="name">${cartList.GOODS_NAME}/${cartList.GOODS_KIND_NUMBER}</em>
@@ -183,11 +130,13 @@ function checkedRows(index){
 									<input type="hidden" name="cart" value="${cartList.CART_NUMBER }">
 									<span id="cartNum${stat.index}" value="${cartList.CART_NUMBER }"></span>
 									<input type="hidden" name="GOODS_NAME" value="${cartList.GOODS_NAME }">
-									<input type="hidden" name="kinds[]" class="goods_kind${stat.index}" value="${cartList.GOODS_KIND_NUMBER }">
-									<input type="hidden" name="GOODS_NUMBER[]" value="${cartList.GOODS_NUMBER }">
+							 		<input type="hidden" name="kinds[]" class="goods_kind${stat.index}" value="${cartList.GOODS_KIND_NUMBER }">
+									<input type="hidden" id="GOODS_NUMBER${stat.index}" name="GOODS_NUMBER[]" value="${cartList.GOODS_NUMBER }">
+									<input type="text" id="ea${stat.index}" name="ea[]" value="${cartList.CART_AMOUNT }" class="input_ea${stat.index}" size="2" readonly> 
+									
+								
 									<input type="hidden" class="mstock" value="${cartList.GOODS_AMOUNT }">
 									<span id="mstock${stat.index}" value="${cartList.GOODS_AMOUNT }"></span>
-									<input type="text" name="ea[]" value="${cartList.CART_AMOUNT }" class="input_ea${stat.index}" size="2" readonly>
 									
 									<span class="ea">
 										<a class="btn-ea-up${stat.index}" onclick="javascript:eaUp(${stat.index});">
@@ -312,11 +261,64 @@ function checkedRows(index){
 </form>
 </div>
 </div>
-
 <script>
+var sum = 0;
+var disSum= 0;
+var totSum = 0;
+var delfee =0;
+//체크된 상품 합계금액 계산
+function checkedRows(index){
+	    var index = index;
+	    console.log("주문요약인덱스:"+index);
+	    var tagName = "#checkbox"+index;
+	    var price = $(".price").eq(index).attr("value"); //상품 가격
+	    console.log("price:"+price);
+	    var disprice = $(".disprice").eq(index).attr("value2"); //할인 금액
+	    console.log("총disprice:"+disprice);
+	    var totprice = rm_comma($("#pricesum"+index).html()); //상품 합계가격
+	    console.log("총totprice:"+totprice);
+	    
+	    price = parseInt(price, 10);
+	    disprice = parseInt(disprice, 10);
+	    totprice = parseInt(totprice, 10);
+      		if($(tagName).is(":checked")){
+      			   sum = sum + price; 
+      			   disSum = disSum + disprice;	//할인 금액합계
+      			   totSum = totSum + totprice;  //최종 결제 금액
+      	   		
+      			//배송비
+      			if(totSum < 30000){
+      				 delfee= 2500;
+      				 $("#delfee").html(comma(delfee));
+      			   } else {
+      				 delfee= 0;
+      				$("#delfee").html(comma(delfee));
+      			   } 
+      			   
+	        	   $("#realtotalPrice").html(comma(totSum));
+	        	   $("#disCountPirce").html(comma(disSum));
+	        	}else{
+	        	    sum = sum-price;
+	        	    disSum = disSum - disprice;
+	        	    totSum = totSum - totprice;
+	        		$("#realtotalPrice").html(comma(totSum));
+	        		$("#disCountPirce").html(comma(disSum));
+	        		
+	        		if(totSum >= 30000 || totSum == 0){
+	        			 delfee= 0;
+	       				$("#delfee").html(comma(delfee));
+	        		} else {
+	        			delfee= 2500;
+	      				 $("#delfee").html(comma(delfee));
+	        		}
+	        }
+	};
+
+
+
+
 function cartBuy(){
-		var fm = document.fmCart;
-		if($("input:checkbox[name='GOODS_KIND_NUMBER']").is(":checked") == false) {
+		if($("input:checkbox[name='GOODS_KIND_NUMBER[]']").is(":checked") == false) {
 			alert("상품을 선택해 주세요.");
 			return false;
 		};
@@ -326,8 +328,15 @@ function cartBuy(){
 			return false;
 		}
 		
-		//fm.mode.value = "cart";
-		fm.target = "_self";
+		$("input:checkbox[name='GOODS_KIND_NUMBER[]']").each(function(index) {
+			if(!$(this).is(":checked")){
+				console.log($(".GOODS_NUMBER"+ index).val());
+				console.log(index);
+				$("#GOODS_NUMBER"+ index).attr("disabled","disabled");
+				$("#ea"+index).attr("disabled","disabled");
+			}
+		});
+		var fm = document.fmCart;
 		fm.action = "/ModuHome/order";
 		fm.submit();
 	}
@@ -346,17 +355,17 @@ $(document).ajaxComplete(function () {
 function cartDelete(){
 	$(document).ready(function(){
 	$("#btn-checked-all").click(function(){
-		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']").not(":checked").trigger("click");
+		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER[]']").not(":checked").trigger("click");
 		return false;
 	});
 	
 	$("#btn-unchecked-all").click(function(){
-		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']:checked").trigger("click");
+		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER[]']:checked").trigger("click");
 		return false;
 	});
 	
 	$("#btn-checked-one").click(function(){
-		if (!$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']").is(":checked")){
+		if (!$(".order-shoppingBag input[name='GOODS_KIND_NUMBER[]']").is(":checked")){
 			alert("삭제하실 상품을 선택해주세요");
 			return false;
 		} else {
@@ -364,7 +373,7 @@ function cartDelete(){
 		if(confirm("정말로 상품을 삭제하시겠습니까?")){
 		//선택 상품 삭제
 		var goodsNum = new Array();
-		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER']:checked").each(function() {
+		$(".order-shoppingBag input[name='GOODS_KIND_NUMBER[]']:checked").each(function() {
 			goodN = $(this).attr("value");
 			goodsNum.push(goodN);
 		});

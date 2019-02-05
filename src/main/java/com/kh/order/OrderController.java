@@ -44,6 +44,7 @@ public class OrderController {
 		commandMap.getMap().put("MEMBER_NUMBER", memn);
 		Map<String, Object> orderMember = orderService.orderMember(commandMap.getMap());
 		mv.addObject("orderMember", orderMember);
+	System.out.println("order:"+commandMap.getMap());
 		
 		//주문코드 생성
 		StringBuffer temp = new StringBuffer();
@@ -56,28 +57,37 @@ public class OrderController {
 		String date = sdf.format(d);
 		String ORDER_CODE = ("S" + date + temp);
 		//상품옵션 및 수량정보
-		String[] goods_kinds_number = request.getParameterValues("kinds[]"); 
+		//String[] goods_kinds_number = request.getParameterValues("kinds[]"); 
+		String[] goods_kinds_number = request.getParameterValues("GOODS_KIND_NUMBER[]");
+	System.out.println("goods_kinds_number:"+goods_kinds_number.length);
 		String[] ea = request.getParameterValues("ea[]");
-		String[] goodsno = request.getParameterValues("goodsno[]");
-		String[] goodsName = request.getParameterValues("GOODS_NAME");
+	System.out.println("ea[]:"+ea.length);
+		String[] goods_no = request.getParameterValues("GOODS_NUMBER[]");
+		System.out.println("goods_no[]:"+goods_no.length);
+		String[] goods_Name = request.getParameterValues("GOODS_NAME");
+		//String[] goods_Index = request.getParameterValues("GOODS_INDEX[]");
 		List<Map<String, Object>> goods = new ArrayList<Map<String, Object>>();
 		
 		for (int i = 0; i < goods_kinds_number.length; i++) {
-			commandMap.put("GOODS_NUMBER", request.getParameter("goodsno"));
-			if(goodsno !=null) { //장바구니 구매시 상품번호
-				commandMap.put("GOODS_NUMBER", goodsno[i]);
-			}
+			System.out.println("goods_kinds_number:"+goods_kinds_number[i]);
+			if(Integer.parseInt(goods_kinds_number[i].toString()) != 0) {
+			commandMap.put("GOODS_NUMBER", goods_no[i]);
 			commandMap.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
+		System.out.println(i);
+		System.out.println(goods_no[i]);
+		System.out.println(goods_kinds_number[i]);
+		System.out.println(ea[i]);
 			commandMap.put("EA", ea[i]);
 			
-			Map<String, Object> orderGoods = orderService.orderGoods(commandMap.getMap());
-
+		Map<String, Object> orderGoods = orderService.orderGoods(commandMap.getMap());
+		System.out.println("orderGoods:"+orderGoods);
 			orderGoods.put("EA", ea[i]);
 			goods.add(orderGoods);
+			}
 		}
 		
-		mv.addObject("GOODS_NAME", goodsName[0]);
-		mv.addObject("GOODS_NUMBER", goodsno);
+		mv.addObject("GOODS_NAME", goods_Name[0]);
+		mv.addObject("GOODS_NUMBER", goods_no);
 		mv.addObject("goods", goods);
 		mv.addObject("ORDER_CODE", ORDER_CODE);
 		
