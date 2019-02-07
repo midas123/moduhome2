@@ -42,54 +42,33 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		String memn = session.getAttribute("MEMBER_NUMBER").toString();
 		commandMap.getMap().put("MEMBER_NUMBER", memn);
+		//주문자 정보
 		Map<String, Object> orderMember = orderService.orderMember(commandMap.getMap());
 		mv.addObject("orderMember", orderMember);
-	System.out.println("order:"+commandMap.getMap());
 		
 		//주문코드 생성
-		StringBuffer temp = new StringBuffer();
-		Random rnd = new Random();
-		for (int i = 0; i < 5; i++) {
-			temp.append((char) ((rnd.nextInt(26)) + 65));
-		}
-		Date d = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String date = sdf.format(d);
-		String ORDER_CODE = ("S" + date + temp);
-		//상품옵션 및 수량정보
-		//String[] goods_kinds_number = request.getParameterValues("kinds[]"); 
+		String ORDER_CODE = orderService.makeOrderCode();
+		mv.addObject("ORDER_CODE", ORDER_CODE);
+		
+		//상품 종류 및 수량
 		String[] goods_kinds_number = request.getParameterValues("GOODS_KIND_NUMBER[]");
-	System.out.println("goods_kinds_number:"+goods_kinds_number.length);
 		String[] ea = request.getParameterValues("ea[]");
-	System.out.println("ea[]:"+ea.length);
 		String[] goods_no = request.getParameterValues("GOODS_NUMBER[]");
-		System.out.println("goods_no[]:"+goods_no.length);
 		String[] goods_Name = request.getParameterValues("GOODS_NAME");
-		//String[] goods_Index = request.getParameterValues("GOODS_INDEX[]");
-		List<Map<String, Object>> goods = new ArrayList<Map<String, Object>>();
-		
-		for (int i = 0; i < goods_kinds_number.length; i++) {
-			System.out.println("goods_kinds_number:"+goods_kinds_number[i]);
-			if(Integer.parseInt(goods_kinds_number[i].toString()) != 0) {
-			commandMap.put("GOODS_NUMBER", goods_no[i]);
-			commandMap.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
-		System.out.println(i);
-		System.out.println(goods_no[i]);
-		System.out.println(goods_kinds_number[i]);
-		System.out.println(ea[i]);
-			commandMap.put("EA", ea[i]);
-			
-		Map<String, Object> orderGoods = orderService.orderGoods(commandMap.getMap());
-		System.out.println("orderGoods:"+orderGoods);
-			orderGoods.put("EA", ea[i]);
-			goods.add(orderGoods);
-			}
-		}
-		
 		mv.addObject("GOODS_NAME", goods_Name[0]);
 		mv.addObject("GOODS_NUMBER", goods_no);
+		
+		List<Map<String, Object>> goods = new ArrayList<Map<String, Object>>(); //주문 상품 목록
+		for (int i = 0; i < goods_kinds_number.length; i++) {
+				commandMap.put("GOODS_NUMBER", goods_no[i]);
+				commandMap.put("GOODS_KIND_NUMBER", goods_kinds_number[i]);
+				commandMap.put("EA", ea[i]);
+				//주문 상품 정보
+				Map<String, Object> orderGoods = orderService.orderGoods(commandMap.getMap());
+				orderGoods.put("EA", ea[i]);
+				goods.add(orderGoods);
+		}
 		mv.addObject("goods", goods);
-		mv.addObject("ORDER_CODE", ORDER_CODE);
 		
 		return mv;
 	
@@ -137,7 +116,7 @@ public class OrderController {
 		//주문서에 포함될 상품가격을 객체에 저장
 		commandMap.put("ORDER_TOTAL_PRICE[]", goods_Disprice);
 		
-		//주문서에 포함될 배송정보를 객체에 저장
+		//주문 코드
 		String ORDER_CODE = request.getParameter("ORDER_CODE");
 		mv.addObject("ORDER_CODE", ORDER_CODE);
 		

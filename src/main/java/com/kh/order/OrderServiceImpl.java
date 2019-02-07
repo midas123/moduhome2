@@ -1,8 +1,12 @@
 package com.kh.order;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +34,9 @@ public class OrderServiceImpl implements OrderService {
 	public Map<String, Object> orderGoods(Map<String, Object> map) throws Exception {
 		return orderDAO.orderGoods(map);
 	}
-	
-	@Override
-	public Map<String, Object> orderGoods2(Map<String, Object> map) throws Exception {
-		return orderDAO.orderGoods2(map);
-	}
-	
 
 	@Override
-	public Object orderGoodsAction(Map<String, Object> map) throws Exception {
+	public void orderGoodsAction(Map<String, Object> map) throws Exception {
 		//트랜잭션 설정
 		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
 		def.setName("GoodsOrderTx");
@@ -48,23 +46,19 @@ public class OrderServiceImpl implements OrderService {
 		try {
 		//배송 정보 생성
 		orderDAO.createDeliveryList(map);
-		//주문 정보 생성
-		if(map.get("kinds[]") instanceof String) {
+		//주문서 생성
+		if(map.get("kinds[]") instanceof String) { //단품
 			map.put("GOODS_KIND_NUMBER", map.get("kinds[]"));
 			map.put("ORDER_AMOUNT", map.get("ea[]"));
 			map.put("GOODS_NUMBER", map.get("GOODS_NUMBER[]"));
 			List<BigDecimal> orderPrice = (List<BigDecimal>) map.get("ORDER_TOTAL_PRICE[]");
 			map.put("ORDER_TOTAL_PRICE", orderPrice.get(0));
 			orderDAO.createOrderList(map);
-		} else {
+		} else { //여러개 상품
 			String[] goodsKindNum = (String[]) map.get("kinds[]");
 			String[] ea = (String[]) map.get("ea[]");
 			String[] goodsNum = (String[]) map.get("GOODS_NUMBER[]");
 			List<BigDecimal> orderPrices = (List<BigDecimal>) map.get("ORDER_TOTAL_PRICE[]");
-		/*	map.remove("kinds[]");
-			map.remove("ea[]");
-			map.remove("GOODS_NUMBER[]");
-			map.remove("ORDER_TOTAL_PRICE[]");*/
 			
 			for(int i=0; i<goodsKindNum.length; i++) {
 				map.put("GOODS_KIND_NUMBER", Integer.parseInt(goodsKindNum[i]));
@@ -74,7 +68,6 @@ public class OrderServiceImpl implements OrderService {
 				orderDAO.createOrderList(map);
 			}
 		}
-		
 		
 		//상품 재고 수량 빼기
 		orderDAO.goodsCountDown(map);
@@ -96,8 +89,8 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println("#####주문 처리 중 에러발생");
 			  throw ex;
 			}
+		//트랜잭션 종료
 		transactionManager.commit(status);
-		return null;
 	}
 
 	@Override
@@ -120,12 +113,19 @@ public class OrderServiceImpl implements OrderService {
 	public Object insertPoint(Map<String, Object> map) throws Exception {
 		return orderDAO.insertPoint(map);
 	}
-
+	
 	@Override
-	public List<Map<String, Object>> selectOrderList2(Map<String, Object> map) throws Exception {
-		return orderDAO.selectOrderList2(map);
+	public String makeOrderCode() throws Exception {
+		StringBuffer temp = new StringBuffer();
+		Random rnd = new Random();
+		for (int i = 0; i < 5; i++) {
+			temp.append((char) ((rnd.nextInt(26)) + 65));
+		}
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String date = sdf.format(d);
+		String ORDER_CODE = ("S" + date + temp);
+		
+		return ORDER_CODE;
 	}
-
-
-
 }

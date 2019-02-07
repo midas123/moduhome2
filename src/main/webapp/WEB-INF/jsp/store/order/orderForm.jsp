@@ -16,7 +16,7 @@
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <script>
-var IMP = window.IMP; // 생략가능
+var IMP = window.IMP;
 IMP.init('imp08080720'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 
 </script>
@@ -99,7 +99,7 @@ var submitAction = function(e) {
     e.stopPropagation();
 };
 
-function sendGoods() {
+function buyGoods() {
 	 if ($('#order-name').val().length == 0) {
 	        alert("주문자의 성함을 입력하세요.");	       
 	        $('#order-name').focus();
@@ -322,7 +322,6 @@ function copydata2() {
 					    </c:forEach>
 					    <input type="hidden" name="MEMBER_ID" value="${orderMember.MEMBER_ID }">
 					    <input type="hidden" name="ORDER_CODE" value="${ORDER_CODE}">
-                   	<!-- <h3 class="stit"><img src="/MODA/theme/pshp/img_MODA/order_prd_tit.gif" alt="주문할 상품" title="주문할 상품"></h3> -->
                     <div class="table-cart table-order-prd">
                     <h3 class="order_title" style="margin-top:30px;"><small>상품 정보</small></h3>
                     <table class="order-table">
@@ -347,7 +346,7 @@ function copydata2() {
                              	</thead>
                         <tbody>
                          <c:forEach var="orderForm"  items="${goods}" varStatus="stat">
-      <c:url var="viewURL" value="/goodsDetail">
+      <c:url var="viewURL" value="/goods/detail">
       <c:param name="GOODS_NUMBER" value="${orderForm.GOODS_NUMBER }" />
       </c:url>
               <tr class="nbg">
@@ -769,8 +768,8 @@ function copydata2() {
                     					<input type="hidden" name="TOTALPRICE" value="${sum}">
                     					<span id="oritotalprice" value=""></span>
                     					<input type="hidden" name="usePoint" value="0">  
-                        <div class="endorder-footer" style="margin:auto; width:50%;">
-                               <button type="button" onclick="javaScript:sendGoods();">주문하기</button> 
+                        <div class="endorder-footer" style="margin:auto; width:45%;">
+                               <button type="button" onclick="javaScript:buyGoods();">주문하기</button> 
                                <button type="button" class="button2" onclick="location.href='/ModuHome/goods/detail?GOODS_NUMBER=${GOODS_NUMBER}';">주문취소</button> 
                         </div>
                     </form>
@@ -790,21 +789,13 @@ function copydata2() {
 
 function changePoint() {
 	$(document).ready(function(){
-	//보유 포인트
-	var mypoint = parseInt($("#myPoint").val(), 10);
-	//사용할 포인트
-	var usepoint = parseInt($("#POINT_POINT").val(), 10);
-	//배송비
-	var deliveryfee = 0;
-	//차감 후 포인트 
-	var afterpoint = 0;
-	//포인트 차감 후 결제금액
-	var aftersumprice =0;
-	//포인트 적용 전 결제금액
-	var sumprice = ${sum};
-	//포인트 사용한도
-	var pointmax = sumprice * 0.05;
-	console.log("pointmax:"+pointmax);
+	var mypoint = parseInt($("#myPoint").val(), 10);//보유 포인트
+	var usepoint = parseInt($("#POINT_POINT").val(), 10);//사용할 포인트
+	var deliveryfee = 0;//배송비
+	var afterpoint = 0;//차감 후 포인트 
+	var aftersumprice =0;//포인트 차감 후 결제금액
+	var sumprice = ${sum};//포인트 적용 전 결제금액
+	var pointmax = sumprice * 0.05;//포인트 사용한도
 	
 	//사용할 포인트 유효성 검사
 	if(isNaN(usepoint) || usepoint <= 0){
@@ -842,9 +833,10 @@ function changePoint() {
 }
 
 function rollbackPoint() {
-	var sumprice = ${sum};
-	var bkpoint = parseInt($("#backupPoint").val(), 10);
-	var zrpoint = "";
+	var sumprice = ${sum}; //주문 총액
+	var bkpoint = parseInt($("#backupPoint").val(), 10);//원래 포인트
+	var zrpoint = "";//사용 포인트 빈칸
+	//페이지 삽입
 	$("#totalPrice").html(comma(sumprice));
 	$("#myPoint").val(bkpoint);
 	$("#POINT_POINT").val(zrpoint);

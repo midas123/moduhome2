@@ -11,11 +11,10 @@ public class GoodsPaging {
    private int endCount; // 한 페이지에서 보여줄 게시글의 끝 번호
    private int startPage; // 시작 페이지
    private int endPage; // 마지막 페이지
-   private String dogName;
 
    private StringBuffer pagingHtml;
 
-   public GoodsPaging(int currentPage, int totalCount, int blockCount, int blockPage, String sort) {
+   public GoodsPaging(int currentPage, int totalCount, int blockCount, int blockPage) {
 
       this.blockCount = blockCount;
       this.blockPage = blockPage;
@@ -48,41 +47,44 @@ public class GoodsPaging {
 
       // 이전 block 페이지
       pagingHtml = new StringBuffer();
-      /*
-       * if (currentPage > blockPage) { int i = currentPage;
-       * pagingHtml.append("<a href='#qna' onclick='javascript:paging("+(i-1)+")'>");
-       * pagingHtml.append("<a class='page prv' href=" + dogName + "?currentPage=" +
-       * (startPage - 1) + ">"); pagingHtml.append("&lt;"); pagingHtml.append("</a>");
-       * }
-       */
-
-      // 페이지 번호.현재 페이지는 빨간색으로 강조하고 링크를 제거.
+      pagingHtml.append("<div class=\"goods_pagination\" style=\"padding:40px;\">");
+      
+      if (currentPage > blockPage) { 
+    	    int i = currentPage;
+	        pagingHtml.append("<a href='#ajaxList' onclick='javascript:ajaxList(" +(i-1)+")'>");
+	        pagingHtml.append("&laquo;"); 
+	        pagingHtml.append("</a>");
+      }
+       
+      // 페이지 번호
       for (int i = startPage; i <= endPage; i++) {
           if (i > totalPage) {
              break;
           }
           if (i == currentPage) {
-                pagingHtml.append("<span class=\"pg_current\">");
+                pagingHtml.append("<a class=\"active\" href=\"#\">");
                 pagingHtml.append(i);
-                pagingHtml.append("</span>");
+                pagingHtml.append("</a>");
           } else {
-             pagingHtml.append("<a style=\"margin-top: -8px;\" class=\"pg_page\" href='#ajaxList' onclick='javascript:ajaxList(" + sort + "," + i + ")'>");
-             /* pagingHtml.append("<a class='page' href=" + dogName + "?currentPage="); */
+             pagingHtml.append("<a  class=\"pg_page\" href='#ajaxList' onclick='javascript:ajaxList("+ i + ")'>");
              pagingHtml.append(i);
              pagingHtml.append("</a>");
           }
        }
 
       // 다음 block 페이지
-      /*
-       * if (totalPage - startPage >= blockPage) { int i = currentPage;
-       * pagingHtml.append("<a href='#qna' onclick='javascript:paging("+(i-1)+")'>");
-       * pagingHtml.append("<a class='page next' href=" + dogName + "?currentPage=" +
-       * (endPage + 1) + ">"); pagingHtml.append("&gt;"); pagingHtml.append("</a>"); }
-       */
+      
+     if (totalPage - startPage >= blockPage) { 
+    	int i = currentPage;
+        pagingHtml.append("<a href='#ajaxList' onclick='javascript:ajaxList("+(i-1)+")'>");
+        pagingHtml.append("&raquo;");
+        pagingHtml.append("</a>"); 
+      }
+       
+      pagingHtml.append("</div>");
    }
    
-   public GoodsPaging(int currentPage, int totalCount, int blockCount, int blockPage) {
+   /*public GoodsPaging(int currentPage, int totalCount, int blockCount, int blockPage) {
 
 	      this.blockCount = blockCount;
 	      this.blockPage = blockPage;
@@ -127,19 +129,19 @@ public class GoodsPaging {
 	                   pagingHtml.append("</span>");
 	             } else {
 	                pagingHtml.append("<a style=\"margin-top: -8px;\" class=\"pg_page\" href='#ajaxList' onclick='javascript:ajaxList(" +i+")'>");
-	                /* pagingHtml.append("<a class='page' href=" + dogName + "?currentPage="); */
+	                 pagingHtml.append("<a class='page' href=" + dogName + "?currentPage="); 
 	                pagingHtml.append(i);
 	                pagingHtml.append("</a>");
 	             }
 	          }
 	      // 다음 block 페이지
-	      /*
+	      
 	       * if (totalPage - startPage >= blockPage) { int i = currentPage;
 	       * pagingHtml.append("<a href='#qna' onclick='javascript:paging("+(i-1)+")'>");
 	       * pagingHtml.append("<a class='page next' href=" + dogName + "?currentPage=" +
 	       * (endPage + 1) + ">"); pagingHtml.append("&gt;"); pagingHtml.append("</a>"); }
-	       */
-	   }
+	       
+	   }*/
 
    public int getCurrentPage() {
       return currentPage;
@@ -213,13 +215,7 @@ public class GoodsPaging {
       this.endPage = endPage;
    }
 
-   public String getDogName() {
-      return dogName;
-   }
-
-   public void setDogName(String dogName) {
-      this.dogName = dogName;
-   }
+ 
 
    public StringBuffer getPagingHtml() {
       return pagingHtml;

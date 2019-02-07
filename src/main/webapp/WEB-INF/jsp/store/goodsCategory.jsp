@@ -52,6 +52,24 @@
 	display: inline;
 }
 
+.goods_pagination {
+  display: inline-block;
+}
+
+.goods_pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.goods_pagination a.active {
+  background-color: #85C8DD;
+  color: white;
+}
+
+.goods_pagination a:hover:not(.active) {background-color: #ddd;}
+
 </style>
 <title>Insert title here</title>
 </head>
