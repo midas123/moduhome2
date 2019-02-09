@@ -18,7 +18,7 @@ import com.kh.moduhome.GoodsImageUtils;
 @Service("reviewService")
 public class ReviewServiceImpl implements ReviewService {
 
-	private static final String filePath = "C:\\Users\\yk\\Desktop\\upload\\images\\review\\";
+	private static final String filePath = "/upload/images/review/";
 	//private static final String filePath = "C:\\Users\\yk\\Desktop\\upload\\images\\review\\";
 	
 	@Resource(name = "reviewDAO")
