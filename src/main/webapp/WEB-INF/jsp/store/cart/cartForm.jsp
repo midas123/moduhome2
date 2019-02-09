@@ -261,6 +261,8 @@
 </form>
 </div>
 </div>
+
+
 <script>
 var sum = 0;
 var disSum= 0;
@@ -324,9 +326,9 @@ function cartBuy(){
 		};
 		
 		if('${sessionScope.MEMBER_ID}' == null || '${sessionScope.MEMBER_ID}' =='' ){
-			alert("로그인 후 구매해주세요.")
+			alert("로그인 후 구매 가능합니다.")
 			return false;
-		}
+		};
 		
 		$("input:checkbox[name='GOODS_KIND_NUMBER[]']").each(function(index) {
 			if(!$(this).is(":checked")){
@@ -409,7 +411,7 @@ function ajaxChangeEa(cartNum, index, idx) {
 	console.log("장바구니 수량변경");
 	var idx = idx; //추가한 상품 수량
 	var index = index;//장바구니 목록 중 상품의 인덱스
-	var ea = parseInt($(".input_ea"+index).val(), 10);//현재 상품 수량
+	//var ea = parseInt($(".input_ea"+index).val(), 10);//현재 상품 수량
 	var goodKind = parseInt($(".goods_kind"+index).val(), 10);
 	$.ajax({
 		url: "/ModuHome/cart/modifyEa",
@@ -417,7 +419,7 @@ function ajaxChangeEa(cartNum, index, idx) {
 		dataType: "json",
 		success:function(data){
 			//수량 변경 후 페이지에 삽입
-			$(".input_ea"+index).val(idx+ea);
+			$(".input_ea"+index).val(idx);
 		}
 	});
 }
@@ -472,9 +474,9 @@ $(document).off().on("click", ".btn-ea-up"+index, function(e) {
     }
     
 	//상품 수량 변경 ajax
-    ajaxChangeEa(cartNum, index, 1);
-
 	inputEa = inputEa + 1
+    ajaxChangeEa(cartNum, index, inputEa);
+
     total = price + total;
     
   	//배송비
@@ -518,10 +520,10 @@ $(document).off().on("click", "li a.btn-ea-dn"+index, function(e) {
 		return false;
 	}
 
-	ajaxChangeEa(cartNum, index, -1);
+    inputEa = inputEa - 1
+	ajaxChangeEa(cartNum, index, inputEa);
 	
     total = total - price;
-    inputEa = inputEa - 1
   	//배송비
   	var delfee = 0;
 	if(total < 30000){

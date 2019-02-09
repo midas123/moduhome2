@@ -428,7 +428,7 @@
 
 	
 	<!-- 스토어 -->
-	<definition name="goodsMain" extends="layout-m">
+	<definition name="goodsMain" extends="layout-store">
 	<put-attribute name="body" value="/WEB-INF/jsp/store/goodsMain.jsp"/>
 	</definition>
 
@@ -436,7 +436,7 @@
 	<put-attribute name="body" value="/WEB-INF/jsp/store/goodsDetail.jsp"/>
 	</definition>
 
-	<definition name="goodsCategory" extends="layout-m">
+	<definition name="goodsCategory" extends="layout-store">
 	<put-attribute name="body" value="/WEB-INF/jsp/store/goodsCategory.jsp"/>
 	</definition>
 

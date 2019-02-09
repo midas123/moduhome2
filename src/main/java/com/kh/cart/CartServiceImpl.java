@@ -154,7 +154,7 @@ public class CartServiceImpl implements CartService {
 				
 				//장바구니 상품 수량 업데이트
 				int OldEa = ((BigDecimal)cartOld.get("CART_AMOUNT")).intValue();
-				int NewEa = Integer.parseInt((String) map.get("CART_AMOUNT"));
+				int NewEa = Integer.parseInt(map.get("CART_AMOUNT").toString());
 				map.put("CART_NUMBER", cartOld.get("CART_NUMBER"));
 				map.put("CART_AMOUNT", Integer.toString(OldEa + NewEa));
 				//DB에 장바구니 저장

@@ -63,12 +63,8 @@ public class LoginController {
    @RequestMapping(value = "/login", method = RequestMethod.POST)
    public ModelAndView loginComplete(CommandMap commandMap, HttpServletRequest request) throws Exception {
       ModelAndView mv = new ModelAndView();
-      
-      
       HttpSession session = request.getSession();
-    
       
-      System.out.println("아이디" + commandMap.get("MEMBER_ID"));
       
       Map<String, Object> chk = loginService.loginGo(commandMap.getMap());
       if (chk == null) {	//아이디 값이 없으면

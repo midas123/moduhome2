@@ -6,9 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="/ModuHome/js/store/jquery-1.11.0.min.js"></script>
+<!-- <script type="text/javascript" src="/ModuHome/js/store/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="/ModuHome/js/store/jquery-ui.js"></script>
 <script type="text/javascript" src="/ModuHome/js/store/jquery-migrate-1.2.1.min.js"></script>	
+ -->
+<script src="/ModuHome/style/js/scripts.min.js"></script>
+ <script src="/ModuHome/style/js/custom.min.js"></script>
 
 <meta charset="UTF-8">
 <style>
@@ -70,12 +73,16 @@
 
 .goods_pagination a:hover:not(.active) {background-color: #ddd;}
 
+body #main-slider-bg, #changeList, #category-section, #menu-container {
+background: white; !important;
+}
+
 </style>
 <title>Insert title here</title>
 </head>
-<body>
+<body style="background: white;">
 	<div class="storemain-top" style="margin-top: 0px;">
-		<section class="flexslider">
+		<section class="flexslider" id="main-slider-bg">
 			<ul class="slides">
 				<!-- <li class="overlay"
 					style="background-image: url(/ModuHome/images/storeMain/20180827storemain1.jpeg); width: auto; height: 600px;">
@@ -93,32 +100,26 @@
 		</section>
 	</div>
 
-<section id="category-section" style="background: #fff">
-
-	<!-- <div class="upper-menu" style=" background: #fff; width:100%; height:50px;"> -->
-	<div class="container">
-			<div class="row">
-	<div class="commerce-menu" >
-			<div class="col-md-8 col-md-offset-2" style="margin-bottom:5px;">
-				<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=전체" style="color: black;">전체상품</a></div>
-			<!-- 	<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가구" style="color: black;">가구</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가전" style="color: black;">가전</a></div>	
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=패브릭" style="color: black;">패브릭</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=주방" style="color: black;">주방</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=생활·수납" style="color: black;">생활·수납</a></div> -->
-				<c:forEach items="${mainCategory}" var="mainCategory" varStatus="status">
-			<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=${mainCategory}" style="color: black;">${mainCategory}</a></div>
-	</c:forEach>
-				
-				
-	<hr style="color:#99999; width:90%; padding:20px;">
+<section id="category-section" style="background: white;">
+<div class="container" id="menu-container">
+	<div class="row">
+		<div class="commerce-menu" >
+				<div class="col-md-8 col-md-offset-2" style="margin-bottom:5px;">
+					<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=전체" style="color: black;">전체상품</a></div>
+					<c:forEach items="${mainCategory}" var="mainCategory" varStatus="status">
+					<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=${mainCategory}" style="color: black;">${mainCategory}</a>
+					</div>
+					</c:forEach>
+							
+							
+				<hr style="color:#99999; width:90%; padding:20px;">
 			</div>
 		</div>
-		</div>
-		</div>
+	</div>
+</div>
 	</section>
 	
-		<div class="container">
+		<div class="container" id="menu-container2">
 			<div class="row">
 	<div class="commerce-menu-detailmenu" style="float: left; background: #fff; width:100%; color:black;">
 			<!-- <div style="float: left; margin-top: 25px; height: 50px; margin-left: 190px;"> -->

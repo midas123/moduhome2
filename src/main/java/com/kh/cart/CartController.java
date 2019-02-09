@@ -140,17 +140,21 @@ public class CartController {
 		HttpSession session = request.getSession();
 		//회원 장바구니 상품 수량변경
 		if(session.getAttribute("MEMBER_NUMBER") != null) {
+			System.out.println(commandMap.getMap());
 			cartService.updateCart(commandMap.getMap());
 		} else {
 			//비회원 장바구니 상품 수량변경
-			int goodKind = Integer.parseInt((String)commandMap.get("GOODS_KIND_NUMBER"));
+			int goodKind = Integer.parseInt(commandMap.get("GOODS_KIND_NUMBER").toString());
+			System.out.println("goodKind:"+goodKind);
+			
 			List<Map<String, Object>> sessionCart = (List<Map<String, Object>>) session.getAttribute("cartSession");
 			for(int i=0; i<sessionCart.size(); i++) {
 				int session_goodKind = Integer.parseInt(sessionCart.get(i).get("GOODS_KIND_NUMBER").toString()); 
 				if(session_goodKind == goodKind) {
-					int cart_amount = Integer.parseInt(sessionCart.get(i).get("CART_AMOUNT").toString());
-					//int cart_amount2 = Integer.parseInt(cart_amount1);
-					cart_amount += 1;
+					//int cart_amount = Integer.parseInt(sessionCart.get(i).get("CART_AMOUNT").toString());
+					int cart_amount = Integer.parseInt(commandMap.get("CART_AMOUNT").toString());
+					System.out.println("cart_amount:"+cart_amount);
+					//cart_amount += 1;
 					sessionCart.get(i).replace("CART_AMOUNT", cart_amount);
 				}
 			}

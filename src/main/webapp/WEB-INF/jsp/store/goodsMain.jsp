@@ -7,6 +7,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="/ModuHome/style/js/scripts.min.js"></script>
+ <script src="/ModuHome/style/js/custom.min.js"></script>
 <style>
 .img-responsive {
 	display: block;
@@ -47,16 +49,17 @@
 	border-bottom: 1px solid #85C8DD;
 	border-bottom-width: 2px;
 }
+
+body #main-slider-bg{
+background: white; !important;
+}
 </style>
 <title>Insert title here</title>
 </head>
 <body>
 	<div class="storemain-top" style="margin-top: 0px;">
-		<section class="flexslider">
+		<section class="flexslider" id="main-slider-bg">
 			<ul class="slides">
-				<!-- <li class="overlay"
-					style="background-image: url(/ModuHome/images/storeMain/20180827storemain1.jpeg); width: auto; height: 600px;">
-				</li> -->
 				<li
 					style="background-image: url(/ModuHome/images/storeMain/20180827storemain2.jpeg); width: auto; height: 600px;">
 				</li>
@@ -69,34 +72,17 @@
 			</ul>
 		</section>
 	</div>
-	
-		<div class="container">
-			<div class="row">
-	<div class="commerce-menu" >
-		
-	
-		<!-- 	<div class="col-md-8 col-md-offset-2">
-				<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=전체" style="color: black;">전체상품</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가구" style="color: black;">가구</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=가전" style="color: black;">가전</a></div>	
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=패브릭" style="color: black;">패브릭</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=주방" style="color: black;">주방</a></div>
-				<div class="col-md-2"><a href="/ModuHome/goods/category?CATEGORY=생활·수납" style="color: black;">생활·수납</a></div>
-			</div> -->
-			
-			<div class="col-md-8 col-md-offset-2">
-			<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=전체" style="color: black;">전체상품</a></div>
-			<c:forEach items="${mainCategory}" var="mainCategory" varStatus="status">
-			<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=${mainCategory}" style="color: black;">${mainCategory}</a></div>
-			</c:forEach>
-			</div> 
-	
-		</div>
-		</div>
-
-	</div>
 	<section class="probootstrap-section probootstrap-bg-white">
 		<div class="container">
+				<div class="commerce-menu" style="display:inline-block; background: white; margin-bottom:30px;" >
+					<div class="col-md-8 col-md-offset-2">
+					<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=전체" style="color: black;">전체상품</a></div>
+					<c:forEach items="${mainCategory}" var="mainCategory" varStatus="status">
+					<div class="col-md-2" ><a href="/ModuHome/goods/category?CATEGORY=${mainCategory}" style="color: black;">${mainCategory}</a></div>
+					</c:forEach>
+					</div> 
+	
+				</div>
 			<div class="row">
 				<div class="commerce-title">
 				<font size="3" style="font-family: Open Sans, Arial, sans-serif; color:black; margin-left: 140px;">신상품<!--  <a href="/ModuHome/goods/category?CATEGORY=전체&fromMain=1" style="color: black; float: right; font-weight: 500; font-size: 16px; margin-top: 25px; margin-right: 80px; cursor: pointer;">전체보기></a> -->
