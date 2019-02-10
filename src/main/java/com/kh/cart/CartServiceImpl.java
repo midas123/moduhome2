@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
 		int goodsNum = Integer.parseInt(map.get("GOODS_NUMBER").toString()); //상품번호
 		
 		if (map.get("optno[]") instanceof String) { //단품 주문
-			String goodsKind = (String) map.get("kinds[]"); 
+			String goodsKind = (String) map.get("GOODS_KIND_NUMBER[]"); 
 			String goodsAmount = (String) map.get("ea[]"); 
 			Map<String, Object> cartItem = new HashMap<String, Object>();
 				cartItem.put("GOODS_NUMBER", goodsNum);
@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
 				}
 				
 		} else { // 여러개 주문
-			String[] goodsKind = (String[]) map.get("kinds[]"); 
+			String[] goodsKind = (String[]) map.get("GOODS_KIND_NUMBER[]"); 
 			String[] goodsAmount = (String[]) map.get("ea[]"); 
 			for(int i=0; i<goodsKind.length; i++) {
 				Map<String, Object> cartItem = new HashMap<String, Object>();

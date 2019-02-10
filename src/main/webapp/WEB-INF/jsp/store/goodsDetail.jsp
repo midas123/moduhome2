@@ -475,14 +475,6 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		</div>
 	</div>
 </div>
-
-<div class="modal fade bs-example-modal-sm mymodal" id="myModal2" tabindex="-1" role="dialog" 
-aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-sm" style="width:500px;">
-		<div class="modal-content">
-		</div>
-	</div>
-</div>
 <!-- modal trigger 삭제금지 -->
 
 <!-- The Modal image-->
@@ -784,14 +776,14 @@ $(document).ready(function(){
 <script>
 //상품 후기 이미지 modal
 function detailView(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("myModal2").style.display = "block"; 
+	document.getElementById("img01").src = element.src;
+	document.getElementById("myModal2").style.display = "block"; 
 }
 </script>
 <script>
 //장바구니 담기, 구매하기 유효성검사
-	var loginCheck = '${sessionScope.MEMBER_ID}';
 	function _exec(mode) {
+		 var loginCheck = '${sessionScope.MEMBER_ID}';
 		 if (mode == "buy") {
 			if(loginCheck == null || loginCheck==''){			
 				alert('로그인 후 이용 가능합니다.');
@@ -816,14 +808,14 @@ function detailView(element) {
 				return;
 			}
 			//var mode = 'cart';
-		 	var goodsno = $("input[name='GOODS_NUMBER']").attr('value');
+		 	var goodsno = $("input[name='GOODS_NUMBER[]']").attr('value');
 			//var ea = $("input[name='ea[]']").attr('value');
 			var ea = new Array();
 			$("input[name='ea[]']").each(function(i) {
 				ea[i] =  $(this).val();
 			});
 			var kinds = new Array();
-			$("input[name='kinds[]']").each(function(index) {
+			$("input[name='GOODS_KIND_NUMBER[]']").each(function(index) {
 				kinds[index] = $(this).val();
 			});
 			var GOODS_NAME = $("input[name='GOODS_NAME']").attr('value');
@@ -838,7 +830,7 @@ function detailView(element) {
 			  $.ajax({
 			       url: "/ModuHome/cart/cartAdd",
 			       type : "post",
-			       data: {"mode":mode,"GOODS_NUMBER":goodsno,"ea[]":ea,"kinds[]":kinds,"GOODS_NAME":GOODS_NAME,"delivery-payment":deliverypayment, "optno[]":optno},
+			       data: {"mode":mode,"GOODS_NUMBER":goodsno,"ea[]":ea,"GOODS_KIND_NUMBER[]":kinds,"GOODS_NAME":GOODS_NAME,"delivery-payment":deliverypayment, "optno[]":optno},
 			       success:function(data){
 			          cartPopover();
 			          $('.MK_li_1_1').remove();
