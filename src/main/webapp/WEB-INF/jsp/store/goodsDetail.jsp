@@ -124,7 +124,7 @@ i {
 <body class="goods-detail-page" style="background: #fff">
 	<form name="fmOrder">
 			<input type="hidden" name="mode"> 
-			<input type="hidden" name="GOODS_NUMBER" value="${goodsBasic.GOODS_NUMBER }"> 
+			<input type="hidden" name="GOODS_NUMBER[]" value="${goodsBasic.GOODS_NUMBER }"> 
 				<input type="hidden" name="GOODS_NAME" value="${goodsBasic.GOODS_NAME}">
 	<div class="container" style="margin: auto; width: 1000px;">
 		<div class="furniture-view">
@@ -551,7 +551,7 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				var li = "<li class='MK_li_1_1'><span class='MK_p-name'>" 
 						+ $("#option option:selected").attr("value")
 						+ "</span><input type='hidden' name='optno[]' value='" + optno + 
-								"'><input type='hidden' name='kinds[]' value='"
+								"'><input type='hidden' name='GOODS_KIND_NUMBER[]' value='"
 						+ $("option:selected", $(obj)).attr("kinds")
 						+ "'><input type='hidden' class='mstock' value='"
 						+ $("option:selected", $(obj)).attr("stock")

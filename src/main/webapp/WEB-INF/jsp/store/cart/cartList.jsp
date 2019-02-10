@@ -6,7 +6,7 @@
     
     
 <div id="changeCartGoodlist" class="section-body col-md-12" style="background-color:#fff; !important;">
-			<form name="fmCart" action="/ModuHome/cart/cartDelete">
+			<form name="fmCart" action="#">
 			<div class="container">
 			<div class="table-order-list" align="center">
 				<table class="table" >
@@ -29,25 +29,16 @@
 					</tr> 
 				</thead>
 				<tbody>
-			<%-- 		<c:choose>
-				<c:when test="${!empty cartList}">
-						<c:set var = "cartList" value = "${cartList}"/>
-				</c:when>
-				<c:when test="${!empty sessionScope.cartSession}">
-						<c:set var = "cartList" value="${sessionScope.cartSession}"/>
-				</c:when>
-				</c:choose>	 --%>	
 				<c:if test="${!empty cartList}">
 						<c:forEach var="cartList" items="${cartList}" varStatus="stat">
 						<tr>
 						<td>
 						&nbsp;&nbsp;
-						<input type="checkbox" id="checkbox${stat.index}" name="GOODS_KIND_NUMBER" value="${cartList.GOODS_KIND_NUMBER}" onclick="javascript:checkedRows('${stat.index}');">
+						<input type="checkbox" id="checkbox${stat.index}" name="GOODS_KIND_NUMBER[]" value="${cartList.GOODS_KIND_NUMBER}" onclick="javascript:checkedRows('${stat.index}');">
 						</td>
 						<td class="info-img">
-						<a href="/ModuHome/goodsDetail?GOODS_NUMBER=${cartList.GOODS_NUMBER }">
-						<img img_layer="/ModuHome/images/goods/${cartList.GOODS_THUMBNAIL}" goodsno="${cartList.GOODS_NUMBER }"
-								src="/ModuHome/images/goods/${cartList.GOODS_THUMBNAIL}"
+						<a href="/ModuHome/goods/detail?GOODS_NUMBER=${cartList.GOODS_NUMBER }">
+						<img src="/ModuHome/images/goods/${cartList.GOODS_THUMBNAIL}"
 								width="167" class="img-responsive"></a></td>
 						<td class="info-caption">
 							<em class="name">${cartList.GOODS_NAME}/${cartList.GOODS_KIND_NUMBER}</em>
@@ -60,11 +51,13 @@
 									<input type="hidden" name="cart" value="${cartList.CART_NUMBER }">
 									<span id="cartNum${stat.index}" value="${cartList.CART_NUMBER }"></span>
 									<input type="hidden" name="GOODS_NAME" value="${cartList.GOODS_NAME }">
-									<input type="hidden" name="kinds[]" class="goods_kind${stat.index}" value="${cartList.GOODS_KIND_NUMBER }">
-									<input type="hidden" name="GOODS_NUMBER[]" value="${cartList.GOODS_NUMBER }">
+							 		<input type="hidden" name="kinds[]" class="goods_kind${stat.index}" value="${cartList.GOODS_KIND_NUMBER }">
+									<input type="hidden" id="GOODS_NUMBER${stat.index}" name="GOODS_NUMBER[]" value="${cartList.GOODS_NUMBER }">
+									<input type="text" id="ea${stat.index}" name="ea[]" value="${cartList.CART_AMOUNT }" class="input_ea${stat.index}" size="2" readonly> 
+									
+								
 									<input type="hidden" class="mstock" value="${cartList.GOODS_AMOUNT }">
 									<span id="mstock${stat.index}" value="${cartList.GOODS_AMOUNT }"></span>
-									<input type="text" name="ea[]" value="${cartList.CART_AMOUNT }" class="input_ea${stat.index}" size="2" readonly>
 									
 									<span class="ea">
 										<a class="btn-ea-up${stat.index}" onclick="javascript:eaUp(${stat.index});">
@@ -160,7 +153,6 @@
 </c:if>
 </td>
 </tr>
-
 <tr>
 <td>
 <div class="cal-result">
