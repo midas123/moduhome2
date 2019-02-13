@@ -22,7 +22,7 @@ public class CartServiceImpl implements CartService {
 	public List<Map<String, Object>> makeCart(Map<String, Object> map) throws Exception {
 	/*	단품 or 여러개 상품 추가(종류만 다른 같은 상품)
 		비어있는 장바구니에 상품 추가
-		상품이 있는 장바구니에 상품 추가 (상품 종류까지 같은 중복 상품은 등록X)*/
+		상품이 있는 장바구니에 상품 추가 (상품 종류까지 같은 중복 상품은 수량 업데이트)*/
 		List<Map<String, Object>> newCart = new ArrayList<>(); //새로운 장바구니
 		Map<String, Object> updatedCartItem = new HashMap<>(); //이전 장바구니 상품
 		
@@ -30,8 +30,8 @@ public class CartServiceImpl implements CartService {
 		int goodsNum = Integer.parseInt(map.get("GOODS_NUMBER").toString()); //상품번호
 		
 		if (map.get("optno[]") instanceof String) { //단품 주문
-			String goodsKind = (String) map.get("GOODS_KIND_NUMBER[]"); 
-			String goodsAmount = (String) map.get("ea[]"); 
+			String goodsKind = map.get("GOODS_KIND_NUMBER[]").toString(); 
+			String goodsAmount = map.get("ea[]").toString(); 
 			Map<String, Object> cartItem = new HashMap<String, Object>();
 				cartItem.put("GOODS_NUMBER", goodsNum);
 				cartItem.put("CART_AMOUNT", goodsAmount);
@@ -75,7 +75,7 @@ public class CartServiceImpl implements CartService {
 					}
 			}
 		}
-		
+		System.out.println("newCart"+newCart);
 		//이전 세션 카트에서 중복 상품을 제거하고 새로운 카트 리스트와 결합
 		if(oldSessionCart != null) {
 			newCart = sessionCartJoin(oldSessionCart, newCart);
@@ -93,8 +93,8 @@ public class CartServiceImpl implements CartService {
 			for(int i=0; i<cartOldSession.size(); i++) {
 				//중복 상품의 수량을 업데이트
 				if(cartOldSession.get(i).get("GOODS_KIND_NUMBER").equals(map.get("GOODS_KIND_NUMBER"))){ //같은 상품 일 경우
-					int oldEA = Integer.parseInt((String) cartOldSession.get(i).get("CART_AMOUNT"));//이전에 저장된 상품 수량
-					int newEA = Integer.parseInt((String) map.get("CART_AMOUNT")); //새로 추가된 상품 수량
+					int oldEA = Integer.parseInt(cartOldSession.get(i).get("CART_AMOUNT").toString());//이전에 저장된 상품 수량
+					int newEA = Integer.parseInt(map.get("CART_AMOUNT").toString()); //새로 추가된 상품 수량
 					//수량 더하기 
 					map.replace("CART_AMOUNT", (oldEA + newEA));
 					//수량 합산한 상품을 세션 장바구니에서 제거, 업데이트 된 상품은 map에 저장됨
